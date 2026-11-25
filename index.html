@@ -192,6 +192,228 @@ const SPECIALIST_PHONE = "201099006190"; // رقم الأخصائي للتحوي
 // قاعدة بيانات الأصناف + السعرات + طريقة التحضير الإرشادية الصحية
 const FOODS = [
   {
+    id: 'red_meat', name: 'لحوم حمراء', calPer100: 250, defaultQty: 150, min: 50, max: 350, reqFreeze: false,
+    prep: '👨‍🍳 طريقة التحضير الصحية: تُطهى مسلوقة أو مشوية جيداً (قطعية قليلة الدهن) بدون قلي في زيوت مهدرجة، مع البهارات الطبيعية والبصل.'
+  },
+  {
+    id: 'luncheon', name: 'لانشون بيتي (لحم مفروم)', calPer100: 190, defaultQty: 80, min: 30, max: 200, reqFreeze: false,
+    prep: '👨‍🍳 طريقة التحضير الصحية: يُحضر منزلياً من لحم مفروم صافي مع التوابل الطبيعية وجيلاتين طبيعي أو بياض بيض على البخار بدون نشا صناعي أو مواد حافظة.'
+  },
+  {
+    id: 'cheese', name: 'جبن طبيعي', calPer100: 250, defaultQty: 60, min: 20, max: 150, reqFreeze: false,
+    prep: '👨‍🍳 طريقة التحضير الصحية: يُستخدم جبن طبيعي 100% (قريش أو شيدر طبيعي أو ملح خفيف) خالٍ تماماً من الزيوت النباتية المهدرجة.'
+  },
+  {
+    id: 'rice', name: 'أرز (مجمد 12 ساعة)', calPer100: 130, defaultQty: 150, min: 50, max: 350, reqFreeze: true,
+    prep: '👨‍🍳 طريقة التحضير الصحية: يُطهى بأقل كمية دهون، ثم يُترك ليبرد ويُجمد في الفريزر لمدة 12 ساعة كاملة لتحويل النشا إلى نشا مقاوم، ثم يُسخن عند الأكل.'
+  },
+  {
+    id: 'mahshi', name: 'محشي (مجمد 12 ساعة)', calPer100: 145, defaultQty: 200, min: 50, max: 400, reqFreeze: true,
+    prep: '👨‍🍳 طريقة التحضير الصحية: يُحضر بخضرة وفيرة وأرز قليل، وبعد التسوية يُجمد في الفريزر 12 ساعة لرفع النشا المقاوم وتقليل رفع السكر بالدم، ثم يُسخن.'
+  },
+  {
+    id: 'bread', name: 'خبز (سبق تجميده)', calPer100: 250, defaultQty: 60, min: 25, max: 150, reqFreeze: true,
+    prep: '👨‍🍳 طريقة التحضير الصحية: يُحفظ الخبز في الفريزر مسبقاً حتى يتجمد تماماً، ثم يُخرج ويُسخن قبل التناول مباشرة لتقليل المؤشر الجلايسيمي.'
+  },
+  {
+    id: 'salad', name: 'سلطة خضراء وجزر مسلوق', calPer100: 35, defaultQty: 150, min: 50, max: 300, reqFreeze: false, isSalad: true,
+    prep: '👨‍🍳 طريقة التحضير الصحية: بقدونس + كزبرة + نصف خيارة مقشرة ومبشورة + نصف طماطم متوسطة + جزر مسلوق. ويمكن إضافة زيت زيتون بكر ممتاز.'
+  },
+  {
+    id: 'nutella', name: 'نوتيلا صحية (مساءً فقط)', calPer100: 560, defaultQty: 25, min: 10, max: 60, reqFreeze: false, isNutella: true,
+    prep: '👨‍🍳 طريقة التحضير الصحية: يُطحن كوب سمسم محمص خفيف + كوب فول سوداني + ملعقة كاكاو خام + زيت بذور الكتان أو زيت نباتي عالي الجودة حتى يصبح القوام كريمياً.'
+  },
+  {
+    id: 'basbousa', name: 'بسبوسة سميد وسمن بلدي', calPer100: 360, defaultQty: 100, min: 30, max: 250, reqFreeze: false, isBasbousa: true,
+    prep: '👨‍🍳 طريقة التحضير الصحية: تُجهز بدقيق السميد الخشن فقط (بدون دقيق أبيض) وتُبس بأقل كمية ممكنة من السمن البلدي الطبيعي، وتُؤكل بعد البروتين.'
+  }
+];
+
+let state = JSON.parse(localStorage.getItem('nutriclinic_data')) || {
+  lastMealTime: null,
+  celebratedLastFasting: false,
+  logs: []
+};
+
+let selectedFood = null;
+let currentCart = [];
+
+function playApplauseSound() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    for (let i = 0; i < 25; i++) {
+      const time = ctx.currentTime + (i * 0.08) + (Math.random() * 0.04);
+      const bufferSize = ctx.sampleRate * 0.08;
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let j = 0; j < bufferSize; j++) data[j] = (Math.random() * 2 - 1) * Math.exp(-j / (ctx.sampleRate * 0.02));
+      const noise = ctx.createBufferSource();
+      noise.buffer = buffer;
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.value = 1000 + Math.random() * 800;
+      noise.connect(filter);
+      filter.connect(ctx.destination);
+      noise.start(time);
+    }
+  } catch(e) {}
+}
+
+function getTodayStr() { return new Date().toISOString().split('T')[0]; }
+function getFullArabicDayDate(ts) {
+  const d = new Date(ts);
+  return d.toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric' });
+}
+function getTimeStr(ts) {
+  return new Date(ts).toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
+}
+function getWeekNumber() {
+  const d = new Date();
+  d.setHours(0,0,0,0);
+  d.setDate(d.getDate() + 4 - (d.getDay()||7));
+  return Math.ceil((((d - new Date(d.getFullYear(),0,1))/8.64e7)+1)/7);
+}
+
+function getQuotas() {
+  const today = getTodayStr();
+  const week = getWeekNumber();
+  let salad = 0, ginger = 0, nutella = 0, basbousa = 0;
+
+  state.logs.forEach(log => {
+    if (log.date === today) {
+      if (log.type === 'ginger') ginger++;
+      if (log.items) {
+        log.items.forEach(it => {
+          if (it.id === 'salad') salad++;
+          if (it.id === 'nutella') nutella++;
+        });
+      }
+    }
+    if (log.week === week && log.items) {
+      log.items.forEach(it => { if (it.id === 'basbousa') basbousa++; });
+    }
+  });
+  return { salad, ginger, nutella, basbousa };
+}
+
+function updateDashboard() {
+  const q = getQuotas();
+  document.getElementById('qSalad').innerText = `${q.salad} / 2`;
+  document.getElementById('qGinger').innerText = `${q.ginger} / 3`;
+  document.getElementById('qNutella').innerText = `${q.nutella} / 1`;
+  document.getElementById('qBasbousa').innerText = `${q.basbousa} / 2`;
+
+  const card = document.getElementById('timerCard');
+  const status = document.getElementById('timerStatus');
+  const display = document.getElementById('timerDisplay');
+  const sub = document.getElementById('timerSubtext');
+  const nextBox = document.getElementById('nextMealBox');
+
+  if (!state.lastMealTime) {
+    display.innerText = "جاهز للبدء";
+    status.innerText = "ابدأ بتسجيل وجبتك الأولى";
+    nextBox.innerHTML = "<strong>مقترح الوجبة الأولى:</strong> بروتين (لحوم حمراء / لانشون / جبن) + خبز مجمد + حصة سلطة.";
+    return;
+  }
+
+  const now = Date.now();
+  const diffMs = now - state.lastMealTime;
+  const fiveHoursMs = 5 * 3600 * 1000;
+  const nextMealDate = new Date(state.lastMealTime + fiveHoursMs);
+  const nextTimeFormatted = nextMealDate.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
+
+  const hour = nextMealDate.getHours();
+  let suggestedItems = [];
+  if (hour >= 18 || hour < 4) {
+    if (q.nutella < 1) suggestedItems.push("نوتيلا صحية (مرة مساءً)");
+    suggestedItems.push("جبن طبيعي");
+  } else {
+    suggestedItems.push("لحوم حمراء");
+    suggestedItems.push("أرز أو محشي (مجمد 12 ساعة)");
+    if (q.salad < 2) suggestedItems.push("سلطة خضراء");
+    if (q.basbousa < 2) suggestedItems.push("متاح حصة بسبوسة سميد بعد البروتين");
+  }
+
+  nextBox.innerHTML = `
+    <div>⏰ <strong>الموعد المناسب لوجبتك القادمة:</strong> الساعة <span style="color:var(--primary); font-size:1.05rem;">${nextTimeFormatted}</span></div>
+    <div style="margin-top:4px;">🥗 <strong>التنسيق المقترح:</strong> ${suggestedItems.join(' + ')}</div>
+  `;
+
+  if (diffMs < fiveHoursMs) {
+    const rem = fiveHoursMs - diffMs;
+    const h = String(Math.floor(rem / 3600000)).padStart(2, '0');
+    const m = String(Math.floor((rem % 3600000) / 60000)).padStart(2, '0');
+    const s = String(Math.floor((rem % 60000) / 1000)).padStart(2, '0');
+    display.innerText = `${h}:${m}:${s}`;
+    card.className = "card timer-card";
+    status.className = "badge badge-wait";
+    status.innerText = "فترة صيام وضبط الإنسولين (ممنوع الطعام)";
+    sub.innerText = `يُسمح فقط بالماء أو الزنجبيل (متبقي ${3 - q.ginger} مرات)`;
+  } else {
+    const extraMs = diffMs - fiveHoursMs;
+    const totalH = Math.floor(diffMs / 3600000);
+    const totalM = Math.floor((diffMs % 3600000) / 60000);
+    display.innerText = `${totalH} س و ${totalM} د`;
+
+    if (extraMs >= 15 * 60000) {
+      card.className = "card timer-card golden";
+      status.className = "badge badge-golden";
+      status.innerText = "🏆 إنجاز رائع! إطالة فترة الصيام";
+      sub.innerText = "ممتاز! جسمك الآن في أعلى معدلات حرق الدهون وضبط السكر.";
+      if (!state.celebratedLastFasting) {
+        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+        playApplauseSound();
+        state.celebratedLastFasting = true;
+        saveState();
+      }
+    } else {
+      card.className = "card timer-card ready";
+      status.className = "badge badge-ready";
+      status.innerText = "✅ حان الوقت المناسب لوجبتك";
+      sub.innerText = "أتممت 5 ساعات بنجاح. اختر الكمية المشبعة لك.";
+    }
+  }
+}
+
+function openMealModal() {
+  const q = getQuotas();
+  const list = document.getElementById('foodList');
+  list.innerHTML = '';
+  FOODS.forEach(f => {
+    let disabled = false;
+    let note = '';
+    if (f.isSalad && q.salad >= 2) { disabled = true; note = ' (اكتمل 2/2)'; }
+    if (f.isNutella && q.nutella >= 1) { disabled = true; note = ' (اكتمل 1/1)'; }
+    if (f.isBasbousa && q.basbousa >= 2) { disabled = true; note = ' (اكتمل 2/2 أسبوعياً)'; }
+
+    const btn = document.createElement('button');
+    btn.className = 'food-btn';
+    btn.disabled = disabled;
+    btn.style.opacity = disabled ? '0.45' : '1';
+    btn.innerText = f.name + note;
+    btn.onclick = () => selectFood(f, btn);
+    list.appendChild(btn);
+  });
+  document.getElementById('mealModal')جئ)">إحساس بهبوط حقيقي (دوخة / رعشة / خمول مفاجئ)</option>
+      <option value="جوع جسدي حقيقي (قرقرة بالمعدة)">جوع جسدي حقيقي (قرقرة بالمعدة)</option>
+      <option value="جوع نفسي / اشتهاء للسكريات أو الطعام">جوع نفسي / اشتهاء للسكريات أو الطعام</option>
+      <option value="هبوط طاقة بعد مجهود بدني أو ذهني">هبوط طاقة بعد مجهود بدني أو ذهني</option>
+      <option value="أسباب أخرى (توتر / قلة نوم / عطش)">أسباب أخرى (توتر / قلة نوم / عطش)</option>
+    </select>
+
+    <label style="font-weight:bold; font-size:0.9rem; display:block; margin-bottom:6px;">ملاحظات إضافية (اختياري):</label>
+    <input type="text" id="dropNotes" placeholder="مثال: شعرت بدوخة بسيطة وشربت ماء..." style="width:100%; padding:10px; border-radius:10px; border:1.5px solid #cbd5e1; margin-bottom:14px;">
+
+    <button class="btn" style="background:var(--danger); color:white;" onclick="saveDropTime()">💾 حفظ وتوثيق الـ Drop Time</button>
+  </div>
+</div>
+
+<script>
+const SPECIALIST_PHONE = "201099006190"; // رقم الأخصائي للتحويل المباشر
+
+// قاعدة بيانات الأصناف + السعرات + طريقة التحضير الإرشادية الصحية
+const FOODS = [
+  {
     id: 'chicken', name: 'فراخ / دجاج', calPer100: 165, defaultQty: 150, min: 50, max: 350, reqFreeze: false,
     prep: '👨‍🍳 طريقة التحضير الصحية: يُطهى مسلوقاً أو مشوياً في الفرن أو القلاية الهوائية بدون جلد وبدون زيوت مهدرجة، مع التتبيل بالبهارات الطبيعية والليمون.'
   },
