@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Nutriclinic Mind - متابع الوجبات</title>
+<title>Nutriclinic Mind - متابع التغذية الذكي</title>
 <style>
   :root {
     --primary: #0f766e;
@@ -19,7 +19,7 @@
   * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
   body { margin: 0; background: var(--bg); color: var(--text); padding-bottom: 80px; }
   .header { background: var(--primary); color: white; padding: 16px; text-align: center; font-weight: bold; font-size: 1.1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-  .container { padding: 14px; max-width: 500px; margin: auto; }
+  .container { padding: 14px; max-width: 520px; margin: auto; }
   
   .card { background: var(--card); border-radius: 16px; padding: 16px; margin-bottom: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.04); border: 1px solid #e2e8f0; }
   .timer-card { text-align: center; }
@@ -44,28 +44,40 @@
   .btn-ginger { background: #f59e0b; color: white; }
   .btn-drop { background: #fee2e2; color: #b91c1c; border: 1.5px solid #fca5a5; }
   .btn-share { background: #25D366; color: white; }
-  .btn-outline { background: transparent; border: 1.5px solid var(--primary); color: var(--primary); }
 
+  /* Modal & Multi-Select */
   .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65); z-index: 999; align-items: flex-end; }
   .modal.active { display: flex; }
-  .modal-content { background: white; width: 100%; max-width: 500px; margin: auto; border-radius: 20px 20px 0 0; padding: 20px; max-height: 90vh; overflow-y: auto; }
-  .food-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
-  .food-btn { padding: 12px 8px; border: 1.5px solid #cbd5e1; border-radius: 10px; background: white; font-weight: 600; cursor: pointer; text-align: center; font-size: 0.88rem; color: var(--text); }
-  .food-btn.selected { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
+  .modal-content { background: white; width: 100%; max-width: 520px; margin: auto; border-radius: 20px 20px 0 0; padding: 18px; max-height: 92vh; overflow-y: auto; }
   
-  .prep-guide { background: #eff6ff; border-right: 4px solid #2563eb; padding: 10px 12px; border-radius: 8px; font-size: 0.85rem; color: #1e3a8a; margin-bottom: 10px; line-height: 1.5; }
-  .control-box { background: #f8fafc; padding: 12px; border-radius: 12px; margin-top: 10px; border: 1px solid #e2e8f0; }
-  input[type="range"] { width: 100%; margin: 10px 0; accent-color: var(--primary); }
-  .cal-preview { font-size: 1.2rem; font-weight: bold; color: var(--primary); text-align: center; margin: 8px 0; }
-  
-  .log-item { border-bottom: 1px solid #e2e8f0; padding: 10px 0; font-size: 0.88rem; }
-  .log-drop { background: var(--danger-bg); padding: 10px; border-radius: 10px; border-right: 4px solid var(--danger); margin: 6px 0; }
-  .log-header { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 4px; }
+  .multi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
+  .check-card { display: flex; align-items: center; gap: 8px; padding: 10px; border: 1.5px solid #cbd5e1; border-radius: 10px; cursor: pointer; font-size: 0.86rem; font-weight: 600; background: #fff; user-select: none; }
+  .check-card.active { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
+  .check-card input { width: 17px; height: 17px; accent-color: var(--primary); }
+
+  .selected-item-box { background: #f8fafc; border: 1px solid #cbd5e1; border-right: 4px solid var(--primary); border-radius: 12px; padding: 12px; margin-bottom: 10px; }
+  .prep-guide { background: #eff6ff; padding: 8px 10px; border-radius: 8px; font-size: 0.82rem; color: #1e3a8a; margin: 6px 0; line-height: 1.45; }
+  input[type="range"] { width: 100%; margin: 8px 0; accent-color: var(--primary); }
+
+  /* Positive Direction Questions */
+  .direction-box { background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 12px; padding: 12px; margin: 12px 0; }
+  .dir-q { display: flex; align-items: flex-start; gap: 8px; font-size: 0.86rem; margin-bottom: 8px; cursor: pointer; line-height: 1.4; }
+  .dir-q input { width: 17px; height: 17px; margin-top: 2px; accent-color: #16a34a; }
+
+  /* Logs & Delete Controls */
+  .log-item { border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px; margin-bottom: 10px; font-size: 0.88rem; background: #fff; }
+  .log-drop { background: var(--danger-bg); border-color: #fca5a5; border-right: 4px solid var(--danger); }
+  .log-header { display: flex; justify-content: space-between; align-items: center; font-weight: bold; margin-bottom: 6px; border-bottom: 1px dashed #e2e8f0; padding-bottom: 6px; }
+  .del-log-btn { background: #fee2e2; color: #dc2626; border: none; border-radius: 6px; padding: 3px 8px; font-size: 0.78rem; font-weight: bold; cursor: pointer; }
+  .item-chip { display: inline-flex; align-items: center; gap: 6px; background: #f1f5f9; padding: 4px 8px; border-radius: 8px; margin: 3px 2px; font-size: 0.83rem; }
+  .del-item-btn { background: #cbd5e1; color: #1e293b; border: none; border-radius: 50%; width: 18px; height: 18px; font-size: 0.75rem; line-height: 1; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; }
+  .del-item-btn:hover { background: #dc2626; color: white; }
+  .dir-badge { display: inline-block; background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; margin-top: 5px; }
+
   .tag-ok { color: #059669; }
   .tag-warn { color: var(--danger); }
   .tag-gold { color: var(--gold); }
 
-  /* احتفال مدمج بدون إنترنت */
   .confetti-piece { position: fixed; width: 10px; height: 10px; top: -10px; z-index: 2000; animation: fall 3s linear forwards; }
   @keyframes fall { to { transform: translateY(105vh) rotate(720deg); opacity: 0; } }
 </style>
@@ -75,17 +87,20 @@
 <div class="header">Nutriclinic Mind | متابعة التغذية العلاجية</div>
 
 <div class="container">
+  <!-- 1. عداد الصيام -->
   <div class="card timer-card" id="timerCard">
     <span class="badge badge-wait" id="timerStatus">جاري حساب التوقيت...</span>
     <div class="timer-display" id="timerDisplay">جاهز للبدء</div>
     <div id="timerSubtext" style="font-size: 0.85rem; color: #64748b;">الحد الأدنى بين الوجبات 5 ساعات</div>
   </div>
 
+  <!-- 2. نسق وجبتك التالية -->
   <div class="card">
     <div style="font-weight: bold; margin-bottom: 8px; color: var(--primary);">📅 نسق وجبتك التالية (ضبط تلقائي)</div>
     <div class="next-meal-box" id="nextMealBox">جاري تحليل جدولك...</div>
   </div>
 
+  <!-- 3. الأرصدة -->
   <div class="card">
     <div class="quotas">
       <div class="q-item">سلطة اليوم<span class="q-val" id="qSalad">0 / 2</span></div>
@@ -95,57 +110,48 @@
     </div>
   </div>
 
-  <button type="button" class="btn btn-primary" onclick="openMealModal()">🍽️ تسجيل وجبة وحساب السعرات</button>
+  <!-- 4. أزرار الإجراءات -->
+  <button type="button" class="btn btn-primary" onclick="openMealModal()">🍽️ تنظيم وتسجيل وجبة (اختيار متعدد)</button>
   <button type="button" class="btn btn-ginger" onclick="logGinger()">☕ تسجيل مشروب زنجبيل (تحضير + تسجيل)</button>
   <button type="button" class="btn btn-drop" onclick="openDropModal()">📉 تسجيل وقت هبوط أو جوع (Drop Time)</button>
   <button type="button" class="btn btn-share" onclick="shareWithSpecialist()">📲 إرسال السجل للأخصائي (01099006190)</button>
 
+  <!-- 5. السجل -->
   <div class="card" style="margin-top: 16px;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-      <strong style="color: var(--primary);">📋 سجل الأيام والأوقات والهبوط</strong>
-      <input type="text" id="searchLog" placeholder="بحث في السجل..." onkeyup="renderLogs()" style="padding: 5px 10px; border-radius: 8px; border: 1px solid #cbd5e1; width: 140px; font-size: 0.82rem;">
+      <strong style="color: var(--primary);">📋 سجل الوجبات والأوقات (قابل للتعديل)</strong>
+      <input type="text" id="searchLog" placeholder="بحث في السجل..." onkeyup="renderLogs()" style="padding: 5px 10px; border-radius: 8px; border: 1px solid #cbd5e1; width: 135px; font-size: 0.82rem;">
     </div>
     <div id="logsContainer"></div>
   </div>
 </div>
 
-<!-- نافذة الوجبات -->
+<!-- نافذة الاختيار المتعدد للوجبة -->
 <div class="modal" id="mealModal">
   <div class="modal-content">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-      <h3 style="margin:0;">اختر الصنف والكمية المشبعة</h3>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+      <h3 style="margin:0; font-size:1.05rem;">حدد مكونات وجبتك (اختيار متعدد)</h3>
       <button type="button" onclick="closeMealModal()" style="border:none; background:none; font-size:1.8rem; cursor:pointer; padding:0 8px;">&times;</button>
     </div>
 
-    <div class="food-grid" id="foodList"></div>
+    <div class="multi-grid" id="multiFoodGrid"></div>
 
-    <div class="control-box" id="itemConfig" style="display:none;">
-      <div class="prep-guide" id="prepGuideBox"></div>
+    <!-- تفاصيل الكميات وطريقة التحضير لكل صنف محدد -->
+    <div id="selectedItemsConfig"></div>
 
-      <div id="freezeCheckDiv" style="display:none; margin-bottom:10px; background:#fffbeb; padding:8px; border-radius:8px; border:1px solid #fcd34d;">
-        <label style="font-weight:bold; font-size:0.9rem; display:flex; align-items:center; gap:8px;">
-          <input type="checkbox" id="freezeConfirmed"> تم تجميد الصنف مسبقاً لمدة 12 ساعة ✅
-        </label>
-      </div>
-
-      <div id="oliveOilDiv" style="display:none; margin-bottom:10px; background:#f0fdf4; padding:8px; border-radius:8px;">
-        <label style="font-size:0.9rem; font-weight:bold;">إضافة زيت زيتون على السلطة:</label>
-        <select id="oliveOilAmount" onchange="updateCalPreview()" style="width:100%; padding:6px; margin-top:4px; border-radius:6px;">
-          <option value="0">بدون زيت زيتون (0 سعرة)</option>
-          <option value="45">ملعقة صغيرة زيت زيتون 5 مل (+45 سعرة)</option>
-          <option value="90">ملعقة كبيرة زيت زيتون 10 مل (+90 سعرة)</option>
-        </select>
-      </div>
-
-      <label style="font-weight:bold; font-size:0.9rem;">الكمية المشبعة لك: <span id="qtyLabel">100</span> جم</label>
-      <input type="range" id="qtySlider" min="20" max="400" step="10" value="100" oninput="updateCalPreview()">
-      
-      <div class="cal-preview" id="calPreview">0 سعرة حرارية</div>
-      <button type="button" class="btn btn-outline" onclick="addItemToMeal()">+ إضافة الصنف للوجبة</button>
+    <!-- أسئلة مؤشر الاتجاه الصحيح -->
+    <div class="direction-box" id="directionQuestionsBox" style="display:none;">
+      <div style="font-weight:bold; color:#15803d; margin-bottom:8px; font-size:0.92rem;">🧭 مؤشر الاتجاه الصحيح (علامات تحسن الحرق والإنسولين):</div>
+      <label class="dir-q"><input type="checkbox" id="dirQ1"> انتظرت حتى شعرت بجوع حقيقي هادئ (دون دوخة أو توتر).</label>
+      <label class="dir-q"><input type="checkbox" id="dirQ2"> التزمت بالماء أو الزنجبيل فقط طوال فترة الانتظار.</label>
+      <label class="dir-q"><input type="checkbox" id="dirQ3"> طاقتي وتركيزي مستقرة وشهيتي للسكريات أقل من السابق.</label>
     </div>
 
-    <div id="currentMealCart" style="margin-top:12px;"></div>
-    <button type="button" class="btn btn-primary" id="saveMealBtn" style="display:none; margin-top:10px;" onclick="saveFullMeal()">✅ اعتماد وحفظ الوجبة الآن</button>
+    <div id="totalMealSummary" style="display:none; background:#0f766e; color:white; padding:12px; border-radius:12px; text-align:center; font-weight:bold; margin:10px 0;">
+      إجمالي سعرات الوجبة: <span id="grandTotalCal">0</span> سعرة حرارية
+    </div>
+
+    <button type="button" class="btn btn-primary" id="saveMealBtn" style="display:none;" onclick="saveMultiMeal()">✅ اعتماد وحفظ الوجبة في السجل</button>
   </div>
 </div>
 
@@ -162,6 +168,212 @@
       <option value="إحساس بهبوط حقيقي (دوخة / رعشة / خمول مفاجئ)">إحساس بهبوط حقيقي (دوخة / رعشة / خمول مفاجئ)</option>
       <option value="جوع جسدي حقيقي (قرقرة بالمعدة)">جوع جسدي حقيقي (قرقرة بالمعدة)</option>
       <option value="جوع نفسي / اشتهاء للسكريات أو الطعام">جوع نفسي / اشتهاء للسكريات أو الطعام</option>
+      <option value="هبوط طاقة بعد مجهود بدني أو ذهني">هبوط طاقة بعد مجهود بدني أو ذهني</option>
+      <option value="أسباب أخرى (توتر / قلة نوم / عطش)">أسباب أخرى (توتر / قلة نوم / عطش)</option>
+    </select>
+
+    <label style="font-weight:bold; font-size:0.9rem; display:block; margin-bottom:6px;">ملاحظات إضافية (اختياري):</label>
+    <input type="text" id="dropNotes" placeholder="مثال: شعرت بدوخة بسيطة وشربت ماء..." style="width:100%; padding:10px; border-radius:10px; border:1.5px solid #cbd5e1; margin-bottom:14px;">
+
+    <button type="button" class="btn" style="background:var(--danger); color:white;" onclick="saveDropTime()">💾 حفظ وتوثيق الـ Drop Time</button>
+  </div>
+</div>
+
+<script>
+const SPECIALIST_PHONE = "201099006190";
+
+const FOODS = [
+  {
+    id: 'red_meat', name: 'لحوم حمراء', calPer100: 250, defaultQty: 150, min: 50, max: 350, reqFreeze: false,
+    prep: '👨‍🍳 التحضير: مسلوقة أو مشوية (قطعية قليلة الدهن) بدون قلي في زيوت مهدرجة.'
+  },
+  {
+    id: 'luncheon', name: 'لانشون بيتي (لحم مفروم)', calPer100: 190, defaultQty: 80, min: 30, max: 200, reqFreeze: false,
+    prep: '👨‍🍳 التحضير: لحم مفروم صافي مطهو على البخار بالتوابل الطبيعية بدون نشا أو مواد حافظة.'
+  },
+  {
+    id: 'cheese', name: 'جبن طبيعي', calPer100: 250, defaultQty: 60, min: 20, max: 150, reqFreeze: false,
+    prep: '👨‍🍳 التحضير: جبن طبيعي 100% خالٍ تماماً من الزيوت النباتية المهدرجة.'
+  },
+  {
+    id: 'rice', name: 'أرز (مجمد 12 ساعة)', calPer100: 130, defaultQty: 150, min: 50, max: 350, reqFreeze: true,
+    prep: '👨‍🍳 التحضير: يُجمد بعد الطهي 12 ساعة كاملة في الفريزر لرفع النشا المقاوم ثم يُسخن.'
+  },
+  {
+    id: 'mahshi', name: 'محشي (مجمد 12 ساعة)', calPer100: 145, defaultQty: 200, min: 50, max: 400, reqFreeze: true,
+    prep: '👨‍🍳 التحضير: خضرة وفيرة وأرز قليل، ويُجمد 12 ساعة في الفريزر قبل التسخين والأكل.'
+  },
+  {
+    id: 'bread', name: 'خبز (سبق تجميده)', calPer100: 250, defaultQty: 60, min: 25, max: 150, reqFreeze: true,
+    prep: '👨‍🍳 التحضير: يُحفظ في الفريزر حتى يتجمد تماماً ثم يُسخن عند الأكل لتقليل المؤشر الجلايسيمي.'
+  },
+  {
+    id: 'salad', name: 'سلطة خضراء وجزر مسلوق', calPer100: 35, defaultQty: 150, min: 50, max: 300, reqFreeze: false, isSalad: true,
+    prep: '👨‍🍳 التحضير: بقدونس + كزبرة + نصف خيارة مبشورة + نصف طماطم + جزر مسلوق (+ زيت زيتون اختياري).'
+  },
+  {
+    id: 'nutella', name: 'نوتيلا صحية (مساءً فقط)', calPer100: 560, defaultQty: 25, min: 10, max: 60, reqFreeze: false, isNutella: true,
+    prep: '👨‍🍳 التحضير: كوب سمسم مطحون + كوب فول سوداني + ملعقة كاكاو خام + زيت بذور الكتان أو زيت عالي الجودة.'
+  },
+  {
+    id: 'basbousa', name: 'بسبوسة سميد وسمن بلدي', calPer100: 360, defaultQty: 100, min: 30, max: 250, reqFreeze: false, isBasbousa: true,
+    prep: '👨‍🍳 التحضير: سميد فقط (بدون دقيق) + أقل كمية سمن بلدي، وتُؤكل بعد البروتين.'
+  }
+];
+
+let memoryFallback = { lastMealTime: null, celebratedLastFasting: false, logs: [] };
+function loadState() {
+  try {
+    const raw = localStorage.getItem('nutriclinic_data');
+    return raw ? JSON.parse(raw) : memoryFallback;
+  } catch (e) { return memoryFallback; }
+}
+function saveState() {
+  try { localStorage.setItem('nutriclinic_data', JSON.stringify(state)); }
+  catch (e) { memoryFallback = state; }
+}
+
+let state = loadState();
+let selectedIds = new Set(); // لتخزين الأصناف المختارة في الاختيار المتعدد
+let draftConfigs = {}; // لحفظ كميات وخيارات كل صنف محدد أثناء التنظيم
+
+function triggerCelebration() {
+  const colors = ['#f59e0b', '#10b981', '#3b82f6', '#ef4444', '#8b5cf6'];
+  for (let i = 0; i < 45; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    el.style.animationDuration = (2 + Math.random() * 2) + 's';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 4000);
+  }
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    for (let i = 0; i < 20; i++) {
+      const time = ctx.currentTime + (i * 0.08);
+      const bufferSize = ctx.sampleRate * 0.06;
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let j = 0; j < bufferSize; j++) data[j] = (Math.random() * 2 - 1) * Math.exp(-j / (ctx.sampleRate * 0.02));
+      const noise = ctx.createBufferSource();
+      noise.buffer = buffer;
+      noise.connect(ctx.destination);
+      noise.start(time);
+    }
+  } catch(e) {}
+}
+
+function getTodayStr() { return new Date().toISOString().split('T')[0]; }
+function getFullArabicDayDate(ts) {
+  return new Date(ts).toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric' });
+}
+function getTimeStr(ts) {
+  return new Date(ts).toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
+}
+function getWeekNumber() {
+  const d = new Date();
+  d.setHours(0,0,0,0);
+  d.setDate(d.getDate() + 4 - (d.getDay()||7));
+  return Math.ceil((((d - new Date(d.getFullYear(),0,1))/8.64e7)+1)/7);
+}
+
+function getQuotas() {
+  const today = getTodayStr();
+  const week = getWeekNumber();
+  let salad = 0, ginger = 0, nutella = 0, basbousa = 0;
+
+  state.logs.forEach(log => {
+    if (log.date === today) {
+      if (log.type === 'ginger') ginger++;
+      if (log.items) {
+        log.items.forEach(it => {
+          if (it.id === 'salad') salad++;
+          if (it.id === 'nutella') nutella++;
+        });
+      }
+    }
+    if (log.week === week && log.items) {
+      log.items.forEach(it => { if (it.id === 'basbousa') basbousa++; });
+    }
+  });
+  return { salad, ginger, nutella, basbousa };
+}
+
+function recalculateLastMealTime() {
+  const latestMeal = state.logs.find(l => l.type === 'meal');
+  state.lastMealTime = latestMeal ? latestMeal.timestamp : null;
+}
+
+function updateDashboard() {
+  const q = getQuotas();
+  document.getElementById('qSalad').innerText = `${q.salad} / 2`; document.getElementById('qGinger').innerText = `${q.ginger} / 3`;
+  document.getElementById('qNutella').innerText = `${q.nutella} / 1`; document.getElementById('qBasbousa').innerText = `${q.basbousa} / 2`;
+
+  const card = document.getElementById('timerCard');
+  const status = document.getElementById('timerStatus');
+  const display = document.getElementById('timerDisplay');
+  const sub = document.getElementById('timerSubtext');
+  const nextBox = document.getElementById('nextMealBox');
+
+  if (!state.lastMealTime) {
+    card.className = "card timer-card";
+    status.className = "badge badge-wait";
+    display.innerText = "جاهز للبدء";
+    status.innerText = "ابدأ بتسجيل وجبتك الأولى";
+    sub.innerText = "الحد الأدنى بين الوجبات 5 ساعات";
+    nextBox.innerHTML = "<strong>مقترح الوجبة الأولى:</strong> بروتين (لحوم حمراء / لانشون / جبن) + خبز مجمد + حصة سلطة.";
+    return;
+  }
+
+  const now = Date.now();
+  const diffMs = now - state.lastMealTime;
+  const fiveHoursMs = 5 * 3600 * 1000;
+  const nextMealDate = new Date(state.lastMealTime + fiveHoursMs);
+  const nextTimeFormatted = nextMealDate.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
+
+  const hour = nextMealDate.getHours();
+  let suggestedItems = [];
+  if (hour >= 18 || hour < 4) {
+    if (q.nutella < 1) suggestedItems.push("نوتيلا صحية (مرة مساءً)");
+    suggestedItems.push("جبن طبيعي");
+  } else {
+    suggestedItems.push("لحوم حمراء");
+    suggestedItems.push("أرز أو محشي (مجمد 12 ساعة)");
+    if (q.salad < 2) suggestedItems.push("سلطة خضراء");
+    if (q.basbousa < 2) suggestedItems.push("متاح حصة بسبوسة سميد بعد البروتين");
+  }
+
+  nextBox.innerHTML = `
+    <div>⏰ <strong>الموعد المناسب لوجبتك القادمة:</strong> الساعة <span style="color:var(--primary); font-size:1.05rem;">${nextTimeFormatted}</span></div>
+    <div style="margin-top:4px;">🥗 <strong>التنسيق المقترح:</strong> ${suggestedItems.join(' + ')}</div>
+  `;
+
+  if (diffMs < fiveHoursMs) {
+    const rem = fiveHoursMs - diffMs;
+    const h = String(Math.floor(rem / 3600000)).padStart(2, '0');
+    const m = String(Math.floor((rem % 3600000) / 60000)).padStart(2, '0');
+    const s = String(Math.floor((rem % 60000) / 1000)).padStart(2, '0');
+    display.innerText = `${h}:${m}:${s}`; card.className = "card timer-card"; status.className = "badge badge-wait"; status.innerText = "فترة صيام وضبط الإنسولين (ممنوع الطعام)"; sub.innerText = `يُسمح فقط بالماء أو الزنجبيل (متبقي ${3 - q.ginger} مرات)`;
+  } else {
+    const extraMs = diffMs - fiveHoursMs;
+    const totalH = Math.floor(diffMs / 3600000);
+    const totalM = Math.floor((diffMs % 3600000) / 60000);
+    display.innerText = `${totalH} س و ${totalM} د`;
+
+    if (extraMs >= 15 * 60000) {
+      card.className = "card timer-card golden";
+      status.className = "badge badge-golden";
+      status.innerText = "🏆 إنجاز رائع! إطالة فترة الصيام";
+      sub.innerText = "ممتاز! جسمك الآن في أعلى معدلات حرق الدهون وضبط السكر.";
+      if (!state.celebratedLastFasting) {
+        triggerCelebration();
+        state.celebratedLastFasting = true;
+        saveState();
+      }
+    } else {
+      card.className = "card timer-card ready";
+      status.classNamعام">جوع نفسي / اشتهاء للسكريات أو الطعام</option>
       <option value="هبوط طاقة بعد مجهود بدني أو ذهني">هبوط طاقة بعد مجهود بدني أو ذهني</option>
       <option value="أسباب أخرى (توتر / قلة نوم / عطش)">أسباب أخرى (توتر / قلة نوم / عطش)</option>
     </select>
