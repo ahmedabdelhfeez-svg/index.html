@@ -12,7 +12,6 @@
     --gold: #d97706;
     --gold-bg: #fef3c7;
     --danger: #dc2626;
-    --danger-dark: #7f1d1d;
     --danger-bg: #fef2f2;
     --bg: #f1f5f9;
     --card: #ffffff;
@@ -21,15 +20,13 @@
   * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
   body { margin: 0; background: var(--bg); color: var(--text); padding-bottom: 90px; }
   
-  /* Header */
   .header { background: linear-gradient(135deg, #0f766e, #134e4a); color: white; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.15); position: sticky; top: 0; z-index: 50; }
   .header-title { font-weight: 800; font-size: 1rem; }
-  .logout-btn { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 5px 10px; border-radius: 8px; font-size: 0.78rem; cursor: pointer; }
+  .logout-btn { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 5px 10px; border-radius: 8px; font-size: 0.78rem; cursor: pointer; font-weight: bold; }
 
   .container { padding: 14px; max-width: 540px; margin: auto; }
   .card { background: var(--card); border-radius: 16px; padding: 16px; margin-bottom: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
 
-  /* Timer */
   .timer-card { text-align: center; transition: 0.3s; }
   .timer-card.ready { background: #ecfdf5; border-color: #10b981; }
   .timer-card.golden { background: var(--gold-bg); border-color: var(--gold); }
@@ -40,28 +37,23 @@
   .badge-ready { background: #10b981; color: white; }
   .badge-golden { background: var(--gold); color: white; }
 
-  /* Next Meal */
   .next-meal-box { background: #f0fdfa; border-right: 4px solid var(--primary); padding: 12px; border-radius: 10px; font-size: 0.9rem; line-height: 1.65; }
 
-  /* Quotas */
   .quotas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; text-align: center; font-size: 0.76rem; }
   .q-item { background: #f8fafc; padding: 8px 4px; border-radius: 10px; border: 1px solid #e2e8f0; }
   .q-val { font-weight: 800; font-size: 0.95rem; color: var(--primary); display: block; margin-top: 2px; }
 
-  /* Buttons */
-  .btn { width: 100%; padding: 14px; border: none; border-radius: 12px; font-size: 0.96rem; font-weight: 700; cursor: pointer; margin-bottom: 9px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.15s; }
+  .btn { width: 100%; padding: 14px; border: none; border-radius: 12px; font-size: 0.96rem; font-weight: 700; cursor: pointer; margin-bottom: 9px; display: flex; align-items: center; justify-content: center; gap: 8px; }
   .btn:active { transform: scale(0.98); }
   .btn-primary { background: var(--primary); color: white; }
   .btn-ginger { background: #d97706; color: white; }
   .btn-drop { background: #fee2e2; color: #b91c1c; border: 1.5px solid #fca5a5; }
   .btn-share { background: #25D366; color: white; }
 
-  /* Modals */
-  .modal { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.75); z-index: 999; align-items: flex-end; backdrop-filter: blur(2px); }
+  .modal { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.75); z-index: 999; align-items: flex-end; }
   .modal.active { display: flex; }
   .modal-content { background: white; width: 100%; max-width: 540px; margin: auto; border-radius: 22px 22px 0 0; padding: 18px; max-height: 92vh; overflow-y: auto; }
 
-  /* Encyclopedia Search & Filter */
   .search-enc { width: 100%; padding: 12px; border: 2px solid var(--primary); border-radius: 12px; font-size: 0.95rem; margin-bottom: 10px; outline: none; }
   .filter-tabs { display: flex; gap: 6px; margin-bottom: 12px; overflow-x: auto; padding-bottom: 4px; }
   .tab-btn { padding: 7px 12px; border-radius: 20px; border: 1px solid #cbd5e1; background: #f8fafc; font-size: 0.82rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
@@ -69,31 +61,26 @@
   .tab-btn.danger-tab.active { background: var(--danger); border-color: var(--danger); }
 
   .multi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
-  .food-card-btn { display: flex; flex-direction: column; justify-content: space-between; padding: 10px; border: 1.5px solid #cbd5e1; border-radius: 12px; cursor: pointer; font-size: 0.85rem; font-weight: 700; background: #fff; text-align: right; position: relative; }
+  .food-card-btn { display: flex; flex-direction: column; justify-content: space-between; padding: 10px; border: 1.5px solid #cbd5e1; border-radius: 12px; cursor: pointer; font-size: 0.85rem; font-weight: 700; background: #fff; text-align: right; }
   .food-card-btn.allowed.active { border-color: var(--primary); background: var(--primary-light); color: var(--primary-dark); }
   .food-card-btn.forbidden { border-color: #fecaca; background: #fff5f5; color: #991b1b; }
   .tag-pill { font-size: 0.7rem; padding: 2px 6px; border-radius: 6px; display: inline-block; margin-top: 4px; width: fit-content; }
   .pill-ok { background: #dcfce7; color: #166534; }
   .pill-no { background: #fee2e2; color: #991b1b; }
 
-  /* Recipes & Selected Item Config */
   .selected-item-box { background: #f8fafc; border: 1px solid #cbd5e1; border-right: 4px solid var(--primary); border-radius: 12px; padding: 12px; margin-bottom: 12px; }
   .recipe-toggle { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; padding: 6px 10px; border-radius: 8px; font-size: 0.82rem; font-weight: 700; cursor: pointer; margin: 6px 0; display: inline-block; }
   .recipe-box { display: none; background: #f0f9ff; padding: 10px; border-radius: 8px; font-size: 0.83rem; color: #0c4a6e; line-height: 1.55; margin-bottom: 8px; border-right: 3px solid #0284c7; }
   input[type="range"] { width: 100%; margin: 8px 0; accent-color: var(--primary); }
 
-  /* Psychological Deterrence Modal */
   .deterrence-modal { display: none; position: fixed; inset: 0; background: rgba(127, 29, 29, 0.92); z-index: 2000; align-items: center; justify-content: center; padding: 18px; }
   .deterrence-modal.active { display: flex; }
-  .deterrence-card { background: #fff; border: 3px solid #dc2626; border-radius: 20px; padding: 22px; max-width: 440px; width: 100%; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.4); animation: shake 0.4s; }
-  @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+  .deterrence-card { background: #fff; border: 3px solid #dc2626; border-radius: 20px; padding: 22px; max-width: 440px; width: 100%; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
 
-  /* Direction Box */
   .direction-box { background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 12px; padding: 12px; margin: 12px 0; }
   .dir-q { display: flex; align-items: flex-start; gap: 8px; font-size: 0.85rem; margin-bottom: 8px; cursor: pointer; line-height: 1.4; }
   .dir-q input { width: 17px; height: 17px; margin-top: 2px; accent-color: #16a34a; }
 
-  /* Logs */
   .log-item { border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px; margin-bottom: 10px; font-size: 0.87rem; background: #fff; }
   .log-drop { background: var(--danger-bg); border-color: #fca5a5; border-right: 4px solid var(--danger); }
   .log-header { display: flex; justify-content: space-between; align-items: center; font-weight: 700; margin-bottom: 6px; border-bottom: 1px dashed #e2e8f0; padding-bottom: 6px; }
@@ -147,20 +134,17 @@
 </div>
 
 <div class="container">
-  <!-- 1. عداد الصيام -->
   <div class="card timer-card" id="timerCard">
     <span class="badge badge-wait" id="timerStatus">جاري حساب التوقيت...</span>
     <div class="timer-display" id="timerDisplay">جاهز للبدء</div>
     <div id="timerSubtext" style="font-size: 0.85rem; color: #64748b;">الحد الأدنى بين الوجبات 5 ساعات</div>
   </div>
 
-  <!-- 2. نسق وجبتك التالية -->
   <div class="card">
     <div style="font-weight: 800; margin-bottom: 8px; color: var(--primary);">📅 نسق وجبتك التالية (توصية تلقائية)</div>
     <div class="next-meal-box" id="nextMealBox">جاري تحليل جدولك...</div>
   </div>
 
-  <!-- 3. الأرصدة -->
   <div class="card">
     <div class="quotas">
       <div class="q-item">سلطة اليوم<span class="q-val" id="qSalad">0 / 2</span></div>
@@ -170,13 +154,11 @@
     </div>
   </div>
 
-  <!-- 4. أزرار الإجراءات -->
   <button type="button" class="btn btn-primary" onclick="openMealModal()">🔍 موسوعة الطعام وتنظيم الوجبة (مسموح / ممنوع)</button>
   <button type="button" class="btn btn-ginger" onclick="logGinger()">☕ تسجيل مشروب زنجبيل طازج (تحضير + تسجيل)</button>
   <button type="button" class="btn btn-drop" onclick="openDropModal()">📉 تسجيل وقت هبوط أو جوع (Drop Time)</button>
   <button type="button" class="btn btn-share" onclick="shareWithSpecialist()">📲 إرسال التقرير الشامل للأخصائي (01099006190)</button>
 
-  <!-- 5. السجل -->
   <div class="card" style="margin-top: 16px;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
       <strong style="color: var(--primary);">📋 سجل المتابعة (قابل للتعديل والحذف)</strong>
@@ -203,11 +185,8 @@
     </div>
 
     <div class="multi-grid" id="multiFoodGrid"></div>
-
-    <!-- تفاصيل الكميات والوصفات لكل صنف مسموح محدد -->
     <div id="selectedItemsConfig"></div>
 
-    <!-- أسئلة مؤشر الاتجاه الصحيح -->
     <div class="direction-box" id="directionQuestionsBox" style="display:none;">
       <div style="font-weight:bold; color:#15803d; margin-bottom:8px; font-size:0.9rem;">🧭 علامات الاتجاه الصحيح (تأكيد استجابة الجسم):</div>
       <label class="dir-q"><input type="checkbox" id="dirQ1"> انتظرت حتى شعرت بجوع حقيقي هادئ (دون دوخة أو توتر).</label>
@@ -248,15 +227,28 @@
 </div>
 
 <script>
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xaeovayb";
 const SPECIALIST_PHONE = "201099006190";
 
-// الموسوعة الشاملة (المسموحات بوصفاتها + الممنوعات بتحذيراتها النفسية القاسية)
+// دالة المزامنة الفورية في الخلفية لمتابعة كل عميل
+function syncToCloud(payload) {
+  try {
+    fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+  } catch (e) {}
+}
+
 const ENCYCLOPEDIA = [
-  // === المسموحات العلاجية ===
   {
     id: 'potato_frozen', type: 'allowed', name: 'بطاطس محمرة ثم مجمدة 12 ساعة', calPer100: 165, defaultQty: 150, min: 50, max: 350, reqFreeze: true,
     recipes: `
-      <b>1. بطاطس النشا المقاوم المقرمشة:</b> تُقطع البطاطس أصابع وتُحمر في زيت نباتي عالي الجودة أو سمن بلدي، ثم تُصفى وتُترك لتبرد تماماً وتُوضع في الفريزر <b>12 ساعة كاملة</b> (لتحويل النشا السريع إلى نشا مقاوم يغذي بكتيريا الأمعاء ولا يرفع الإنسولين)، ثم تُسخن في الفرن أو القلاية الهوائية.<br>
+      <b>1. بطاطس النشا المقاوم المقرمشة:</b> تُقطع البطاطس أصابع وتُحمر في زيت نباتي عالي الجودة أو سمن بلدي، ثم تُصفى وتُترك لتبرد تماماً وتُوضع في الفريزر <b>12 ساعة كاملة</b> (لتحويل النشا السريع إلى نشا مقاوم)، ثم تُسخن في الفرن أو القلاية الهوائية.<br>
       <b>2. مكعبات البطاطس بالأعشاب المجمدة:</b> تُحمر مكعبات البطاطس مع ثوم وزعتر، تُجمد 12 ساعة، ثم تُسخن وتُقدم بجانب اللحوم الحمراء.
     `
   },
@@ -317,8 +309,6 @@ const ENCYCLOPEDIA = [
       <b>1. بسبوسة السميد النقية:</b> كوب سميد خشن فقط (ممنوع الدقيق الأبيض تماماً) + ملعقة كبيرة سمن بلدي طبيعي + رشة بيكنج بودر + ماء دافئ للعجن، تُخبز وتُسقى بشربات خفيف جداً محلى بالستيفيا أو أقل قدر من العسل، وتُؤكل بعد البروتين.
     `
   },
-
-  // === الممنوعات (مع تحذير نفسي قاسٍ) ===
   {
     id: 'forb_coffee', type: 'forbidden', name: 'القهوة والنسكافيه والكافيين المركز',
     warning: 'القهوة ترفع هرمون الكورتيزول والأدرينالين فجأة، مما يسبب تشتتاً ذهنياً، توتراً عصبياً، واضطراباً في سكر الدم يجعلك تشتهي السكريات بشراهة لاحقاً. استبدلها بالزنجبيل الطازج فوراً!'
@@ -361,7 +351,6 @@ const ENCYCLOPEDIA = [
   }
 ];
 
-// === إدارة الجلسة وتسجيل الدخول ===
 let userProfile = JSON.parse(localStorage.getItem('nutriclinic_user')) || null;
 
 function initAuth() {
@@ -392,6 +381,16 @@ function handleAuth() {
     }
     userProfile = { name, phone, pin };
     localStorage.setItem('nutriclinic_user', JSON.stringify(userProfile));
+    
+    // إرسال بيانات العميل الجديد فوراً
+    syncToCloud({
+      _subject: `🆕 عميل جديد: ${name}`,
+      "التاريخ والوقت": `${getFullArabicDayDate(Date.now())} - ${getTimeStr(Date.now())}`,
+      "اسم العميل": name,
+      "رقم الهاتف": phone,
+      "نوع الحدث": "تسجيل عميل جديد في التطبيق"
+    });
+
     unlockApp();
   }
 }
@@ -408,7 +407,6 @@ function logoutUser() {
   initAuth();
 }
 
-// === إدارة البيانات والحالة ===
 let memoryFallback = { lastMealTime: null, celebratedLastFasting: false, logs: [] };
 function loadState() {
   try {
@@ -575,7 +573,6 @@ function updateDashboard() {
   }
 }
 
-// === الموسوعة والاختيار المتعدد ===
 function openMealModal() {
   selectedIds.clear();
   draftConfigs = {};
@@ -588,9 +585,7 @@ function openMealModal() {
   document.getElementById('mealModal').classList.add('active');
 }
 
-function closeMealModal() {
-  document.getElementById('mealModal').classList.remove('active');
-}
+function closeMealModal() { document.getElementById('mealModal').classList.remove('active'); }
 
 function setEncFilter(filterType, btn) {
   currentEncFilter = filterType;
@@ -621,10 +616,7 @@ function renderEncyclopedia() {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'food-card-btn forbidden';
-      btn.innerHTML = `
-        <span>⛔ ${item.name}</span>
-        <span class="tag-pill pill-no">ممنوع - اضغط لمعرفة الخطر</span>
-      `;
+      btn.innerHTML = `<span>⛔ ${item.name}</span><span class="tag-pill pill-no">ممنوع - اضغط لمعرفة الخطر</span>`;
       btn.onclick = () => triggerDeterrence(item);
       grid.appendChild(btn);
     } else {
@@ -640,10 +632,7 @@ function renderEncyclopedia() {
       btn.disabled = disabled;
       btn.className = `food-card-btn allowed ${isSelected ? 'active' : ''}`;
       if (disabled) btn.style.opacity = '0.45';
-      btn.innerHTML = `
-        <span>${isSelected ? '☑️' : '⬜'} ${item.name}${note}</span>
-        <span class="tag-pill pill-ok">مسموح (${item.calPer100} سعرة/100جم)</span>
-      `;
+      btn.innerHTML = `<span>${isSelected ? '☑️' : '⬜'} ${item.name}${note}</span><span class="tag-pill pill-ok">مسموح (${item.calPer100} سعرة/100جم)</span>`;
       btn.onclick = () => toggleFoodSelection(item.id);
       grid.appendChild(btn);
     }
@@ -656,9 +645,7 @@ function triggerDeterrence(item) {
   document.getElementById('deterrenceModal').classList.add('active');
 }
 
-function closeDeterrence() {
-  document.getElementById('deterrenceModal').classList.remove('active');
-}
+function closeDeterrence() { document.getElementById('deterrenceModal').classList.remove('active'); }
 
 function toggleFoodSelection(id) {
   if (selectedIds.has(id)) {
@@ -708,10 +695,8 @@ function renderSelectedConfigs() {
           <span>${f.name}</span>
           <span id="cal_${id}">${itemCals} سعرة</span>
         </div>
-        
         <button type="button" class="recipe-toggle" onclick="toggleRecipe('${id}')">📖 عرض وصفات التحضير العلاجية لهذا الصنف</button>
         <div class="recipe-box" id="rec_${id}">${f.recipes}</div>
-
         ${f.reqFreeze ? `
           <label style="display:flex; align-items:center; gap:6px; font-size:0.84rem; font-weight:bold; background:#fffbeb; padding:7px; border-radius:8px; margin-bottom:6px; border:1px solid #fcd34d;">
             <input type="checkbox" ${cfg.frozen ? 'checked' : ''} onchange="draftConfigs['${id}'].frozen = this.checked"> تأكيد التجميد لمدة 12 ساعة كاملة ✅
@@ -792,6 +777,7 @@ function saveMultiMeal() {
   if (q1) dirLabels.push("جوع هادئ");
   if (q2) dirLabels.push("التزام بالماء/الزنجبيل");
   if (q3) dirLabels.push("طاقة مستقرة");
+  const dirText = dirLabels.length ? `${dirScore}/3 (${dirLabels.join(' - ')})` : '0/3';
 
   const now = Date.now();
   let intervalText = "الوجبة الأولى";
@@ -806,20 +792,38 @@ function saveMultiMeal() {
     else if (diffMins >= 315) timingStatus = "gold";
   }
 
+  const fullDayDate = getFullArabicDayDate(now);
+  const timeStr = getTimeStr(now);
+  const clientName = userProfile ? userProfile.name : 'غير مسجل';
+  const clientPhone = userProfile ? userProfile.phone : '';
+
   state.logs.unshift({
     id: 'log_' + now,
     type: 'meal',
     timestamp: now,
     date: getTodayStr(),
     week: getWeekNumber(),
-    fullDayDate: getFullArabicDayDate(now),
-    timeStr: getTimeStr(now),
+    fullDayDate,
+    timeStr,
     interval: intervalText,
     timingStatus,
     items: itemsList,
     totalCals,
     dirScore,
-    dirText: dirLabels.length ? `${dirScore}/3 (${dirLabels.join(' - ')})` : '0/3'
+    dirText
+  });
+
+  // إرسال الوجبة فوراً لقاعدة بياناتك
+  syncToCloud({
+    _subject: `🍽️ وجبة جديدة - ${clientName}`,
+    "التاريخ والوقت": `${fullDayDate} - ${timeStr}`,
+    "اسم العميل": clientName,
+    "رقم الهاتف": clientPhone,
+    "نوع الحدث": "تسجيل وجبة",
+    "الفاصل الزمني": intervalText,
+    "المكونات والكميات": itemsList.map(i => `${i.name} (${i.qty}جم)`).join(' + '),
+    "إجمالي السعرات": `${totalCals} سعرة`,
+    "مؤشر الاتجاه الصحيح": dirText
   });
 
   state.lastMealTime = now;
@@ -870,16 +874,31 @@ function logGinger() {
   }
 
   const now = Date.now();
+  const fullDayDate = getFullArabicDayDate(now);
+  const timeStr = getTimeStr(now);
+  const note = `مشروب زنجبيل طازج (${num}/3) - ${sweetener}`;
+  const clientName = userProfile ? userProfile.name : 'غير مسجل';
+
   state.logs.unshift({
     id: 'log_' + now,
     type: 'ginger',
     timestamp: now,
     date: getTodayStr(),
     week: getWeekNumber(),
-    fullDayDate: getFullArabicDayDate(now),
-    timeStr: getTimeStr(now),
-    note: `مشروب زنجبيل طازج (${num}/3) - ${sweetener}`
+    fullDayDate,
+    timeStr,
+    note
   });
+
+  syncToCloud({
+    _subject: `☕ زنجبيل - ${clientName}`,
+    "التاريخ والوقت": `${fullDayDate} - ${timeStr}`,
+    "اسم العميل": clientName,
+    "رقم الهاتف": userProfile ? userProfile.phone : '',
+    "نوع الحدث": "مشروب زنجبيل",
+    "التفاصيل": note
+  });
+
   saveState();
   updateDashboard();
   renderLogs();
@@ -901,17 +920,32 @@ function saveDropTime() {
     sinceLastMeal = `بعد ${h} ساعة و ${m} دقيقة من آخر وجبة`;
   }
 
+  const fullDayDate = getFullArabicDayDate(now);
+  const timeStr = getTimeStr(now);
+  const clientName = userProfile ? userProfile.name : 'غير مسجل';
+
   state.logs.unshift({
     id: 'log_' + now,
     type: 'drop',
     timestamp: now,
     date: getTodayStr(),
     week: getWeekNumber(),
-    fullDayDate: getFullArabicDayDate(now),
-    timeStr: getTimeStr(now),
+    fullDayDate,
+    timeStr,
     sinceLastMeal,
     reason,
     notes
+  });
+
+  syncToCloud({
+    _subject: `📉 تنبيه Drop Time - ${clientName}`,
+    "التاريخ والوقت": `${fullDayDate} - ${timeStr}`,
+    "اسم العميل": clientName,
+    "رقم الهاتف": userProfile ? userProfile.phone : '',
+    "نوع الحدث": "Drop Time (هبوط أو جوع)",
+    "الفاصل الزمني": sinceLastMeal,
+    "السبب": reason,
+    "ملاحظات": notes
   });
 
   document.getElementById('dropNotes').value = '';
