@@ -25,7 +25,7 @@
   .header { background: linear-gradient(135deg, #0f766e, #134e4a); color: white; padding: 13px 14px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50; box-shadow: 0 4px 12px rgba(0,0,0,0.18); }
   .header-title { font-weight: 800; font-size: 0.96rem; }
   .header-btns { display: flex; gap: 5px; }
-  .top-btn { background: #ffffff; border: none; color: #0f766e; padding: 6px 9px; border-radius: 9px; font-size: 0.75rem; cursor: pointer; font-weight: 800; box-shadow: 0 2px 5px rgba(0,0,0,0.15); }
+  .top-btn { background: #ffffff; border: none; color: #0f766e; padding: 6px 9px; border-radius: 9px; font-size: 0.75rem; cursor: pointer; font-weight: 800; }
   
   .container { padding: 14px; max-width: 540px; margin: auto; }
   .card { background: var(--card); border-radius: 18px; padding: 16px; margin-bottom: 14px; box-shadow: 0 4px 14px rgba(15,23,42,0.06); border: 1px solid #e2e8f0; }
@@ -58,18 +58,18 @@
   .quotas { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; text-align: center; font-size: 0.78rem; }
   .q-item { background: #f8fafc; padding: 9px 6px; border-radius: 10px; border: 1.5px solid #cbd5e1; }
   .q-val { font-weight: 900; font-size: 0.96rem; color: var(--primary); display: block; margin-top: 2px; }
-  .vitd-wa-btn { margin-top: 6px; background: #25D366; color: white; border: none; border-radius: 8px; padding: 6px 10px; font-size: 0.78rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; box-shadow: 0 2px 6px rgba(37,211,102,0.3); }
+  .vitd-wa-btn { margin-top: 6px; background: #25D366; color: white; border: none; border-radius: 8px; padding: 6px 10px; font-size: 0.78rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
 
-  .action-btn { width: 100%; padding: 16px; border: none; border-radius: 15px; font-size: 1.02rem; font-weight: 800; cursor: pointer; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; text-align: center; transition: transform 0.12s; }
+  .action-btn { width: 100%; padding: 16px; border: none; border-radius: 15px; font-size: 1.02rem; font-weight: 800; cursor: pointer; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; text-align: center; }
   .action-btn:active { transform: translateY(3px); }
   
-  .btn-goal-main { background: linear-gradient(135deg, #059669, #047857); color: white; box-shadow: 0 5px 0 #064e3b, 0 8px 16px rgba(5,150,105,0.28); }
-  .btn-cal-main { background: linear-gradient(135deg, #0284c7, #0369a1); color: white; box-shadow: 0 5px 0 #0c4a6e, 0 8px 16px rgba(2,132,199,0.28); }
-  .btn-meal-main { background: linear-gradient(135deg, #0f766e, #115e59); color: white; box-shadow: 0 5px 0 #042f2e, 0 8px 16px rgba(15,118,110,0.28); }
-  .btn-drinks-main { background: linear-gradient(135deg, #d97706, #b45309); color: white; box-shadow: 0 5px 0 #78350f, 0 8px 16px rgba(217,119,6,0.28); }
-  .btn-chat-main { background: linear-gradient(135deg, #7c3aed, #5b21b6); color: white; box-shadow: 0 5px 0 #3b0764, 0 8px 16px rgba(109,40,217,0.28); }
-  .btn-drop-main { background: linear-gradient(135deg, #dc2626, #b91c1c); color: white; box-shadow: 0 5px 0 #7f1d1d, 0 8px 16px rgba(220,38,38,0.28); }
-  .btn-share-main { background: linear-gradient(135deg, #16a34a, #15803d); color: white; box-shadow: 0 5px 0 #14532d, 0 8px 16px rgba(22,163,74,0.28); }
+  .btn-goal-main { background: linear-gradient(135deg, #059669, #047857); color: white; box-shadow: 0 5px 0 #064e3b; }
+  .btn-cal-main { background: linear-gradient(135deg, #0284c7, #0369a1); color: white; box-shadow: 0 5px 0 #0c4a6e; }
+  .btn-meal-main { background: linear-gradient(135deg, #0f766e, #115e59); color: white; box-shadow: 0 5px 0 #042f2e; }
+  .btn-drinks-main { background: linear-gradient(135deg, #d97706, #b45309); color: white; box-shadow: 0 5px 0 #78350f; }
+  .btn-chat-main { background: linear-gradient(135deg, #7c3aed, #5b21b6); color: white; box-shadow: 0 5px 0 #3b0764; }
+  .btn-drop-main { background: linear-gradient(135deg, #dc2626, #b91c1c); color: white; box-shadow: 0 5px 0 #7f1d1d; }
+  .btn-share-main { background: linear-gradient(135deg, #16a34a, #15803d); color: white; box-shadow: 0 5px 0 #14532d; }
 
   .modal { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); z-index: 999; align-items: flex-end; }
   .modal.active { display: flex; }
@@ -122,7 +122,7 @@
 </head>
 <body>
 
-<!-- شاشة تسجيل الدخول لأول مرة -->
+<!-- شاشة تسجيل الدخول -->
 <div id="authScreen" style="position:fixed; inset:0; background:linear-gradient(135deg, #0f766e, #115e59); z-index:9999; display:flex; align-items:center; justify-content:center; padding:14px; overflow-y:auto;">
   <div style="background:white; width:100%; max-width:440px; border-radius:22px; padding:20px; text-align:center; max-height:95vh; overflow-y:auto;">
     <h2 style="color:#0f766e; margin:0 0 4px 0;">Nutriclinic Mind Pro</h2>
@@ -188,13 +188,13 @@
     </div>
     
     <input type="tel" id="userPinInput" maxlength="4" inputmode="numeric" class="form-input" placeholder="رمز الدخول (4 أرقام)" style="text-align:center; letter-spacing:5px; font-weight:bold;">
-    <button type="button" id="mainAuthBtn" style="width:100%; padding:15px; background:#0f766e; color:white; border:none; border-radius:12px; font-size:1.05rem; font-weight:900; cursor:pointer; box-shadow:0 4px 12px rgba(15,118,110,0.35);">دخول النظام 🚀</button>
+    <button type="button" onclick="handleAuth()" style="width:100%; padding:15px; background:#0f766e; color:white; border:none; border-radius:12px; font-size:1.05rem; font-weight:900; cursor:pointer; box-shadow:0 4px 12px rgba(15,118,110,0.35);">دخول النظام 🚀</button>
     <div id="authError" style="color:#dc2626; font-size:0.86rem; font-weight:bold; margin-top:10px; display:none; background:#fef2f2; padding:8px; border-radius:8px; border:1px solid #fecaca;"></div>
-    <button type="button" id="resetAccountBtn" style="display:none; margin-top:10px; background:none; border:none; color:#64748b; text-decoration:underline; font-size:0.8rem; cursor:pointer;">تسجيل عميل جديد / مسح البيانات القديمة</button>
+    <button type="button" id="resetAccountBtn" onclick="resetOldAccount()" style="display:none; margin-top:10px; background:none; border:none; color:#64748b; text-decoration:underline; font-size:0.8rem; cursor:pointer;">تسجيل عميل جديد / مسح البيانات القديمة</button>
   </div>
 </div>
 
-<!-- شاشة الاستجواب الإجبارية (تظهر عند فتح التطبيق للمرة الثانية وما بعدها فقط) -->
+<!-- شاشة الاستجواب الإجبارية (للمرة الثانية وما بعدها فقط) -->
 <div class="interrogation-modal" id="interrogationModal">
   <div class="interrogation-card">
     <div style="text-align:center; margin-bottom:10px;">
@@ -202,17 +202,14 @@
       <h3 style="color:#b45309; margin:4px 0;">استجواب المتابعة الإجباري</h3>
       <p style="font-size:0.83rem; color:#475569; margin:0;">أهلاً بعودتك! سجل بصراحة ما حدث في الفترة السابقة قبل المتابعة:</p>
     </div>
-
     <label style="font-weight:bold; font-size:0.86rem; display:block; margin-bottom:5px;">1️⃣ هل التزمت بالوجبة المحددة في الجدول؟</label>
     <select id="interrogCompliance" class="form-input" style="border-color:#d97706; font-weight:bold;">
       <option value="نعم، التزمت بالوجبة والكمية تماماً ✅">نعم، التزمت بالوجبة والكمية تماماً ✅</option>
       <option value="التزمت جزئياً مع تعديل بسيط في الكمية ⚖️">التزمت جزئياً مع تعديل بسيط في الكمية ⚖️</option>
       <option value="لا، أكلت أطعمة خارج الجدول / لخبطت ⚠️">لا، أكلت أطعمة خارج الجدول / لخبطت ⚠️</option>
     </select>
-
     <label style="font-weight:bold; font-size:0.86rem; display:block; margin-bottom:5px;">2️⃣ اكتب بالتفصيل كل ما أكلته أو شربته الفترة السابقة:</label>
-    <textarea id="interrogFoodDetails" rows="3" placeholder="مثال: أكلت قطعة لحم + بطاطس مجمدة، أو أكلت قطعة حلوى..." style="width:100%; padding:10px; border:1.5px solid #cbd5e1; border-radius:10px; font-size:0.9rem; margin-bottom:12px; resize:none;"></textarea>
-
+    <textarea id="interrogFoodDetails" rows="3" placeholder="مثال: أكلت قطعة لحم + بطاطس مجمدة..." style="width:100%; padding:10px; border:1.5px solid #cbd5e1; border-radius:10px; font-size:0.9rem; margin-bottom:12px; resize:none;"></textarea>
     <button type="button" onclick="submitInterrogation()" style="width:100%; padding:14px; background:#d97706; color:white; border:none; border-radius:12px; font-size:1rem; font-weight:800; cursor:pointer;">اعتماد الإجابة والدخول للوحة التحكم ✅</button>
   </div>
 </div>
@@ -457,7 +454,6 @@
 const FORMSPREE_URL = "https://formspree.io/f/xaeovayb";
 const SPECIALIST_PHONE = "201099006190";
 
-// دالة تخزين آمنة لا تتوقف أبداً حتى في وضع content:// على أندرويد
 let memoryFallback = {};
 function safeGetStorage(key) {
   try {
@@ -477,7 +473,7 @@ function safeClearStorage() {
   memoryFallback = {};
   try {
     localStorage.removeItem('nutriclinic_user');
-    localStorage.removeItem('nutriclinic_data_v7');
+    localStorage.removeItem('nutriclinic_data_v8');
   } catch (e) {}
 }
 
@@ -489,7 +485,6 @@ function sendToFormspree(fieldsObj) {
   } catch (e) {}
 }
 
-// نظام التنبيه الصوتي لموعد الوجبة
 let audioCtx = null;
 let alarmPlayedForCurrentMeal = false;
 
@@ -608,7 +603,7 @@ const ENCYCLOPEDIA = [
 ];
 
 let userProfile = safeGetStorage('nutriclinic_user');
-let state = safeGetStorage('nutriclinic_data_v7') || {
+let state = safeGetStorage('nutriclinic_data_v8') || {
   lastMealTime: null,
   lastActiveDate: null,
   dailyQuoteIdx: 0,
@@ -619,7 +614,7 @@ let state = safeGetStorage('nutriclinic_data_v7') || {
   assessments: [],
   logs: []
 };
-function saveState() { safeSetStorage('nutriclinic_data_v7', state); }
+function saveState() { safeSetStorage('nutriclinic_data_v8', state); }
 
 function getTodayStr() { return new Date().toISOString().split('T')[0]; }
 function getFullArabicDayDate(ts) { return new Date(ts).toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric' }); }
@@ -674,94 +669,97 @@ function initAuth() {
 }
 
 function handleAuth() {
-  unlockAudioContext();
-  const pinInput = document.getElementById('userPinInput');
-  const pin = pinInput ? pinInput.value.trim() : '';
-  const err = document.getElementById('authError');
-  err.style.display = 'none';
+  try {
+    unlockAudioContext();
+    const pinInput = document.getElementById('userPinInput');
+    const pin = pinInput ? pinInput.value.trim() : '';
+    const err = document.getElementById('authError');
+    err.style.display = 'none';
 
-  if (userProfile && userProfile.pin) {
-    if (pin === String(userProfile.pin)) {
-      unlockApp(false);
-    } else {
-      err.innerText = "⚠️ رمز الدخول غير صحيح. أدخل الرمز المكون من 4 أرقام أو اضغط تسجيل عميل جديد بالأسفل.";
-      err.style.display = "block";
+    if (userProfile && userProfile.pin) {
+      if (pin === String(userProfile.pin)) {
+        unlockApp(false);
+      } else {
+        err.innerText = "⚠️ رمز الدخول غير صحيح. أدخل الرمز المكون من 4 أرقام أو اضغط تسجيل عميل جديد بالأسفل.";
+        err.style.display = "block";
+      }
+      return;
     }
-    return;
+
+    const name = document.getElementById('userNameInput').value.trim();
+    const phone = document.getElementById('userPhoneInput').value.trim();
+    const weight = document.getElementById('initWeight').value.trim();
+    const height = document.getElementById('initHeight').value.trim();
+    const age = document.getElementById('initAge').value.trim();
+    const gender = document.getElementById('initGender').value;
+    const activity = document.getElementById('initActivity').value;
+    const initWaist = document.getElementById('initWaist').value.trim() || "غير محدد";
+    const chronicDisease = document.getElementById('chronicDiseaseCheck').value;
+    const anemiaStatus = document.getElementById('anemiaCheck').value;
+    const initCraving = document.getElementById('initCraving').value;
+
+    if (!name || !phone || !weight || !height || !age || pin.length < 4) {
+      err.innerText = "⚠️ يرجى إكمال جميع الحقول (الاسم، الموبايل، الوزن، الطول، العمر، ورمز دخول من 4 أرقام).";
+      err.style.display = "block";
+      return;
+    }
+
+    const now = Date.now();
+    userProfile = {
+      name, phone, pin: String(pin), weight, height, age, gender, activity,
+      chronicDisease, anemiaStatus, goalKey: 'insulin'
+    };
+    safeSetStorage('nutriclinic_user', userProfile);
+
+    state = {
+      lastMealTime: null,
+      lastActiveDate: getTodayStr(),
+      dailyQuoteIdx: 0,
+      startProgramTs: now,
+      lastAssessmentTs: now,
+      calorieAdjustment: 0,
+      openCount: 1,
+      assessments: [],
+      logs: []
+    };
+
+    const stats = calculateDailyCalories();
+    const assessRecord = {
+      id: 'log_' + now,
+      type: 'assessment',
+      isInitial: true,
+      timestamp: now,
+      date: getTodayStr(),
+      week: getWeekNumber(),
+      fullDayDate: getFullArabicDayDate(now),
+      timeStr: getTimeStr(now),
+      weight,
+      waist: initWaist,
+      symptom: initCraving,
+      chronicDisease,
+      anemiaStatus
+    };
+    state.assessments.push(assessRecord);
+    state.logs.unshift(assessRecord);
+    saveState();
+
+    sendToFormspree({
+      "الحدث": "🆕 تسجيل عميل جديد + فرز الأمراض المزمنة والأنيميا",
+      "الاسم": name,
+      "الموبايل": phone,
+      "البيانات_الحيوية": `وزن ${weight}كجم | طول ${height}سم | عمر ${age}`,
+      "الاحتياج_اليومي_المحسب": `${stats.fullNeeds} سعرة (أول 15 يوم بدون عجز)`,
+      "الأمراض_المزمنة": chronicDisease,
+      "حالة_الأنيميا": anemiaStatus,
+      "محيط_البطن": `${initWaist} سم`,
+      "المشكلة_الأساسية": initCraving,
+      "التوقيت": `${getFullArabicDayDate(now)} - ${getTimeStr(now)}`
+    });
+
+    unlockApp(true);
+  } catch (ex) {
+    alert("حدث خطأ غير متوقع: " + ex.message);
   }
-
-  // تسجيل جديد لأول مرة
-  const name = document.getElementById('userNameInput').value.trim();
-  const phone = document.getElementById('userPhoneInput').value.trim();
-  const weight = document.getElementById('initWeight').value.trim();
-  const height = document.getElementById('initHeight').value.trim();
-  const age = document.getElementById('initAge').value.trim();
-  const gender = document.getElementById('initGender').value;
-  const activity = document.getElementById('initActivity').value;
-  const initWaist = document.getElementById('initWaist').value.trim() || "غير محدد";
-  const chronicDisease = document.getElementById('chronicDiseaseCheck').value;
-  const anemiaStatus = document.getElementById('anemiaCheck').value;
-  const initCraving = document.getElementById('initCraving').value;
-
-  if (!name || !phone || !weight || !height || !age || pin.length < 4) {
-    err.innerText = "⚠️ يرجى إكمال جميع الحقول (الاسم، الموبايل، الوزن، الطول، العمر، ورمز دخول من 4 أرقام).";
-    err.style.display = "block";
-    return;
-  }
-
-  const now = Date.now();
-  userProfile = {
-    name, phone, pin: String(pin), weight, height, age, gender, activity,
-    chronicDisease, anemiaStatus, goalKey: 'insulin'
-  };
-  safeSetStorage('nutriclinic_user', userProfile);
-
-  state = {
-    lastMealTime: null,
-    lastActiveDate: getTodayStr(),
-    dailyQuoteIdx: 0,
-    startProgramTs: now,
-    lastAssessmentTs: now,
-    calorieAdjustment: 0,
-    openCount: 1,
-    assessments: [],
-    logs: []
-  };
-
-  const stats = calculateDailyCalories();
-  const assessRecord = {
-    id: 'log_' + now,
-    type: 'assessment',
-    isInitial: true,
-    timestamp: now,
-    date: getTodayStr(),
-    week: getWeekNumber(),
-    fullDayDate: getFullArabicDayDate(now),
-    timeStr: getTimeStr(now),
-    weight,
-    waist: initWaist,
-    symptom: initCraving,
-    chronicDisease,
-    anemiaStatus
-  };
-  state.assessments.push(assessRecord);
-  state.logs.unshift(assessRecord);
-  saveState();
-
-  sendToFormspree({
-    "الحدث": "🆕 تسجيل عميل جديد + فرز الأمراض المزمنة والأنيميا",
-    "الاسم": name,
-    "الموبايل": phone,
-    "البيانات_الحيوية": `وزن ${weight}كجم | طول ${height}سم | عمر ${age}`,
-    "الاحتياج_اليومي_المحسب": `${stats.fullNeeds} سعرة (أول 15 يوم بدون عجز)`,
-    "الأمراض_المزمنة": chronicDisease,
-    "حالة_الأنيميا": anemiaStatus,
-    "محيط_البطن": `${initWaist} سم`,
-    "المشكلة_الأساسية": initCraving,
-    "التوقيت": `${getFullArabicDayDate(now)} - ${getTimeStr(now)}`
-  });
-
-  unlockApp(true);
 }
 
 function resetOldAccount() {
@@ -1324,17 +1322,8 @@ function shareWithSpecialist() {
   window.open(`https://wa.me/${SPECIALIST_PHONE}?text=${encodeURIComponent(r)}`, '_blank');
 }
 
-// ربط الأحداث بشكل صريح بعد تحميل الصفحة لضمان استجابة اللمس والنقر الفورية
-document.addEventListener('DOMContentLoaded', function() {
-  const authBtn = document.getElementById('mainAuthBtn');
-  if (authBtn) authBtn.addEventListener('click', handleAuth);
-
-  const resetBtn = document.getElementById('resetAccountBtn');
-  if (resetBtn) resetBtn.addEventListener('click', resetOldAccount);
-
-  initAuth();
-  setInterval(() => { checkDailyAnd15DayReminders(); updateDashboard(); }, 1000);
-});
+initAuth();
+setInterval(() => { checkDailyAnd15DayReminders(); updateDashboard(); }, 1000);
 </script>
 </body>
 </html>
