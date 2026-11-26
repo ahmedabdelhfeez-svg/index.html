@@ -13,37 +13,72 @@
     --gold-bg: #fef3c7;
     --danger: #dc2626;
     --danger-bg: #fef2f2;
-    --bg: #f1f5f9;
+    --purple: #6d28d9;
+    --purple-bg: #f5f3ff;
+    --bg: #eef2f6;
     --card: #ffffff;
     --text: #0f172a;
   }
   * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
   body { margin: 0; background: var(--bg); color: var(--text); padding-bottom: 90px; }
-  .header { background: linear-gradient(135deg, #0f766e, #134e4a); color: white; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50; }
-  .header-title { font-weight: 800; font-size: 1rem; }
-  .logout-btn { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 5px 10px; border-radius: 8px; font-size: 0.78rem; cursor: pointer; font-weight: bold; }
+  
+  .header { background: linear-gradient(135deg, #0f766e, #134e4a); color: white; padding: 13px 14px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50; box-shadow: 0 4px 12px rgba(0,0,0,0.18); }
+  .header-title { font-weight: 800; font-size: 0.96rem; }
+  .header-btns { display: flex; gap: 5px; }
+  .top-btn { background: #ffffff; border: none; color: #0f766e; padding: 6px 9px; border-radius: 9px; font-size: 0.75rem; cursor: pointer; font-weight: 800; box-shadow: 0 2px 5px rgba(0,0,0,0.15); }
+  
   .container { padding: 14px; max-width: 540px; margin: auto; }
-  .card { background: var(--card); border-radius: 16px; padding: 16px; margin-bottom: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
-  .timer-card { text-align: center; }
+  .card { background: var(--card); border-radius: 18px; padding: 16px; margin-bottom: 14px; box-shadow: 0 4px 14px rgba(15,23,42,0.06); border: 1px solid #e2e8f0; }
+
+  .drinks-rule-banner { background: linear-gradient(135deg, #fffbeb, #fef3c7); border: 2px solid #f59e0b; border-right: 6px solid #d97706; border-radius: 16px; padding: 13px 15px; margin-bottom: 14px; }
+  .drinks-rule-title { font-weight: 900; color: #92400e; font-size: 0.92rem; margin-bottom: 6px; }
+  .drinks-rule-list { margin: 0; padding-right: 18px; font-size: 0.82rem; color: #78350f; line-height: 1.6; font-weight: 600; }
+
+  .cal-budget-card { background: linear-gradient(135deg, #0f172a, #1e293b); color: white; border-radius: 16px; padding: 14px 16px; margin-bottom: 14px; }
+  .cal-bar-bg { width: 100%; height: 10px; background: rgba(255,255,255,0.2); border-radius: 10px; overflow: hidden; margin: 8px 0; }
+  .cal-bar-fill { height: 100%; background: #10b981; transition: width 0.3s; }
+
+  .reassess-alert { display: none; background: linear-gradient(135deg, #fee2e2, #fecaca); border: 2px solid #ef4444; border-radius: 16px; padding: 14px; margin-bottom: 14px; text-align: center; }
+  .reassess-alert.active { display: block; }
+
+  .welcome-banner { background: linear-gradient(135deg, #ecfdf5, #f0fdfa); border: 2px solid #34d399; border-right: 6px solid var(--primary); border-radius: 16px; padding: 14px 16px; margin-bottom: 14px; }
+  .welcome-banner-title { font-weight: 800; color: var(--primary-dark); font-size: 0.96rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
+  .goal-pill-btn { background: linear-gradient(135deg, #0f766e, #0d9488); color: white; font-size: 0.78rem; padding: 6px 12px; border-radius: 12px; font-weight: 800; cursor: pointer; border: none; }
+  .expected-result-box { background: white; border: 1.5px dashed #10b981; border-radius: 10px; padding: 9px 11px; margin-top: 8px; font-size: 0.83rem; color: #065f46; line-height: 1.55; }
+  .welcome-banner-msg { font-size: 0.86rem; color: #1e293b; line-height: 1.6; margin-top: 8px; }
+
+  .timer-card { text-align: center; border: 2px solid #cbd5e1; }
   .timer-card.ready { background: #ecfdf5; border-color: #10b981; }
-  .timer-card.golden { background: var(--gold-bg); border-color: var(--gold); }
-  .timer-display { font-size: 2.2rem; font-weight: 900; color: var(--primary); margin: 8px 0; }
+  .timer-display { font-size: 2.3rem; font-weight: 900; color: var(--primary); margin: 8px 0; font-variant-numeric: tabular-nums; }
   .badge { display: inline-block; padding: 5px 14px; border-radius: 20px; font-size: 0.84rem; font-weight: 700; }
   .badge-wait { background: #e2e8f0; color: #334155; }
   .badge-ready { background: #10b981; color: white; }
-  .badge-golden { background: var(--gold); color: white; }
-  .next-meal-box { background: #f0fdfa; border-right: 4px solid var(--primary); padding: 12px; border-radius: 10px; font-size: 0.9rem; line-height: 1.65; }
-  .quotas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; text-align: center; font-size: 0.76rem; }
-  .q-item { background: #f8fafc; padding: 8px 4px; border-radius: 10px; border: 1px solid #e2e8f0; }
-  .q-val { font-weight: 800; font-size: 0.95rem; color: var(--primary); display: block; margin-top: 2px; }
-  .btn { width: 100%; padding: 14px; border: none; border-radius: 12px; font-size: 0.96rem; font-weight: 700; cursor: pointer; margin-bottom: 9px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-  .btn-primary { background: var(--primary); color: white; }
-  .btn-ginger { background: #d97706; color: white; }
-  .btn-drop { background: #fee2e2; color: #b91c1c; border: 1.5px solid #fca5a5; }
-  .btn-share { background: #25D366; color: white; }
-  .modal { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.75); z-index: 999; align-items: flex-end; }
+  .next-meal-box { background: #f0fdfa; border-right: 4px solid var(--primary); padding: 12px; border-radius: 10px; font-size: 0.88rem; line-height: 1.65; }
+  
+  .quotas { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; text-align: center; font-size: 0.78rem; }
+  .q-item { background: #f8fafc; padding: 9px 6px; border-radius: 10px; border: 1.5px solid #cbd5e1; }
+  .q-val { font-weight: 900; font-size: 0.96rem; color: var(--primary); display: block; margin-top: 2px; }
+  .vitd-wa-btn { margin-top: 6px; background: #25D366; color: white; border: none; border-radius: 8px; padding: 6px 10px; font-size: 0.78rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; box-shadow: 0 2px 6px rgba(37,211,102,0.3); }
+
+  .action-btn { width: 100%; padding: 16px; border: none; border-radius: 15px; font-size: 1.02rem; font-weight: 800; cursor: pointer; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; text-align: center; transition: transform 0.12s; }
+  .action-btn:active { transform: translateY(3px); }
+  
+  .btn-goal-main { background: linear-gradient(135deg, #059669, #047857); color: white; box-shadow: 0 5px 0 #064e3b, 0 8px 16px rgba(5,150,105,0.28); }
+  .btn-cal-main { background: linear-gradient(135deg, #0284c7, #0369a1); color: white; box-shadow: 0 5px 0 #0c4a6e, 0 8px 16px rgba(2,132,199,0.28); }
+  .btn-meal-main { background: linear-gradient(135deg, #0f766e, #115e59); color: white; box-shadow: 0 5px 0 #042f2e, 0 8px 16px rgba(15,118,110,0.28); }
+  .btn-drinks-main { background: linear-gradient(135deg, #d97706, #b45309); color: white; box-shadow: 0 5px 0 #78350f, 0 8px 16px rgba(217,119,6,0.28); }
+  .btn-chat-main { background: linear-gradient(135deg, #7c3aed, #5b21b6); color: white; box-shadow: 0 5px 0 #3b0764, 0 8px 16px rgba(109,40,217,0.28); }
+  .btn-drop-main { background: linear-gradient(135deg, #dc2626, #b91c1c); color: white; box-shadow: 0 5px 0 #7f1d1d, 0 8px 16px rgba(220,38,38,0.28); }
+  .btn-share-main { background: linear-gradient(135deg, #16a34a, #15803d); color: white; box-shadow: 0 5px 0 #14532d, 0 8px 16px rgba(22,163,74,0.28); }
+
+  .modal { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); z-index: 999; align-items: flex-end; }
   .modal.active { display: flex; }
   .modal-content { background: white; width: 100%; max-width: 540px; margin: auto; border-radius: 22px 22px 0 0; padding: 18px; max-height: 92vh; overflow-y: auto; }
+  
+  .interrogation-modal { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.94); z-index: 5000; align-items: center; justify-content: center; padding: 16px; }
+  .interrogation-modal.active { display: flex; }
+  .interrogation-card { background: white; width: 100%; max-width: 440px; border-radius: 22px; padding: 20px; border: 3px solid #d97706; max-height: 92vh; overflow-y: auto; }
+
   .search-enc { width: 100%; padding: 12px; border: 2px solid var(--primary); border-radius: 12px; font-size: 0.95rem; margin-bottom: 10px; }
   .filter-tabs { display: flex; gap: 6px; margin-bottom: 12px; overflow-x: auto; }
   .tab-btn { padding: 7px 12px; border-radius: 20px; border: 1px solid #cbd5e1; background: #f8fafc; font-size: 0.82rem; font-weight: 700; cursor: pointer; }
@@ -57,39 +92,134 @@
   .pill-ok { background: #dcfce7; color: #166534; }
   .pill-no { background: #fee2e2; color: #991b1b; }
   .selected-item-box { background: #f8fafc; border: 1px solid #cbd5e1; border-right: 4px solid var(--primary); border-radius: 12px; padding: 12px; margin-bottom: 12px; }
-  .recipe-toggle { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; padding: 6px 10px; border-radius: 8px; font-size: 0.82rem; font-weight: 700; cursor: pointer; margin: 6px 0; display: inline-block; }
-  .recipe-box { display: none; background: #f0f9ff; padding: 10px; border-radius: 8px; font-size: 0.83rem; color: #0c4a6e; line-height: 1.55; margin-bottom: 8px; border-right: 3px solid #0284c7; }
+  .satiety-hint { background: #ecfdf5; color: #065f46; font-size: 0.78rem; padding: 4px 8px; border-radius: 6px; font-weight: 700; margin: 4px 0; display: inline-block; }
   input[type="range"] { width: 100%; margin: 8px 0; accent-color: var(--primary); }
-  .deterrence-modal { display: none; position: fixed; inset: 0; background: rgba(127, 29, 29, 0.92); z-index: 2000; align-items: center; justify-content: center; padding: 18px; }
+
+  .deterrence-modal { display: none; position: fixed; inset: 0; background: rgba(127, 29, 29, 0.92); z-index: 6000; align-items: center; justify-content: center; padding: 18px; }
   .deterrence-modal.active { display: flex; }
   .deterrence-card { background: #fff; border: 3px solid #dc2626; border-radius: 20px; padding: 22px; max-width: 440px; width: 100%; text-align: center; }
+
   .direction-box { background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 12px; padding: 12px; margin: 12px 0; }
   .dir-q { display: flex; align-items: flex-start; gap: 8px; font-size: 0.85rem; margin-bottom: 8px; cursor: pointer; }
+  
   .log-item { border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px; margin-bottom: 10px; font-size: 0.87rem; background: #fff; }
   .log-drop { background: var(--danger-bg); border-color: #fca5a5; border-right: 4px solid var(--danger); }
+  .log-chat { background: var(--purple-bg); border-color: #ddd6fe; border-right: 4px solid var(--purple); }
+  .log-assess { background: #fffbeb; border-color: #fde68a; border-right: 4px solid #f59e0b; }
+  .log-interrog { background: #f0f9ff; border-color: #bae6fd; border-right: 4px solid #0284c7; }
   .log-header { display: flex; justify-content: space-between; align-items: center; font-weight: 700; margin-bottom: 6px; border-bottom: 1px dashed #e2e8f0; padding-bottom: 6px; }
   .del-log-btn { background: #fee2e2; color: #dc2626; border: none; border-radius: 6px; padding: 3px 8px; font-size: 0.78rem; font-weight: 700; cursor: pointer; }
   .item-chip { display: inline-flex; align-items: center; gap: 6px; background: #f1f5f9; padding: 4px 8px; border-radius: 8px; margin: 3px 2px; font-size: 0.82rem; }
-  .del-item-btn { background: #cbd5e1; color: #1e293b; border: none; border-radius: 50%; width: 18px; height: 18px; font-size: 0.75rem; cursor: pointer; font-weight: bold; }
   .dir-badge { display: inline-block; background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 6px; font-size: 0.78rem; font-weight: 700; margin-top: 5px; }
+
+  .mood-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+  .mood-chip { padding: 10px; border: 1.5px solid #cbd5e1; border-radius: 10px; background: #f8fafc; font-size: 0.83rem; font-weight: 700; cursor: pointer; text-align: center; }
+  .mood-chip.selected { border-color: var(--purple); background: var(--purple-bg); color: var(--purple); }
+
+  .form-input { width: 100%; padding: 10px; border: 1.5px solid #cbd5e1; border-radius: 10px; margin-bottom: 9px; font-size: 0.9rem; }
+  .field-label { font-size: 0.81rem; font-weight: 800; color: #334155; display: block; margin-bottom: 4px; }
 </style>
 </head>
 <body>
 
-<div id="authScreen" style="position:fixed; inset:0; background:linear-gradient(135deg, #0f766e, #115e59); z-index:9999; display:flex; align-items:center; justify-content:center; padding:20px;">
-  <div style="background:white; width:100%; max-width:400px; border-radius:22px; padding:24px; text-align:center;">
-    <h2 style="color:#0f766e; margin:0 0 6px 0;">Nutriclinic Mind Pro</h2>
-    <p id="authSubtitle" style="color:#64748b; font-size:0.88rem; margin-bottom:18px;">سجل بياناتك للبدء في المتابعة العلاجية</p>
-    <div id="registerFields">
-      <input type="text" id="userNameInput" placeholder="الاسم ثلاثي" style="width:100%; padding:12px; border:1.5px solid #cbd5e1; border-radius:10px; margin-bottom:10px;">
-      <input type="tel" id="userPhoneInput" placeholder="رقم الموبايل" style="width:100%; padding:12px; border:1.5px solid #cbd5e1; border-radius:10px; margin-bottom:10px;">
+<!-- شاشة تسجيل الدخول لأول مرة (البيانات الحيوية + استبعاد الأمراض المزمنة والأنيميا) -->
+<div id="authScreen" style="position:fixed; inset:0; background:linear-gradient(135deg, #0f766e, #115e59); z-index:9999; display:flex; align-items:center; justify-content:center; padding:14px; overflow-y:auto;">
+  <div style="background:white; width:100%; max-width:440px; border-radius:22px; padding:20px; text-align:center; max-height:95vh; overflow-y:auto;">
+    <h2 style="color:#0f766e; margin:0 0 4px 0;">Nutriclinic Mind Pro</h2>
+    <p id="authSubtitle" style="color:#64748b; font-size:0.84rem; margin-bottom:12px;">أجب عن الأسئلة التالية بدقة لضبط سعراتك وتقييم حالتك الصحية</p>
+    
+    <div id="registerFields" style="text-align:right;">
+      <input type="text" id="userNameInput" class="form-input" placeholder="الاسم ثلاثي">
+      <input type="tel" id="userPhoneInput" class="form-input" placeholder="رقم الموبايل">
+      
+      <!-- متطلبات حساب السعرات المناسب -->
+      <div style="background:#f0fdfa; border:1px solid #99f6e4; border-radius:12px; padding:10px; margin-bottom:10px;">
+        <div style="font-size:0.84rem; font-weight:800; color:#0f766e; margin-bottom:6px;">📐 متطلبات حساب السعرات المناسب لجسمك:</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px;">
+          <input type="number" id="initWeight" class="form-input" placeholder="الوزن (كجم)" style="margin-bottom:0;">
+          <input type="number" id="initHeight" class="form-input" placeholder="الطول (سم)" style="margin-bottom:0;">
+          <input type="number" id="initAge" class="form-input" placeholder="العمر" style="margin-bottom:0;">
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:7px;">
+          <select id="initGender" class="form-input" style="margin-bottom:0; font-size:0.84rem;">
+            <option value="male">ذكر</option>
+            <option value="female">أنثى</option>
+          </select>
+          <input type="number" id="initWaist" class="form-input" placeholder="محيط البطن (سم)" style="margin-bottom:0;">
+        </div>
+        <label class="field-label" style="margin-top:7px;">معدل نشاطك اليومي:</label>
+        <select id="initActivity" class="form-input" style="margin-bottom:0; font-size:0.83rem;">
+          <option value="1.2">نشاط خامل / عمل مكتبي بدون رياضة</option>
+          <option value="1.375">نشاط خفيف (مشي أو حركة 1-3 أيام/أسبوع)</option>
+          <option value="1.55">نشاط متوسط (تمرين 3-5 أيام/أسبوع)</option>
+          <option value="1.725">نشاط عالي (مجهود بدني يومي مكثف)</option>
+        </select>
+      </div>
+
+      <!-- سؤال استبعاد الأمراض المزمنة واستبعاد الأنيميا -->
+      <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:12px; padding:10px; margin-bottom:10px;">
+        <div style="font-size:0.84rem; font-weight:800; color:#991b1b; margin-bottom:6px;">🩺 الفرز الصحي (استبعاد الأمراض المزمنة والأنيميا):</div>
+        
+        <label class="field-label">1. هل تعاني من أي أمراض مزمنة؟ (سكري، ضغط، غدة درقية، قلب):</label>
+        <select id="chronicDiseaseCheck" class="form-input" style="font-size:0.83rem;">
+          <option value="لا أعاني من أي أمراض مزمنة (سليم) ✅">لا أعاني من أي أمراض مزمنة (سليم) ✅</option>
+          <option value="سكري أو مقاومة إنسولين مشخصة">سكري أو مقاومة إنسولين مشخصة</option>
+          <option value="ارتفاع ضغط الدم">ارتفاع ضغط الدم</option>
+          <option value="قصور أو نشاط بالغدة الدرقية">قصور أو نشاط بالغدة الدرقية</option>
+          <option value="أعاني من حالة صحية مزمنة أخرى">أعاني من حالة صحية مزمنة أخرى</option>
+        </select>
+
+        <label class="field-label">2. هل تعاني من أنيميا (فقر دم) أو شحوب ودوخة مستمرة؟:</label>
+        <select id="anemiaCheck" class="form-input" style="margin-bottom:0; font-size:0.83rem;">
+          <option value="لا أعاني من أنيميا (نسبة الهيموجلوبين طبيعية) ✅">لا أعاني من أنيميا (نسبة الهيموجلوبين طبيعية) ✅</option>
+          <option value="نعم، مشخص بأنيميا نقص الحديد أو فيتامين B12">نعم، مشخص بأنيميا نقص الحديد أو فيتامين B12</option>
+          <option value="أشعر بأعراض أنيميا (دوخة، شحوب، تساقط شعر) ولم أحلل">أشعر بأعراض أنيميا (دوخة، شحوب، تساقط شعر) ولم أحلل</option>
+        </select>
+      </div>
+
+      <!-- التقييم المبدئي للأعراض -->
+      <div style="background:#fffbeb; border:1px solid #fcd34d; border-radius:12px; padding:10px; margin-bottom:10px;">
+        <div style="font-size:0.83rem; font-weight:800; color:#b45309; margin-bottom:6px;">📋 تقييمك لنفسك قبل البدء:</div>
+        <select id="initCraving" class="form-input" style="margin-bottom:0; font-size:0.85rem;">
+          <option value="شراهة عالية للسكريات والنشويات">شراهة عالية للسكريات والنشويات 🍬</option>
+          <option value="خمول وتعب بعد الأكل مباشرة">خمول وتعب بعد الأكل مباشرة 😴</option>
+          <option value="جوع متكرر وتوتر عصبي">جوع متكرر وتوتر عصبي ⚡</option>
+          <option value="انتفاخ وغازات مستمرة بالقولون">انتفاخ وغازات مستمرة بالقولون 🎈</option>
+          <option value="نحافة وضعف الكتلة العضلية">نحافة وضعف الكتلة العضلية 💪</option>
+        </select>
+      </div>
     </div>
-    <input type="password" id="userPinInput" maxlength="4" inputmode="numeric" placeholder="رمز الدخول (4 أرقام)" style="width:100%; padding:12px; border:1.5px solid #cbd5e1; border-radius:10px; margin-bottom:16px; text-align:center; letter-spacing:5px;">
-    <button type="button" onclick="handleAuth()" style="width:100%; padding:14px; background:#0f766e; color:white; border:none; border-radius:12px; font-size:1rem; font-weight:bold; cursor:pointer;">دخول النظام</button>
+    
+    <input type="password" id="userPinInput" maxlength="4" inputmode="numeric" class="form-input" placeholder="رمز الدخول (4 أرقام)" style="text-align:center; letter-spacing:5px; font-weight:bold;">
+    <button type="button" onclick="handleAuth()" style="width:100%; padding:14px; background:#0f766e; color:white; border:none; border-radius:12px; font-size:1rem; font-weight:bold; cursor:pointer;">دخول النظام 🚀</button>
     <div id="authError" style="color:#dc2626; font-size:0.85rem; margin-top:10px; display:none;"></div>
   </div>
 </div>
 
+<!-- شاشة الاستجواب الإجبارية (تظهر عند فتح التطبيق للمرة الثانية وما بعدها فقط) -->
+<div class="interrogation-modal" id="interrogationModal">
+  <div class="interrogation-card">
+    <div style="text-align:center; margin-bottom:10px;">
+      <span style="font-size:2.4rem;">🕵️‍♂️📋</span>
+      <h3 style="color:#b45309; margin:4px 0;">استجواب المتابعة الإجباري</h3>
+      <p style="font-size:0.83rem; color:#475569; margin:0;">أهلاً بعودتك! سجل بصراحة ما حدث في الفترة السابقة قبل المتابعة:</p>
+    </div>
+
+    <label style="font-weight:bold; font-size:0.86rem; display:block; margin-bottom:5px;">1️⃣ هل التزمت بالوجبة المحددة في الجدول؟</label>
+    <select id="interrogCompliance" class="form-input" style="border-color:#d97706; font-weight:bold;">
+      <option value="نعم، التزمت بالوجبة والكمية تماماً ✅">نعم، التزمت بالوجبة والكمية تماماً ✅</option>
+      <option value="التزمت جزئياً مع تعديل بسيط في الكمية ⚖️">التزمت جزئياً مع تعديل بسيط في الكمية ⚖️</option>
+      <option value="لا، أكلت أطعمة خارج الجدول / لخبطت ⚠️">لا، أكلت أطعمة خارج الجدول / لخبطت ⚠️</option>
+    </select>
+
+    <label style="font-weight:bold; font-size:0.86rem; display:block; margin-bottom:5px;">2️⃣ اكتب بالتفصيل كل ما أكلته أو شربته الفترة السابقة:</label>
+    <textarea id="interrogFoodDetails" rows="3" placeholder="مثال: أكلت قطعة لحم + بطاطس مجمدة، أو أكلت قطعة حلوى..." style="width:100%; padding:10px; border:1.5px solid #cbd5e1; border-radius:10px; font-size:0.9rem; margin-bottom:12px; resize:none;"></textarea>
+
+    <button type="button" onclick="submitInterrogation()" style="width:100%; padding:14px; background:#d97706; color:white; border:none; border-radius:12px; font-size:1rem; font-weight:800; cursor:pointer;">اعتماد الإجابة والدخول للوحة التحكم ✅</button>
+  </div>
+</div>
+
+<!-- شاشة تحذير الممنوعات -->
 <div class="deterrence-modal" id="deterrenceModal">
   <div class="deterrence-card">
     <div style="font-size:3rem; margin-bottom:6px;">⛔💀</div>
@@ -101,377 +231,17 @@
 
 <div class="header">
   <span class="header-title" id="welcomeUserTitle">Nutriclinic Mind Pro</span>
-  <button type="button" class="logout-btn" onclick="logoutUser()">قفل / خروج</button>
+  <div class="header-btns">
+    <button type="button" class="top-btn" onclick="testAlarmSound()">🔔 الجرس</button>
+    <button type="button" class="top-btn" onclick="openReassessModal()">📊 تقييمي</button>
+    <button type="button" class="top-btn" onclick="logoutUser()">قفل</button>
+  </div>
 </div>
 
 <div class="container">
-  <div class="card timer-card" id="timerCard">
-    <span class="badge badge-wait" id="timerStatus">جاري حساب التوقيت...</span>
-    <div class="timer-display" id="timerDisplay">جاهز للبدء</div>
-    <div id="timerSubtext" style="font-size: 0.85rem; color: #64748b;">الحد الأدنى بين الوجبات 5 ساعات</div>
-  </div>
-
-  <div class="card">
-    <div style="font-weight: 800; margin-bottom: 8px; color: var(--primary);">📅 نسق وجبتك التالية (توصية تلقائية)</div>
-    <div class="next-meal-box" id="nextMealBox">جاري تحليل جدولك...</div>
-  </div>
-
-  <div class="card">
-    <div class="quotas">
-      <div class="q-item">سلطة اليوم<span class="q-val" id="qSalad">0 / 2</span></div>
-      <div class="q-item">زنجبيل اليوم<span class="q-val" id="qGinger">0 / 3</span></div>
-      <div class="q-item">نوتيلا مساءً<span class="q-val" id="qNutella">0 / 1</span></div>
-      <div class="q-item">بسبوسة الأسبوع<span class="q-val" id="qBasbousa">0 / 2</span></div>
-    </div>
-  </div>
-
-  <button type="button" class="btn btn-primary" onclick="openMealModal()">🔍 موسوعة الطعام وتنظيم الوجبة</button>
-  <button type="button" class="btn btn-ginger" onclick="logGinger()">☕ تسجيل مشروب زنجبيل طازج</button>
-  <button type="button" class="btn btn-drop" onclick="openDropModal()">📉 تسجيل وقت هبوط أو جوع (Drop Time)</button>
-  <button type="button" class="btn btn-share" onclick="shareWithSpecialist()">📲 إرسال التقرير للأخصائي (01099006190)</button>
-
-  <div class="card" style="margin-top: 16px;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-      <strong style="color: var(--primary);">📋 سجل المتابعة</strong>
-      <input type="text" id="searchLog" placeholder="بحث بالسجل..." onkeyup="renderLogs()" style="padding: 5px 10px; border-radius: 8px; border: 1px solid #cbd5e1; width: 130px; font-size: 0.82rem;">
-    </div>
-    <div id="logsContainer"></div>
-  </div>
-</div>
-
-<div class="modal" id="mealModal">
-  <div class="modal-content">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-      <h3 style="margin:0; font-size:1.05rem;">موسوعة الأطعمة والمشروبات</h3>
-      <button type="button" onclick="closeMealModal()" style="border:none; background:none; font-size:1.8rem; cursor:pointer;">&times;</button>
-    </div>
-    <input type="text" class="search-enc" id="encSearchInput" placeholder="ابحث عن أي أكل أو مشروب..." onkeyup="renderEncyclopedia()">
-    <div class="filter-tabs">
-      <button type="button" class="tab-btn active" onclick="setEncFilter('all', this)">الكل</button>
-      <button type="button" class="tab-btn" onclick="setEncFilter('allowed', this)">✅ المسموح</button>
-      <button type="button" class="tab-btn danger-tab" onclick="setEncFilter('forbidden', this)">⛔ الممنوع</button>
-    </div>
-    <div class="multi-grid" id="multiFoodGrid"></div>
-    <div id="selectedItemsConfig"></div>
-    <div class="direction-box" id="directionQuestionsBox" style="display:none;">
-      <div style="font-weight:bold; color:#15803d; margin-bottom:8px; font-size:0.9rem;">🧭 علامات الاتجاه الصحيح:</div>
-      <label class="dir-q"><input type="checkbox" id="dirQ1"> انتظرت حتى شعرت بجوع حقيقي هادئ.</label>
-      <label class="dir-q"><input type="checkbox" id="dirQ2"> التزمت بالماء أو الزنجبيل فقط 5 ساعات+.</label>
-      <label class="dir-q"><input type="checkbox" id="dirQ3"> طاقتي مستقرة وشهيتي للسكريات أقل.</label>
-    </div>
-    <div id="totalMealSummary" style="display:none; background:#0f766e; color:white; padding:12px; border-radius:12px; text-align:center; font-weight:bold; margin:10px 0;">
-      إجمالي السعرات: <span id="grandTotalCal">0</span> سعرة
-    </div>
-    <button type="button" class="btn btn-primary" id="saveMealBtn" style="display:none;" onclick="saveMultiMeal()">✅ حفظ الوجبة</button>
-  </div>
-</div>
-
-<div class="modal" id="dropModal">
-  <div class="modal-content">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-      <h3 style="margin:0; color:var(--danger);">📉 تسجيل وقت الهبوط أو الجوع</h3>
-      <button type="button" onclick="closeDropModal()" style="border:none; background:none; font-size:1.8rem; cursor:pointer;">&times;</button>
-    </div>
-    <select id="dropReason" style="width:100%; padding:10px; border-radius:10px; border:1.5px solid #cbd5e1; margin-bottom:12px;">
-      <option value="إحساس بهبوط حقيقي (دوخة / رعشة / خمول)">إحساس بهبوط حقيقي (دوخة / رعشة / خمول)</option>
-      <option value="جوع جسدي حقيقي (قرقرة بالمعدة)">جوع جسدي حقيقي (قرقرة بالمعدة)</option>
-      <option value="جوع نفسي / اشتهاء للسكريات">جوع نفسي / اشتهاء للسكريات</option>
-      <option value="أسباب أخرى">أسباب أخرى</option>
-    </select>
-    <input type="text" id="dropNotes" placeholder="ملاحظات إضافية..." style="width:100%; padding:10px; border-radius:10px; border:1.5px solid #cbd5e1; margin-bottom:14px;">
-    <button type="button" class="btn" style="background:var(--danger); color:white;" onclick="saveDropTime()">💾 حفظ الـ Drop Time</button>
-  </div>
-</div>
-
-<script>
-const FORMSPREE_URL = "https://formspree.io/f/xaeovayb";
-const SPECIALIST_PHONE = "201099006190";
-
-function sendToFormspree(fieldsObj) {
-  const formData = new FormData();
-  for (const key in fieldsObj) {
-    formData.append(key, fieldsObj[key]);
-  }
-  fetch(FORMSPREE_URL, {
-    method: "POST",
-    body: formData,
-    headers: { "Accept": "application/json" }
-  }).catch(() => {});
-}
-
-const ENCYCLOPEDIA = [
-  { id: 'potato_frozen', type: 'allowed', name: 'بطاطس محمرة ثم مجمدة 12 ساعة', calPer100: 165, defaultQty: 150, min: 50, max: 350, reqFreeze: true, recipes: 'تُحمر وتُبرد ثم تُجمد 12 ساعة في الفريزر لتحويل النشا إلى نشا مقاوم، ثم تُسخن.' },
-  { id: 'red_meat', type: 'allowed', name: 'لحوم حمراء', calPer100: 250, defaultQty: 150, min: 50, max: 350, reqFreeze: false, recipes: 'مشوية أو مسلوقة أو كباب حلة بدون زيوت مهدرجة.' },
-  { id: 'luncheon', type: 'allowed', name: 'لانشون بيتي', calPer100: 190, defaultQty: 80, min: 30, max: 200, reqFreeze: false, recipes: 'لحم مفروم صافي مع ثوم وتوابل مطهو على البخار.' },
-  { id: 'cheese', type: 'allowed', name: 'جبن طبيعي 100%', calPer100: 250, defaultQty: 60, min: 20, max: 150, reqFreeze: false, recipes: 'جبن قريش أو شيدر طبيعي خالي من الزيوت النباتية.' },
-  { id: 'rice', type: 'allowed', name: 'أرز مجمد 12 ساعة', calPer100: 130, defaultQty: 150, min: 50, max: 350, reqFreeze: true, recipes: 'يُطهى ويُجمد 12 ساعة في الفريزر ثم يُسخن بالبخار.' },
-  { id: 'mahshi', type: 'allowed', name: 'محشي مجمد 12 ساعة', calPer100: 145, defaultQty: 200, min: 50, max: 400, reqFreeze: true, recipes: 'يُجمد بعد التسوية 12 ساعة كاملة ثم يُسخن.' },
-  { id: 'bread', type: 'allowed', name: 'خبز مجمد في الفريزر', calPer100: 250, defaultQty: 60, min: 25, max: 150, reqFreeze: true, recipes: 'يُخرج من الفريزر للتحميص مباشرة.' },
-  { id: 'salad', type: 'allowed', name: 'سلطة خضراء وجزر مسلوق', calPer100: 35, defaultQty: 150, min: 50, max: 300, reqFreeze: false, isSalad: true, recipes: 'بقدونس + كزبرة + خيار مقشر + طماطم + جزر مسلوق + ليمون.' },
-  { id: 'nutella', type: 'allowed', name: 'نوتيلا صحية (مساءً)', calPer100: 560, defaultQty: 25, min: 10, max: 60, reqFreeze: false, isNutella: true, recipes: 'سمسم + فول سوداني + كاكاو خام + زيت بذور الكتان.' },
-  { id: 'basbousa', type: 'allowed', name: 'بسبوسة سميد (مرتين أسبوعياً)', calPer100: 360, defaultQty: 100, min: 30, max: 250, reqFreeze: false, isBasbousa: true, recipes: 'سميد خشن فقط بدون دقيق أبيض + سمن بلدي.' },
-  { id: 'forb_coffee', type: 'forbidden', name: 'القهوة والنسكافيه', warning: 'ترفع الكورتيزول وتشتت التركيز وتضطرب معها مستويات السكر. استبدلها بالزنجبيل!' },
-  { id: 'forb_fries', type: 'forbidden', name: 'بطاطس مقلية طازجة', warning: 'ترفع الإنسولين فوراً وتوقف حرق الدهون 24 ساعة! يجب تجميدها 12 ساعة أولاً.' },
-  { id: 'forb_bread', type: 'forbidden', name: 'خبز طازج / فينو', warning: 'يمتص بسرعة ويرفع سكر الدم بشكل حاد. ممنوع إلا بعد التجميد!' },
-  { id: 'forb_cheese', type: 'forbidden', name: 'جبن نباتي الدهن', warning: 'دهون نباتية مهدرجة تسبب التهاباً خلوياً ومقاومة إنسولين.' },
-  { id: 'forb_sweets', type: 'forbidden', name: 'حلويات وسكريات', warning: 'تكسر الصيام وتدخلك في دوامة جوع وهبوط متكرر!' },
-  { id: 'forb_eggs', type: 'forbidden', name: 'بيض ودواجن وبقوليات', warning: 'مستبعدة من البروتوكول العلاجي الحالي لتجنب الالتهاب واضطراب الهضم.' }
-];
-
-let userProfile = JSON.parse(localStorage.getItem('nutriclinic_user')) || null;
-
-function initAuth() {
-  if (userProfile) {
-    document.getElementById('registerFields').style.display = 'none';
-    document.getElementById('authSubtitle').innerText = `أهلاً بك يا ${userProfile.name}، أدخل رمز المرور`;
-  }
-}
-
-function handleAuth() {
-  const pin = document.getElementById('userPinInput').value.trim();
-  const err = document.getElementById('authError');
-  if (userProfile) {
-    if (pin === userProfile.pin) unlockApp();
-    else { err.innerText = "رمز الدخول غير صحيح"; err.style.display = "block"; }
-  } else {
-    const name = document.getElementById('userNameInput').value.trim();
-    const phone = document.getElementById('userPhoneInput').value.trim();
-    if (!name || !phone || pin.length < 4) {
-      err.innerText = "أدخل الاسم ورقم الموبايل ورمز من 4 أرقام";
-      err.style.display = "block";
-      return;
-    }
-    userProfile = { name, phone, pin };
-    localStorage.setItem('nutriclinic_user', JSON.stringify(userProfile));
-    sendToFormspree({
-      "الحدث": "تسجيل عميل جديد",
-      "الاسم": name,
-      "الموبايل": phone,
-      "التوقيت": new Date().toLocaleString('ar-EG')
-    });
-    unlockApp();
-  }
-}
-
-function unlockApp() {
-  document.getElementById('authScreen').style.display = 'none';
-  document.getElementById('welcomeUserTitle').innerText = `👤 ${userProfile.name}`;
-}
-
-function logoutUser() {
-  document.getElementById('authScreen').style.display = 'flex';
-  initAuth();
-}
-
-let state = JSON.parse(localStorage.getItem('nutriclinic_data_v2')) || { lastMealTime: null, logs: [] };
-function saveState() { localStorage.setItem('nutriclinic_data_v2', JSON.stringify(state)); }
-
-let selectedIds = new Set();
-let draftConfigs = {};
-let currentEncFilter = 'all';
-
-function getTodayStr() { return new Date().toISOString().split('T')[0]; }
-function getFullArabicDayDate(ts) { return new Date(ts).toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric' }); }
-function getTimeStr(ts) { return new Date(ts).toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' }); }
-function getWeekNumber() {
-  const d = new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate() + 4 - (d.getDay()||7));
-  return Math.ceil((((d - new Date(d.getFullYear(),0,1))/8.64e7)+1)/7);
-}
-
-function getQuotas() {
-  const today = getTodayStr(), week = getWeekNumber();
-  let salad = 0, ginger = 0, nutella = 0, basbousa = 0;
-  state.logs.forEach(log => {
-    if (log.date === today) {
-      if (log.type === 'ginger') ginger++;
-      if (log.items) log.items.forEach(it => { if (it.id === 'salad') salad++; if (it.id === 'nutella') nutella++; });
-    }
-    if (log.week === week && log.items) log.items.forEach(it => { if (it.id === 'basbousa') basbousa++; });
-  });
-  return { salad, ginger, nutella, basbousa };
-}
-
-function updateDashboard() {
-  const q = getQuotas();
-  document.getElementById('qSalad').innerText = `${q.salad} / 2`;
-  document.getElementById('qGinger').innerText = `${q.ginger} / 3`;
-  document.getElementById('qNutella').innerText = `${q.nutella} / 1`;
-  document.getElementById('qBasbousa').innerText = `${q.basbousa} / 2`;
-
-  const card = document.getElementById('timerCard'), status = document.getElementById('timerStatus'), display = document.getElementById('timerDisplay'), sub = document.getElementById('timerSubtext'), nextBox = document.getElementById('nextMealBox');
-
-  if (!state.lastMealTime) {
-    display.innerText = "جاهز للبدء";
-    status.innerText = "ابدأ بتسجيل وجبتك الأولى";
-    nextBox.innerHTML = "<strong>مقترح الوجبة الأولى:</strong> بروتين + خبز مجمد 12 ساعة + سلطة.";
-    return;
-  }
-
-  const now = Date.now(), diffMs = now - state.lastMealTime, fiveHoursMs = 5 * 3600 * 1000;
-  const nextTimeFormatted = new Date(state.lastMealTime + fiveHoursMs).toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
-  nextBox.innerHTML = `⏰ <strong>موعد وجبتك القادمة:</strong> الساعة ${nextTimeFormatted}<br>🥗 <strong>التوصية:</strong> لحوم حمراء أو جبن طبيعي + نشويات مجمدة 12 ساعة + سلطة.`;
-
-  if (diffMs < fiveHoursMs) {
-    const rem = fiveHoursMs - diffMs;
-    const h = String(Math.floor(rem / 3600000)).padStart(2, '0'), m = String(Math.floor((rem % 3600000) / 60000)).padStart(2, '0'), s = String(Math.floor((rem % 60000) / 1000)).padStart(2, '0');
-    display.innerText = `${h}:${m}:${s}`;
-    card.className = "card timer-card"; status.className = "badge badge-wait"; status.innerText = "فترة صيام (ممنوع الطعام)";
-    sub.innerText = `مسموح بالماء أو الزنجبيل (متبقي ${3 - q.ginger})`;
-  } else {
-    const totalH = Math.floor(diffMs / 3600000), totalM = Math.floor((diffMs % 3600000) / 60000);
-    display.innerText = `${totalH} س و ${totalM} د`;
-    card.className = "card timer-card ready"; status.className = "badge badge-ready"; status.innerText = "✅ حان الوقت المناسب لوجبتك";
-  }
-}
-
-function openMealModal() { selectedIds.clear(); draftConfigs = {}; renderEncyclopedia(); renderSelectedConfigs(); document.getElementById('mealModal').classList.add('active'); }
-function closeMealModal() { document.getElementById('mealModal').classList.remove('active'); }
-function setEncFilter(t, btn) { currentEncFilter = t; document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); renderEncyclopedia(); }
-
-function renderEncyclopedia() {
-  const query = document.getElementById('encSearchInput').value.trim().toLowerCase();
-  const grid = document.getElementById('multiFoodGrid');
-  grid.innerHTML = '';
-  const filtered = ENCYCLOPEDIA.filter(item => (currentEncFilter === 'all' || item.type === currentEncFilter) && (!query || item.name.toLowerCase().includes(query)));
-  filtered.forEach(item => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    if (item.type === 'forbidden') {
-      btn.className = 'food-card-btn forbidden';
-      btn.innerHTML = `<span>⛔ ${item.name}</span><span class="tag-pill pill-no">ممنوع</span>`;
-      btn.onclick = () => { document.getElementById('detTitle').innerText = item.name; document.getElementById('detBody').innerText = item.warning; document.getElementById('deterrenceModal').classList.add('active'); };
-    } else {
-      const isSelected = selectedIds.has(item.id);
-      btn.className = `food-card-btn allowed ${isSelected ? 'active' : ''}`;
-      btn.innerHTML = `<span>${isSelected ? '☑️' : '⬜'} ${item.name}</span><span class="tag-pill pill-ok">${item.calPer100} سعرة/100جم</span>`;
-      btn.onclick = () => {
-        if (selectedIds.has(item.id)) { selectedIds.delete(item.id); delete draftConfigs[item.id]; }
-        else { selectedIds.add(item.id); draftConfigs[item.id] = { qty: item.defaultQty, frozen: false }; }
-        renderEncyclopedia(); renderSelectedConfigs();
-      };
-    }
-    grid.appendChild(btn);
-  });
-}
-
-function closeDeterrence() { document.getElementById('deterrenceModal').classList.remove('active'); }
-
-function renderSelectedConfigs() {
-  const container = document.getElementById('selectedItemsConfig'), dirBox = document.getElementById('directionQuestionsBox'), sumBox = document.getElementById('totalMealSummary'), saveBtn = document.getElementById('saveMealBtn');
-  if (selectedIds.size === 0) { container.innerHTML = ''; dirBox.style.display = 'none'; sumBox.style.display = 'none'; saveBtn.style.display = 'none'; return; }
-  dirBox.style.display = 'block'; sumBox.style.display = 'block'; saveBtn.style.display = 'flex';
-  let html = '';
-  selectedIds.forEach(id => {
-    const f = ENCYCLOPEDIA.find(x => x.id === id), cfg = draftConfigs[id];
-    const cals = Math.round((f.calPer100 / 100) * cfg.qty);
-    html += `<div class="selected-item-box">
-      <div style="display:flex; justify-content:space-between; font-weight:bold;"><span>${f.name}</span><span id="cal_${id}">${cals} سعرة</span></div>
-      <div style="font-size:0.8rem; color:#0369a1; margin:4px 0;">📖 ${f.recipes}</div>
-      ${f.reqFreeze ? `<label style="display:block; font-size:0.82rem; font-weight:bold; margin:4px 0;"><input type="checkbox" ${cfg.frozen?'checked':''} onchange="draftConfigs['${id}'].frozen=this.checked"> تأكيد التجميد 12 ساعة ✅</label>` : ''}
-      <div>الكمية: <strong id="qtyVal_${id}">${cfg.qty} جم</strong></div>
-      <input type="range" min="${f.min}" max="${f.max}" step="10" value="${cfg.qty}" oninput="draftConfigs['${id}'].qty=parseInt(this.value); document.getElementById('qtyVal_${id}').innerText=this.value+' جم'; document.getElementById('cal_${id}').innerText=Math.round((${f.calPer100}/100)*this.value)+' سعرة'; updateGrandTotal();">
-    </div>`;
-  });
-  container.innerHTML = html;
-  updateGrandTotal();
-}
-
-function updateGrandTotal() {
-  let total = 0;
-  selectedIds.forEach(id => { const f = ENCYCLOPEDIA.find(x => x.id === id); total += Math.round((f.calPer100 / 100) * draftConfigs[id].qty); });
-  document.getElementById('grandTotalCal').innerText = total;
-}
-
-function saveMultiMeal() {
-  for (let id of selectedIds) {
-    const f = ENCYCLOPEDIA.find(x => x.id === id);
-    if (f.reqFreeze && !draftConfigs[id].frozen) { alert(`يرجى تأكيد تجميد (${f.name}) 12 ساعة أولاً.`); return; }
-  }
-  const itemsList = []; let totalCals = 0;
-  selectedIds.forEach(id => {
-    const f = ENCYCLOPEDIA.find(x => x.id === id), cfg = draftConfigs[id], cals = Math.round((f.calPer100 / 100) * cfg.qty);
-    itemsList.push({ id: f.id, name: f.name, qty: cfg.qty, cals }); totalCals += cals;
-  });
-  const score = (document.getElementById('dirQ1').checked?1:0) + (document.getElementById('dirQ2').checked?1:0) + (document.getElementById('dirQ3').checked?1:0);
-  const now = Date.now();
-  const intervalText = state.lastMealTime ? `${Math.floor((now - state.lastMealTime)/3600000)} ساعة و ${Math.round(((now - state.lastMealTime)%3600000)/60000)} دقيقة` : "الوجبة الأولى";
-  const detailsStr = itemsList.map(i => `${i.name} (${i.qty}جم)`).join(' + ');
-
-  state.logs.unshift({ id: 'log_'+now, type: 'meal', timestamp: now, date: getTodayStr(), week: getWeekNumber(), fullDayDate: getFullArabicDayDate(now), timeStr: getTimeStr(now), interval: intervalText, items: itemsList, totalCals, dirText: `${score}/3` });
-  state.lastMealTime = now;
-  saveState();
-
-  sendToFormspree({
-    "الحدث": "تسجيل وجبة",
-    "العميل": userProfile ? `${userProfile.name} (${userProfile.phone})` : "غير مسجل",
-    "التوقيت": `${getFullArabicDayDate(now)} - ${getTimeStr(now)}`,
-    "الفاصل_الزمني": intervalText,
-    "المكونات": detailsStr,
-    "السعرات": `${totalCals} سعرة`,
-    "مؤشر_الاتجاه": `${score}/3`
-  });
-
-  closeMealModal(); updateDashboard(); renderLogs();
-}
-
-function logGinger() {
-  const q = getQuotas();
-  if (q.ginger >= 3) { alert('وصلت للحد الأقصى اليومي (3 مرات).'); return; }
-  const now = Date.now(), note = `زنجبيل طازج (${q.ginger + 1}/3)`;
-  state.logs.unshift({ id: 'log_'+now, type: 'ginger', timestamp: now, date: getTodayStr(), week: getWeekNumber(), fullDayDate: getFullArabicDayDate(now), timeStr: getTimeStr(now), note });
-  saveState();
-  sendToFormspree({ "الحدث": "مشروب زنجبيل", "العميل": userProfile ? `${userProfile.name} (${userProfile.phone})` : "غير مسجل", "التوقيت": `${getFullArabicDayDate(now)} - ${getTimeStr(now)}`, "التفاصيل": note });
-  updateDashboard(); renderLogs();
-}
-
-function openDropModal() { document.getElementById('dropModal').classList.add('active'); }
-function closeDropModal() { document.getElementById('dropModal').classList.remove('active'); }
-
-function saveDropTime() {
-  const now = Date.now(), reason = document.getElementById('dropReason').value, notes = document.getElementById('dropNotes').value.trim();
-  const since = state.lastMealTime ? `بعد ${Math.floor((now - state.lastMealTime)/3600000)} ساعة و ${Math.round(((now - state.lastMealTime)%3600000)/60000)} دقيقة` : "قبل أول وجبة";
-  state.logs.unshift({ id: 'log_'+now, type: 'drop', timestamp: now, date: getTodayStr(), week: getWeekNumber(), fullDayDate: getFullArabicDayDate(now), timeStr: getTimeStr(now), sinceLastMeal: since, reason, notes });
-  saveState();
-  sendToFormspree({ "الحدث": "Drop Time", "العميل": userProfile ? `${userProfile.name} (${userProfile.phone})` : "غير مسجل", "التوقيت": `${getFullArabicDayDate(now)} - ${getTimeStr(now)}`, "الفاصل": since, "السبب": reason, "ملاحظات": notes });
-  document.getElementById('dropNotes').value = '';
-  closeDropModal(); renderLogs();
-}
-
-function deleteFullLog(idx) {
-  if (!confirm('حذف السجل؟')) return;
-  state.logs.splice(idx, 1);
-  const latest = state.logs.find(l => l.type === 'meal');
-  state.lastMealTime = latest ? latest.timestamp : null;
-  saveState(); updateDashboard(); renderLogs();
-}
-
-function renderLogs() {
-  const q = document.getElementById('searchLog').value.toLowerCase();
-  document.getElementById('logsContainer').innerHTML = state.logs.map((l, idx) => {
-    if (q && !JSON.stringify(l).toLowerCase().includes(q)) return '';
-    if (l.type === 'drop') return `<div class="log-item log-drop"><div class="log-header"><span>📉 Drop Time | ${l.timeStr}</span><button class="del-log-btn" onclick="deleteFullLog(${idx})">حذف</button></div><div>${l.reason} (${l.sinceLastMeal})</div></div>`;
-    if (l.type === 'ginger') return `<div class="log-item"><div class="log-header"><span>☕ ${l.timeStr}</span><button class="del-log-btn" onclick="deleteFullLog(${idx})">حذف</button></div><div>${l.note}</div></div>`;
-    const items = l.items.map(i => `<span class="item-chip">${i.name} (${i.qty}جم)</span>`).join('');
-    return `<div class="log-item"><div class="log-header"><span>🍽️ ${l.fullDayDate} | ${l.timeStr}</span><button class="del-log-btn" onclick="deleteFullLog(${idx})">حذف</button></div><div>الفاصل: ${l.interval}</div><div style="margin:6px 0;">${items}</div><strong>الإجمالي: ${l.totalCals} kcal</strong> <span class="dir-badge">🧭 ${l.dirText}</span></div>`;
-  }).join('') || '<div style="text-align:center; color:#94a3b8;">لا توجد سجلات</div>';
-}
-
-function shareWithSpecialist() {
-  if (!state.logs.length) { alert('لا يوجد سجل'); return; }
-  let r = `*تقرير Nutriclinic Mind*\n`;
-  if (userProfile) r += `👤 *العميل:* ${userProfile.name} (${userProfile.phone})\n`;
-  state.logs.slice(0, 20).forEach(l => {
-    if (l.type === 'meal') r += `🍽️ ${l.fullDayDate} (${l.timeStr}): ${l.items.map(i=>i.name+' '+i.qty+'جم').join(' + ')} = ${l.totalCals} سعرة\n`;
-    else if (l.type === 'drop') r += `📉 Drop Time (${l.timeStr}): ${l.reason} (${l.sinceLastMeal})\n`;
-    else r += `☕ (${l.timeStr}): ${l.note}\n`;
-  });
-  window.open(`https://wa.me/${SPECIALIST_PHONE}?text=${encodeURIComponent(r)}`, '_blank');
-}
-
-initAuth();
-setInterval(updateDashboard, 1000);
-updateDashboard();
-renderLogs();
-</script>
-</body>
-</html>
+  <!-- قاعدة المشروبات الصحية أعلى الصفحة -->
+  <div class="drinks-rule-banner">
+    <div class="drinks-rule-title">☕ بروتوكول المشروبات الصحية اليومي (مسموح بـ 3 مشروبات فقط):</div>
+    <ul class="drinks-rule-list">
+      <li>يُسمح بـ <b>مشروب واحد فقط محلى بالسكر</b> ويكون <b>بعد وجبة بروتينية مباشرة</b> (ممنوع نهائياً في وقت الصيام!).</li>
+  
