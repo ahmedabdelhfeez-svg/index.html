@@ -1324,6 +1324,77 @@ function shareWithSpecialist() {
 
 initAuth();
 setInterval(() => { checkDailyAnd15DayReminders(); updateDashboard(); }, 1000);
+// =========================================================
+// إدارة زر الرجوع في الهاتف (إغلاق القوائم المفتوحة بدلاً من الخروج)
+// =========================================================
+const TRACKED_MODALS = [
+  'goalModal',
+  'calAdjustModal',
+  'drinksModal',
+  'reassessModal',
+  'chatModal',
+  'mealModal',
+  'dropModal',
+  'deterrenceModal'
+];
+
+// دفع حالة وهمية في سجل المتصفح لالتقاط ضغطة زر الرجوع
+function pushModalHistoryState() {
+  try {
+    history.pushState({ modalOpen: true }, '', window.location.href);
+  } catch (e) {}
+}
+
+// مراقبة فتح أي نافذة تلقائياً لإضافة حالة رجوع لها
+const modalObserver = new MutationObserver((mutations) => {
+  mutations.forEach((m) => {
+    if (m.attributeName === 'class') {
+      const target = m.target;
+      if (target.classList.contains('active')) {
+        pushModalHistoryState();
+      }
+    }
+  });
+});
+
+TRACKED_MODALS.forEach((id) => {
+  const el = document.getElementById(id);
+  if (el) modalObserver.observe(el, { attributes: true });
+});
+
+// تأمين الحالة الأساسية عند تحميل الصفحة لمنع الخروج الفوري
+try {
+  history.replaceState({ baseApp: true }, '', window.location.href);
+  history.pushState({ appGuard: true }, '', window.location.href);
+} catch (e) {}
+
+// الاستماع لضغطة زر الرجوع في الهاتف
+window.addEventListener('popstate', function () {
+  // 1. منع الخروج من شاشة الاستجواب الإجبارية إذا كانت مفتوحة
+  const interrog = document.getElementById('interrogationModal');
+  if (interrog && interrog.classList.contains('active')) {
+    pushModalHistoryState();
+    return;
+  }
+
+  // 2. البحث عن أي نافذة مفتوحة حالياً وإغلاقها
+  let closedAny = false;
+  // نغلق نافذة التحذير أولاً إذا كانت فوق نافذة الطعام
+  const priorityOrder = ['deterrenceModal', 'goalModal', 'calAdjustModal', 'drinksModal', 'reassessModal', 'chatModal', 'mealModal', 'dropModal'];
+  
+  for (const id of priorityOrder) {
+    const el = document.getElementById(id);
+    if (el && el.classList.contains('active')) {
+      el.classList.remove('active');
+      closedAny = true;
+      break; // إغلاق النافذة العلوية فقط في كل ضغطة رجوع
+    }
+  }
+
+  // 3. إعادة شحن حارس الرجوع حتى تظل الصفحة محمية في الضغطة التالية
+  pushModalHistoryState();
+});
+
 </script>
 </body>
 </html>
