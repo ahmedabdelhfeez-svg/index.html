@@ -40,6 +40,9 @@
   .cal-budget-card { background: linear-gradient(135deg, #0f172a, #1e293b); color: white; border-radius: 16px; padding: 14px 16px; margin-bottom: 14px; }
   .cal-bar-bg { width: 100%; height: 10px; background: rgba(255,255,255,0.2); border-radius: 10px; overflow: hidden; margin: 8px 0; }
   .cal-bar-fill { height: 100%; background: #10b981; transition: width 0.3s; }
+  .metabolic-pills { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.15); text-align: center; }
+  .m-pill { background: rgba(255,255,255,0.08); border-radius: 9px; padding: 6px 4px; font-size: 0.74rem; }
+  .m-pill strong { display: block; font-size: 0.86rem; color: #38bdf8; margin-top: 2px; }
 
   .reassess-alert { display: none; background: linear-gradient(135deg, #fee2e2, #fecaca); border: 2px solid #ef4444; border-radius: 16px; padding: 14px; margin-bottom: 14px; text-align: center; }
   .reassess-alert.active { display: block; }
@@ -61,7 +64,9 @@
   .quotas { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; text-align: center; font-size: 0.78rem; }
   .q-item { background: #f8fafc; padding: 9px 6px; border-radius: 10px; border: 1.5px solid #cbd5e1; }
   .q-val { font-weight: 900; font-size: 0.96rem; color: var(--primary); display: block; margin-top: 2px; }
-  .vitd-wa-btn { margin-top: 6px; background: #25D366; color: white; border: none; border-radius: 8px; padding: 6px 10px; font-size: 0.78rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+  .vitd-wa-btn { margin-top: 6px; background: #25D366; color: white; border: none; border-radius: 8px; padding: 7px 11px; font-size: 0.78rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+  .vitd-code-btn { margin-top: 6px; background: #0f766e; color: white; border: none; border-radius: 8px; padding: 7px 11px; font-size: 0.78rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+  .vitd-log-btn { margin-top: 6px; width: 100%; background: linear-gradient(135deg, #d97706, #b45309); color: white; border: none; border-radius: 10px; padding: 10px; font-size: 0.85rem; font-weight: 900; cursor: pointer; }
 
   .action-btn { width: 100%; padding: 16px; border: none; border-radius: 15px; font-size: 1.02rem; font-weight: 800; cursor: pointer; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; text-align: center; }
   .action-btn:active { transform: translateY(3px); }
@@ -112,6 +117,7 @@
   .log-chat { background: var(--purple-bg); border-color: #ddd6fe; border-right: 4px solid var(--purple); }
   .log-assess { background: #fffbeb; border-color: #fde68a; border-right: 4px solid #f59e0b; }
   .log-interrog { background: #f0f9ff; border-color: #bae6fd; border-right: 4px solid #0284c7; }
+  .log-vitd { background: #fefce8; border-color: #fde047; border-right: 4px solid #eab308; }
   .log-session-marker { background: #ecfdf5; border: 1.5px dashed #10b981; color: #065f46; text-align: center; font-weight: 800; font-size: 0.8rem; padding: 8px; border-radius: 10px; margin-bottom: 10px; }
   .log-header { display: flex; justify-content: space-between; align-items: center; font-weight: 700; margin-bottom: 6px; border-bottom: 1px dashed #e2e8f0; padding-bottom: 6px; }
   .del-log-btn { background: #fee2e2; color: #dc2626; border: none; border-radius: 6px; padding: 3px 8px; font-size: 0.78rem; font-weight: 700; cursor: pointer; }
@@ -126,6 +132,8 @@
 
   .form-input { width: 100%; padding: 10px; border: 1.5px solid #cbd5e1; border-radius: 10px; margin-bottom: 9px; font-size: 0.9rem; }
   .field-label { font-size: 0.81rem; font-weight: 800; color: #334155; display: block; margin-bottom: 4px; }
+  .live-preview-box { background: #eff6ff; border: 1.5px solid #93c5fd; border-radius: 10px; padding: 9px; margin-top: 8px; font-size: 0.8rem; color: #1e3a8a; line-height: 1.55; }
+  .conflict-alert-box { background: #fef2f2; border: 1.5px solid #ef4444; border-radius: 10px; padding: 9px; margin-top: 8px; font-size: 0.81rem; color: #991b1b; font-weight: 700; line-height: 1.5; }
 </style>
 </head>
 <body>
@@ -134,40 +142,43 @@
 <div id="authScreen" style="position:fixed; inset:0; background:linear-gradient(135deg, #0f766e, #115e59); z-index:9999; display:flex; align-items:center; justify-content:center; padding:14px; overflow-y:auto;">
   <div style="background:white; width:100%; max-width:440px; border-radius:22px; padding:20px; text-align:center; max-height:95vh; overflow-y:auto;">
     <h2 style="color:#0f766e; margin:0 0 4px 0;">Nutriclinic Mind Pro</h2>
-    <p id="authSubtitle" style="color:#64748b; font-size:0.84rem; margin-bottom:12px;">أجب عن الأسئلة التالية بدقة لضبط سعراتك وتقييم حالتك الصحية</p>
+    <p id="authSubtitle" style="color:#64748b; font-size:0.84rem; margin-bottom:12px;">أجب عن الأسئلة التالية بدقة لحساب BMR و TDEE وتحديد درجة السمنة</p>
     
     <div id="registerFields" style="text-align:right;">
       <input type="text" id="userNameInput" class="form-input" placeholder="الاسم ثلاثي">
       <input type="tel" id="userPhoneInput" class="form-input" placeholder="رقم الموبايل">
       
       <div style="background:#f0fdfa; border:1px solid #99f6e4; border-radius:12px; padding:10px; margin-bottom:10px;">
-        <div style="font-size:0.84rem; font-weight:800; color:#0f766e; margin-bottom:6px;">📐 متطلبات حساب السعرات المناسب لجسمك:</div>
+        <div style="font-size:0.84rem; font-weight:800; color:#0f766e; margin-bottom:6px;">📐 القياسات الحيوية (لحساب BMR و TDEE ودرجة السمنة):</div>
         <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px;">
-          <input type="number" id="initWeight" class="form-input" placeholder="الوزن (كجم)" style="margin-bottom:0;">
-          <input type="number" id="initHeight" class="form-input" placeholder="الطول (سم)" style="margin-bottom:0;">
-          <input type="number" id="initAge" class="form-input" placeholder="العمر" style="margin-bottom:0;">
+          <input type="number" id="initWeight" class="form-input" placeholder="الوزن (كجم)" oninput="updateLiveBiometricPreview()" style="margin-bottom:0;">
+          <input type="number" id="initHeight" class="form-input" placeholder="الطول (سم)" oninput="updateLiveBiometricPreview()" style="margin-bottom:0;">
+          <input type="number" id="initAge" class="form-input" placeholder="العمر" oninput="updateLiveBiometricPreview()" style="margin-bottom:0;">
         </div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:7px;">
-          <select id="initGender" class="form-input" style="margin-bottom:0; font-size:0.84rem;">
+          <select id="initGender" class="form-input" onchange="updateLiveBiometricPreview()" style="margin-bottom:0; font-size:0.84rem;">
             <option value="male">ذكر</option>
             <option value="female">أنثى</option>
           </select>
-          <input type="number" id="initWaist" class="form-input" placeholder="محيط البطن (سم)" style="margin-bottom:0;">
+          <input type="number" id="initWaist" class="form-input" placeholder="محيط البطن (سم)" oninput="updateLiveBiometricPreview()" style="margin-bottom:0;">
         </div>
         <label class="field-label" style="margin-top:7px;">معدل نشاطك اليومي:</label>
-        <select id="initActivity" class="form-input" style="margin-bottom:0; font-size:0.83rem;">
-          <option value="1.2">نشاط خامل / عمل مكتبي بدون رياضة</option>
-          <option value="1.375">نشاط خفيف (مشي أو حركة 1-3 أيام/أسبوع)</option>
-          <option value="1.55">نشاط متوسط (تمرين 3-5 أيام/أسبوع)</option>
-          <option value="1.725">نشاط عالي (مجهود بدني يومي مكثف)</option>
+        <select id="initActivity" class="form-input" onchange="updateLiveBiometricPreview()" style="margin-bottom:0; font-size:0.83rem;">
+          <option value="1.2">نشاط خامل / عمل مكتبي بدون رياضة (×1.2)</option>
+          <option value="1.375">نشاط خفيف (مشي أو حركة 1-3 أيام/أسبوع ×1.375)</option>
+          <option value="1.55">نشاط متوسط (تمرين 3-5 أيام/أسبوع ×1.55)</option>
+          <option value="1.725">نشاط عالي (مجهود بدني يومي مكثف ×1.725)</option>
         </select>
+
+        <!-- معاينة فورية لـ BMR و TDEE ودرجة السمنة ورصد التضارب -->
+        <div id="liveBiometricBox" style="display:none;"></div>
       </div>
 
       <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:12px; padding:10px; margin-bottom:10px;">
-        <div style="font-size:0.84rem; font-weight:800; color:#991b1b; margin-bottom:6px;">🩺 الفرز الصحي (استبعاد الأمراض المزمنة والأنيميا):</div>
+        <div style="font-size:0.84rem; font-weight:800; color:#991b1b; margin-bottom:6px;">🩺 الفرز الصحي والأدوية الحالية:</div>
         
         <label class="field-label">1. هل تعاني من أي أمراض مزمنة؟ (سكري، ضغط، غدة درقية، قلب):</label>
-        <select id="chronicDiseaseCheck" class="form-input" style="font-size:0.83rem;">
+        <select id="chronicDiseaseCheck" class="form-input" onchange="toggleMedicationsInput()" style="font-size:0.83rem;">
           <option value="لا أعاني من أي أمراض مزمنة (سليم) ✅">لا أعاني من أي أمراض مزمنة (سليم) ✅</option>
           <option value="سكري أو مقاومة إنسولين مشخصة">سكري أو مقاومة إنسولين مشخصة</option>
           <option value="ارتفاع ضغط الدم">ارتفاع ضغط الدم</option>
@@ -176,11 +187,17 @@
         </select>
 
         <label class="field-label">2. هل تعاني من أنيميا (فقر دم) أو شحوب ودوخة مستمرة؟:</label>
-        <select id="anemiaCheck" class="form-input" style="margin-bottom:0; font-size:0.83rem;">
+        <select id="anemiaCheck" class="form-input" onchange="toggleMedicationsInput()" style="margin-bottom:0; font-size:0.83rem;">
           <option value="لا أعاني من أنيميا (نسبة الهيموجلوبين طبيعية) ✅">لا أعاني من أنيميا (نسبة الهيموجلوبين طبيعية) ✅</option>
           <option value="نعم، مشخص بأنيميا نقص الحديد أو فيتامين B12">نعم، مشخص بأنيميا نقص الحديد أو فيتامين B12</option>
           <option value="أشعر بأعراض أنيميا (دوخة، شحوب، تساقط شعر) ولم أحلل">أشعر بأعراض أنيميا (دوخة، شحوب، تساقط شعر) ولم أحلل</option>
         </select>
+
+        <!-- حقل الأدوية يظهر تلقائياً بمجرد اختيار وجود أي حالة مرضية أو أنيميا -->
+        <div id="medicationsBox" style="display:none; margin-top:9px; padding-top:8px; border-top:1px dashed #fca5a5;">
+          <label class="field-label" style="color:#991b1b;">💊 اكتب أسماء وجرعات الأدوية أو الفيتامينات التي تتناولها حالياً:</label>
+          <textarea id="currentMedicationsInput" rows="2" class="form-input" style="margin-bottom:0; border-color:#ef4444; background:#fff;" placeholder="مثال: جلوكوفاج 500 بعد الغداء، أو أقراص حديد..."></textarea>
+        </div>
       </div>
 
       <div style="background:#fffbeb; border:1px solid #fcd34d; border-radius:12px; padding:10px; margin-bottom:10px;">
@@ -222,12 +239,49 @@
   </div>
 </div>
 
-<!-- شاشة تحذير الممنوعات أو حظر التوقيت -->
+<!-- نافذة تفعيل فيتامين D بالكود الرقمي -->
+<div class="modal" id="vitDModal">
+  <div class="modal-content">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+      <h3 style="margin:0; color:#0f766e; font-size:1.08rem;">☀️ تفعيل بروتوكول فيتامين D 5000 IU</h3>
+      <button type="button" onclick="closeVitDModal()" style="border:none; background:none; font-size:1.8rem; cursor:pointer;">&times;</button>
+    </div>
+    <div style="background:#f0fdf4; border:1.5px solid #86efac; border-radius:12px; padding:11px; font-size:0.84rem; color:#166534; line-height:1.6; margin-bottom:12px;">
+      يُفعّل فيتامين D بعد تقييم حالتك من قِبل الأخصائي. اطلب كود التفعيل عبر واتساب ثم أدخله أدناه لتفعيل زر تسجيل الجرعة اليومية:
+    </div>
+    <button type="button" class="action-btn btn-share-main" onclick="askSpecialistAboutVitD()" style="margin-bottom:14px;">
+      <span>📲 طلب كود تفعيل فيتامين D من الأخصائي (واتساب)</span>
+    </button>
+    <label class="field-label">أدخل كود التفعيل الرقمي المُرسل لك من الأخصائي:</label>
+    <input type="number" id="vitDActivationCodeInput" inputmode="numeric" class="form-input" placeholder="أدخل الكود الرقمي هنا..." style="text-align:center; font-size:1.15rem; font-weight:900; letter-spacing:3px; border-color:#0f766e;">
+    <button type="button" class="action-btn btn-meal-main" onclick="verifyAndActivateVitD()">🔓 تفعيل فيتامين D الآن</button>
+  </div>
+</div>
+
+<!-- نافذة تسجيل تناول فيتامين D مع دهون صحية -->
+<div class="modal" id="vitDLogModal">
+  <div class="modal-content">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+      <h3 style="margin:0; color:#b45309; font-size:1.08rem;">☀️ تسجيل جرعة فيتامين D 5000 IU</h3>
+      <button type="button" onclick="closeVitDLogModal()" style="border:none; background:none; font-size:1.8rem; cursor:pointer;">&times;</button>
+    </div>
+    <div style="background:#fffbeb; border:2px solid #f59e0b; border-radius:12px; padding:12px; font-size:0.86rem; color:#78350f; line-height:1.6; margin-bottom:12px;">
+      ⚠️ <strong>شرط الامتصاص الحيوي:</strong> فيتامين D من الفيتامينات الذائبة في الدهون؛ يجب تناوله وسط أو بعد وجبة تحتوي على <strong>دهون صحية</strong> (مثل شرائح اللحم، الجبن الشيدر/الفلامنك المطبوخ، السمن البلدي، أو النوتيلا الصحية).
+    </div>
+    <label class="dir-q" style="background:#f0fdf4; padding:11px; border-radius:10px; border:1.5px solid #86efac; font-weight:800; color:#166534;">
+      <input type="checkbox" id="vitDFatConfirmCheck" style="transform:scale(1.25); margin-top:2px;">
+      <span>أؤكد أنني تناولت كبسولة فيتامين D 5000 IU الآن مع دهون صحية ✅</span>
+    </label>
+    <button type="button" class="action-btn btn-drinks-main" onclick="confirmLogVitDDose()">💾 تسجيل موعد الجرعة الآن</button>
+  </div>
+</div>
+
+<!-- شاشة تحذير الممنوعات أو حظر التوقيت أو تضارب الأرقام -->
 <div class="deterrence-modal" id="deterrenceModal">
   <div class="deterrence-card">
     <div style="font-size:3rem; margin-bottom:6px;" id="detIcon">⛔💀</div>
-    <h2 style="color:#dc2626; margin:0 0 8px 0;" id="detTitle">تحذير بيوكيميائي صارم!</h2>
-    <div style="background:#fef2f2; border:1px solid #fecaca; padding:12px; border-radius:12px; color:#7f1d1d; font-size:0.92rem; line-height:1.65; font-weight:600; margin-bottom:14px;" id="detBody"></div>
+    <h2 style="color:#dc2626; margin:0 0 8px 0;" id="detTitle">تنبيه هام!</h2>
+    <div style="background:#fef2f2; border:1px solid #fecaca; padding:12px; border-radius:12px; color:#7f1d1d; font-size:0.9rem; line-height:1.65; font-weight:600; margin-bottom:14px; white-space:pre-line;" id="detBody"></div>
     <button type="button" onclick="closeDeterrence()" style="width:100%; padding:14px; background:#dc2626; color:white; border:none; border-radius:12px; font-size:1rem; font-weight:800; cursor:pointer;">فهمت.. سألتزم بالبروتوكول ✅</button>
   </div>
 </div>
@@ -242,7 +296,7 @@
 </div>
 
 <div class="container">
-  <!-- تنبيه ذكاء التوقيت (يتفعل إذا كانت الساعة بعد 7 م أو كان موعد الوجبة القادمة بعد 7 م) -->
+  <!-- تنبيه ذكاء التوقيت -->
   <div class="night-mode-banner" id="nightModeBanner">
     <div style="font-weight:900; font-size:0.95rem; margin-bottom:4px;" id="nightBannerTitle">🌙 وضع المساء مُفعّل تلقائياً (الوجبة بعد 7:00 مساءً)</div>
     <div style="font-size:0.82rem; line-height:1.55;">
@@ -259,15 +313,21 @@
     </ul>
   </div>
 
+  <!-- بطاقة السعرات + BMR + TDEE + درجة السمنة -->
   <div class="cal-budget-card">
     <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.86rem;">
-      <span>🔥 السعرات اليومية المسموحة (لا يمكن تجاوزها):</span>
+      <span>🔥 السعرات اليومية المسموحة:</span>
       <strong id="calBudgetNumbers" style="color:#34d399; font-size:1rem;">0 / 2000 سعرة</strong>
     </div>
     <div class="cal-bar-bg"><div class="cal-bar-fill" id="calBarFill" style="width:0%;"></div></div>
-    <div style="display:flex; justify-content:space-between; font-size:0.77rem; color:#cbd5e1;">
-      <span id="dailyNeedsLabel">احتياجك اليومي الكامل: -- سعرة</span>
-      <span id="phasePhaseLabel" style="color:#fbbf24; font-weight:bold;">المرحلة 1 (أول 15 يوم بدون عجز)</span>
+    <div style="display:flex; justify-content:space-between; font-size:0.76rem; color:#cbd5e1;">
+      <span id="dailyNeedsLabel">TDEE: -- سعرة</span>
+      <span id="phasePhaseLabel" style="color:#fbbf24; font-weight:bold;">المرحلة 1 (بدون عجز)</span>
+    </div>
+    <div class="metabolic-pills">
+      <div class="m-pill">الأيض الأساسي BMR<strong id="bmrValuePill">--</strong></div>
+      <div class="m-pill">الطاقة الكلية TDEE<strong id="tdeeValuePill">--</strong></div>
+      <div class="m-pill">التصنيف (BMI)<strong id="obesityClassPill" style="color:#fbbf24;">--</strong></div>
     </div>
   </div>
 
@@ -304,10 +364,9 @@
       <div class="q-item">مشروبات اليوم<span class="q-val" id="qDrinks">0 / 3</span></div>
       <div class="q-item">نوتيلا مساءً<span class="q-val" id="qNutella">0 / 1</span></div>
       <div class="q-item">بسبوسة الأسبوع<span class="q-val" id="qBasbousa">0 / 2</span></div>
-      <div class="q-item" style="grid-column: span 2; background:#f0fdf4; border-color:#86efac;">
-        <span style="font-weight:800; color:#166534;">☀️ فيتامين D 5000 IU (يُضاف بقرار الأخصائي)</span>
-        <button type="button" class="vitd-wa-btn" onclick="askSpecialistAboutVitD()">📲 اسأل الأخصائي عبر واتساب لإضافته</button>
-      </div>
+      
+      <!-- قسم فيتامين D الديناميكي (قفل بالكود قبل التفعيل / تسجيل الجرعة بعد التفعيل) -->
+      <div class="q-item" id="vitDCardContainer" style="grid-column: span 2; background:#f0fdf4; border-color:#86efac;"></div>
     </div>
   </div>
 
@@ -331,7 +390,7 @@
   </div>
 </div>
 
-<!-- نافذة تحديد الهدف -->
+<!-- نافذة تحديد الهدف (بدون أي مقترحات للوجبة) -->
 <div class="modal" id="goalModal">
   <div class="modal-content">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
@@ -352,7 +411,7 @@
     <div id="calInfoSummary" style="background:#f0f9ff; border:1px solid #bae6fd; padding:10px; border-radius:10px; font-size:0.84rem; margin-bottom:12px; line-height:1.6;"></div>
     <label style="font-weight:bold; font-size:0.86rem; display:block; margin-bottom:6px;">اختر التعديل الموجه من الأخصائي:</label>
     <select id="calorieDeficitSelect" class="form-input" style="border-color:#0284c7; font-weight:bold;">
-      <option value="0">0 سعرة (احتياجك اليومي الكامل بدون عجز - أول 15 يوم)</option>
+      <option value="0">0 سعرة (TDEE الكامل بدون عجز - أول 15 يوم)</option>
       <option value="-250">عجز خفيف (-250 سعرة يومياً)</option>
       <option value="-400">عجز متوسط (-400 سعرة يومياً)</option>
       <option value="-500">عجز قوي (-500 سعرة يومياً)</option>
@@ -389,11 +448,12 @@
       <button type="button" onclick="closeReassessModal()" style="border:none; background:none; font-size:1.8rem; cursor:pointer;">&times;</button>
     </div>
     <div id="initialBaselineSummary" style="background:#f8fafc; padding:10px; border-radius:10px; border:1px solid #cbd5e1; font-size:0.84rem; margin-bottom:12px;"></div>
-    <label style="font-weight:bold; font-size:0.86rem;">أدخل أرقامك الجديدة اليوم (يُحدث احتياج السعرات تلقائياً):</label>
+    <label style="font-weight:bold; font-size:0.86rem;">أدخل أرقامك الجديدة اليوم (يُحدث BMR و TDEE ودرجة السمنة تلقائياً):</label>
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:6px;">
-      <input type="number" id="newWeightInput" class="form-input" placeholder="الوزن الجديد (كجم)">
-      <input type="number" id="newWaistInput" class="form-input" placeholder="محيط البطن (سم)">
+      <input type="number" id="newWeightInput" class="form-input" placeholder="الوزن الجديد (كجم)" oninput="updateReassessPreview()">
+      <input type="number" id="newWaistInput" class="form-input" placeholder="محيط البطن (سم)" oninput="updateReassessPreview()">
     </div>
+    <div id="reassessLivePreview" style="display:none; margin-bottom:9px;"></div>
     <select id="newSymptomInput" class="form-input">
       <option value="تحسن ملحوظ في الطاقة واختفاء الخمول">تحسن ملحوظ في الطاقة واختفاء الخمول ⚡</option>
       <option value="انخفاض شراهة السكريات والشبع السريع">انخفاض شراهة السكريات والشبع السريع ✅</option>
@@ -477,12 +537,107 @@
 const FORMSPREE_URL = "https://formspree.io/f/xaeovayb";
 const SPECIALIST_PHONE = "201099006190";
 
-// دالة ذكاء التوقيت المتقدم:
-// تتحقق مما إذا كانت الساعة الحالية >= 7:00 مساءً OR موعد الوجبة القادمة المستحق (بعد 5 ساعات) سيقع بعد 7:00 مساءً!
+// =========================================================
+// محرك التحليل البيومتري: BMR + TDEE + BMI (درجة السمنة) + رصد تضارب الأرقام
+// =========================================================
+function analyzeBiometrics(weightVal, heightVal, ageVal, genderVal, activityVal, waistVal) {
+  const w = parseFloat(weightVal);
+  const h = parseFloat(heightVal);
+  const age = parseFloat(ageVal) || 28;
+  const act = parseFloat(activityVal) || 1.375;
+  const waist = parseFloat(waistVal);
+  const isMale = genderVal !== 'female';
+
+  const errors = [];
+  const warnings = [];
+
+  if (!isNaN(w) && (w < 30 || w > 280)) errors.push(`الوزن المدخل (${w} كجم) خارج النطاق البشري المنطقي (30 - 280 كجم).`);
+  if (!isNaN(h) && (h < 110 || h > 230)) errors.push(`الطول المدخل (${h} سم) خارج النطاق المنطقي (110 - 230 سم).`);
+  if (!isNaN(age) && (age < 12 || age > 100)) errors.push(`العمر المدخل (${age} سنة) غير منطقي.`);
+  if (!isNaN(waist) && (waist < 45 || waist > 200)) errors.push(`محيط البطن المدخل (${waist} سم) خارج النطاق المنطقي (45 - 200 سم).`);
+
+  // رصد تضارب الأرقام بين الوزن والطول ومحيط البطن (مثل: وزن 55 كجم مع محيط بطن 90 سم)
+  if (!isNaN(w) && !isNaN(waist) && errors.length === 0) {
+    // في الحالات الطبيعية يتناسب محيط البطن مع الوزن؛ إذا كان الوزن <= 62 كجم ومحيط البطن >= 85 سم فهذا تضارب صارخ!
+    if (w <= 62 && waist >= 85) {
+      warnings.push(`⚠️ تضارب في الأرقام: الوزن (${w} كجم) منخفض مقارنة بمحيط البطن (${waist} سم)! يرجى التأكد من دقة قياس شريط البطن عند السرة، أو أن الحالة تمثل سمنة بطنية خفية (TOFI).`);
+    } else if (w >= 95 && waist <= 72) {
+      warnings.push(`⚠️ تضارب في الأرقام: الوزن (${w} كجم) مرتفع جداً مقارنة بمحيط البطن (${waist} سم)! تأكد من صحة القياس.`);
+    } else if (!isNaN(h)) {
+      const whtr = waist / h; // نسبة الخصر إلى الطول
+      if (whtr > 0.65 && w < 65) {
+        warnings.push(`⚠️ عدم تناسق: نسبة محيط البطن إلى الطول مرتفعة (${whtr.toFixed(2)}) رغم انخفاض الوزن (${w} كجم). راجع دقة القياس.`);
+      }
+    }
+  }
+
+  let bmi = 0, obesityClass = "غير محدد", obesityColor = "#fbbf24";
+  if (!isNaN(w) && !isNaN(h) && h > 0) {
+    const hMeters = h / 100;
+    bmi = +(w / (hMeters * hMeters)).toFixed(1);
+    if (bmi < 18.5) { obesityClass = "نحافة (نقص وزن)"; obesityColor = "#38bdf8"; }
+    else if (bmi < 25) { obesityClass = "وزن مثالي طبيعي"; obesityColor = "#34d399"; }
+    else if (bmi < 30) { obesityClass = "زيادة وزن (ما قبل السمنة)"; obesityColor = "#fbbf24"; }
+    else if (bmi < 35) { obesityClass = "سمنة درجة أولى"; obesityColor = "#fb923c"; }
+    else if (bmi < 40) { obesityClass = "سمنة درجة ثانية"; obesityColor = "#f87171"; }
+    else { obesityClass = "سمنة مفرطة (درجة ثالثة)"; obesityColor = "#ef4444"; }
+  }
+
+  let waistRisk = "";
+  if (!isNaN(waist)) {
+    const limit = isMale ? 94 : 80;
+    const highLimit = isMale ? 102 : 88;
+    if (waist >= highLimit) waistRisk = "خطر سمنة حشوية مرتفع جداً";
+    else if (waist >= limit) waistRisk = "بداية تراكم دهون حشوية";
+    else waistRisk = "محيط بطن آمن";
+  }
+
+  // حساب BMR بمعادلة Mifflin-St Jeor الدقيقة
+  const bmr = (!isNaN(w) && !isNaN(h))
+    ? Math.round((10 * w) + (6.25 * h) - (5 * age) + (isMale ? 5 : -161))
+    : 1500;
+  const tdee = Math.round(bmr * act);
+
+  return { bmr, tdee, bmi, obesityClass, obesityColor, waistRisk, errors, warnings };
+}
+
+function updateLiveBiometricPreview() {
+  const w = document.getElementById('initWeight').value;
+  const h = document.getElementById('initHeight').value;
+  const age = document.getElementById('initAge').value;
+  const gender = document.getElementById('initGender').value;
+  const act = document.getElementById('initActivity').value;
+  const waist = document.getElementById('initWaist').value;
+  const box = document.getElementById('liveBiometricBox');
+
+  if (!w || !h) { box.style.display = 'none'; return; }
+  const res = analyzeBiometrics(w, h, age, gender, act, waist);
+  box.style.display = 'block';
+
+  let html = `<div class="live-preview-box">
+    📊 <strong>التحليل الفوري لجسمك:</strong><br>
+    • مؤشر الكتلة (BMI): <b>${res.bmi}</b> — التصنيف: <b>${res.obesityClass}</b> ${res.waistRisk ? `(${res.waistRisk})` : ''}<br>
+    • معدل الأيض الأساسي (BMR): <b>${res.bmr} سعرة</b><br>
+    • إجمالي الطاقة اليومية (TDEE): <b>${res.tdee} سعرة</b>
+  </div>`;
+
+  if (res.errors.length || res.warnings.length) {
+    html += `<div class="conflict-alert-box">${[...res.errors, ...res.warnings].join('<br>')}</div>`;
+  }
+  box.innerHTML = html;
+}
+
+function toggleMedicationsInput() {
+  const chronic = document.getElementById('chronicDiseaseCheck').value;
+  const anemia = document.getElementById('anemiaCheck').value;
+  const hasCondition = !chronic.includes('(سليم)') || !anemia.includes('طبيعية)');
+  document.getElementById('medicationsBox').style.display = hasCondition ? 'block' : 'none';
+}
+
 function getTimingIntelligence() {
   const now = new Date();
   const currentHour = now.getHours();
-  const isNowNight = currentHour >= 19; // من 7:00 مساءً إلى 11:59 مساءً
+  const isNowNight = currentHour >= 19;
 
   let nextMealTs = null;
   let isNextMealNight = isNowNight;
@@ -491,18 +646,10 @@ function getTimingIntelligence() {
     nextMealTs = state.lastMealTime + (5 * 3600 * 1000);
     const nextMealDate = new Date(nextMealTs);
     const nextHour = nextMealDate.getHours();
-    // إذا كان موعد الوجبة القادمة بعد 7 مساءً (19:00 - 23:59) أو في فجر اليوم التالي قبل 5 صباحاً
-    if (nextHour >= 19 || nextHour < 5) {
-      isNextMealNight = true;
-    }
+    if (nextHour >= 19 || nextHour < 5) isNextMealNight = true;
   }
 
-  return {
-    isNowNight,
-    isNextMealNight,
-    isNightRestricted: isNowNight || isNextMealNight,
-    nextMealTs
-  };
+  return { isNowNight, isNextMealNight, isNightRestricted: isNowNight || isNextMealNight, nextMealTs };
 }
 
 let memoryFallback = {};
@@ -510,21 +657,17 @@ function safeGetStorage(key) {
   try {
     const val = localStorage.getItem(key);
     return val ? JSON.parse(val) : (memoryFallback[key] || null);
-  } catch (e) {
-    return memoryFallback[key] || null;
-  }
+  } catch (e) { return memoryFallback[key] || null; }
 }
 function safeSetStorage(key, obj) {
   memoryFallback[key] = obj;
-  try {
-    localStorage.setItem(key, JSON.stringify(obj));
-  } catch (e) {}
+  try { localStorage.setItem(key, JSON.stringify(obj)); } catch (e) {}
 }
 function safeClearStorage() {
   memoryFallback = {};
   try {
     localStorage.removeItem('nutriclinic_user');
-    localStorage.removeItem('nutriclinic_data_v10');
+    localStorage.removeItem('nutriclinic_data_v11');
   } catch (e) {}
 }
 
@@ -645,7 +788,6 @@ const ENCYCLOPEDIA = [
   { id: 'nutella', type: 'allowed', isCarb: false, name: 'نوتيلا صحية (محضرة بسكر ستيفيا - مساءً)', calPer100: 510, baseQty: 25, min: 10, max: 60, reqFreeze: false, isNutella: true, recipes: 'طريقة التحضير: سمسم محمص مطحون + فول سوداني مطحون + كاكاو خام + زيت بذور الكتان + تحلية بسكر ستيفيا الطبيعي فقط (مسموحة مساءً ضمن حصة اليوم 1/1).' },
   { id: 'salad', type: 'allowed', isCarb: false, name: 'سلطة خضراء وجزر مسلوق', calPer100: 35, baseQty: 180, min: 50, max: 300, reqFreeze: false, isSalad: true, recipes: 'بقدونس + كزبرة + خيار مقشر + طماطم + جزر مسلوق + ليمون (مسموح نهاراً وليلاً ✅).' },
   
-  // النشويات (مسموحة فقط إذا كانت الوجبة قبل الساعة 7:00 مساءً)
   { id: 'rice', type: 'allowed', isCarb: true, name: 'أرز مجمد 12 ساعة', calPer100: 130, baseQty: 140, min: 50, max: 400, reqFreeze: true, recipes: 'يُطهى ويُجمد 12 ساعة في الفريزر ثم يُسخن بالبخار. (مسموح للوجبات قبل 7:00 مساءً فقط ⏰).' },
   { id: 'mahshi', type: 'allowed', isCarb: true, name: 'محشي مجمد 12 ساعة', calPer100: 145, baseQty: 180, min: 50, max: 400, reqFreeze: true, recipes: 'يُجمد بعد التسوية 12 ساعة كاملة ثم يُسخن. (مسموح للوجبات قبل 7:00 مساءً فقط ⏰).' },
   { id: 'potato_frozen', type: 'allowed', isCarb: true, name: 'بطاطس محمرة ثم مجمدة 12 ساعة', calPer100: 165, baseQty: 150, min: 50, max: 350, reqFreeze: true, recipes: 'تُحمر وتُبرد ثم تُجمد 12 ساعة في الفريزر لتحويل النشا إلى نشا مقاوم، ثم تُسخن. (مسموح للوجبات قبل 7:00 مساءً فقط ⏰).' },
@@ -653,7 +795,6 @@ const ENCYCLOPEDIA = [
   { id: 'banana', type: 'allowed', isCarb: true, name: 'موز (فاكهة مسموحة - يُدمج مع الوجبة نهاراً)', calPer100: 89, baseQty: 100, min: 50, max: 200, reqFreeze: false, isBanana: true, recipes: 'الفاكهة الوحيدة المسموحة؛ ممنوع تناولها منفردة، يجب دمجها داخل الوجبة قبل 7:00 مساءً فقط.' },
   { id: 'basbousa', type: 'allowed', isCarb: true, name: 'بسبوسة سميد (مرتين أسبوعياً نهاراً)', calPer100: 360, baseQty: 100, min: 30, max: 250, reqFreeze: false, isBasbousa: true, recipes: 'سميد خشن فقط بدون دقيق أبيض + سمن بلدي (للوجبات قبل 7:00 مساءً فقط ⏰).' },
 
-  // الممنوعات الدائمة
   { id: 'forb_fruits', type: 'forbidden', name: 'باقي الفواكه (مانجو / عنب / تين / عصائر)', warning: 'الفاكهة الوحيدة المسموحة في البروتوكول هي الموز مدمجاً مع الوجبة نهاراً؛ باقي الفواكه ترفع الفركتوز وتُربك الإنسولين.' },
   { id: 'forb_coffee', type: 'forbidden', name: 'القهوة والنسكافيه', warning: 'ترفع الكورتيزول وتشتت التركيز وتضطرب معها مستويات السكر. استبدلها بقائمة المشروبات الصحية!' },
   { id: 'forb_fries', type: 'forbidden', name: 'بطاطس مقلية طازجة', warning: 'ترفع الإنسولين فوراً وتوقف حرق الدهون 24 ساعة! يجب تجميدها 12 ساعة أولاً وتناولها قبل 7 مساءً.' },
@@ -664,7 +805,7 @@ const ENCYCLOPEDIA = [
 ];
 
 let userProfile = safeGetStorage('nutriclinic_user');
-let state = safeGetStorage('nutriclinic_data_v10') || {
+let state = safeGetStorage('nutriclinic_data_v11') || {
   lastMealTime: null,
   lastActiveDate: null,
   dailyQuoteIdx: 0,
@@ -673,11 +814,13 @@ let state = safeGetStorage('nutriclinic_data_v10') || {
   lastSharedTs: 0,
   sessionCount: 1,
   calorieAdjustment: 0,
+  vitDActivated: false,
+  vitDActivationCode: null,
   openCount: 0,
   assessments: [],
   logs: []
 };
-function saveState() { safeSetStorage('nutriclinic_data_v10', state); }
+function saveState() { safeSetStorage('nutriclinic_data_v11', state); }
 
 function getTodayStr() { return new Date().toISOString().split('T')[0]; }
 function getFullArabicDayDate(ts) { return new Date(ts).toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric' }); }
@@ -688,15 +831,8 @@ function getWeekNumber() {
 }
 
 function calculateDailyCalories() {
-  if (!userProfile) return { fullNeeds: 2000, allowedDaily: 2000, daysSinceStart: 0, adj: 0 };
-  const w = parseFloat(userProfile.weight) || 75;
-  const h = parseFloat(userProfile.height) || 170;
-  const age = parseFloat(userProfile.age) || 28;
-  const act = parseFloat(userProfile.activity) || 1.375;
-  const isMale = userProfile.gender !== 'female';
-
-  const basal = (10 * w) + (6.25 * h) - (5 * age) + (isMale ? 5 : -161);
-  const fullNeeds = Math.round(basal * act);
+  if (!userProfile) return { bmr: 1500, tdee: 2000, allowedDaily: 2000, daysSinceStart: 0, adj: 0, bmi: 0, obesityClass: "غير محدد", obesityColor: "#fbbf24" };
+  const bio = analyzeBiometrics(userProfile.weight, userProfile.height, userProfile.age, userProfile.gender, userProfile.activity, userProfile.waist);
 
   const startTs = state.startProgramTs || Date.now();
   const daysSinceStart = Math.floor((Date.now() - startTs) / (1000 * 3600 * 24));
@@ -704,8 +840,18 @@ function calculateDailyCalories() {
   let adj = state.calorieAdjustment || 0;
   if (daysSinceStart < 15 && adj < 0) adj = 0;
 
-  const allowedDaily = Math.max(1200, fullNeeds + adj);
-  return { fullNeeds, allowedDaily, daysSinceStart, adj };
+  const allowedDaily = Math.max(1200, bio.tdee + adj);
+  return {
+    bmr: bio.bmr,
+    tdee: bio.tdee,
+    fullNeeds: bio.tdee,
+    allowedDaily,
+    daysSinceStart,
+    adj,
+    bmi: bio.bmi,
+    obesityClass: bio.obesityClass,
+    obesityColor: bio.obesityColor
+  };
 }
 
 function getTodayConsumedCalories() {
@@ -726,7 +872,7 @@ function initAuth() {
   } else {
     userProfile = null;
     document.getElementById('registerFields').style.display = 'block';
-    document.getElementById('authSubtitle').innerText = 'أجب عن الأسئلة التالية بدقة لضبط سعراتك وتقييم حالتك الصحية';
+    document.getElementById('authSubtitle').innerText = 'أجب عن الأسئلة التالية بدقة لحساب BMR و TDEE وتحديد درجة السمنة';
     document.getElementById('resetAccountBtn').style.display = 'none';
   }
 }
@@ -756,21 +902,35 @@ function handleAuth() {
     const age = document.getElementById('initAge').value.trim();
     const gender = document.getElementById('initGender').value;
     const activity = document.getElementById('initActivity').value;
-    const initWaist = document.getElementById('initWaist').value.trim() || "غير محدد";
+    const initWaist = document.getElementById('initWaist').value.trim();
     const chronicDisease = document.getElementById('chronicDiseaseCheck').value;
     const anemiaStatus = document.getElementById('anemiaCheck').value;
+    const medications = document.getElementById('currentMedicationsInput').value.trim() || "لا يتناول أدوية حالياً";
     const initCraving = document.getElementById('initCraving').value;
 
-    if (!name || !phone || !weight || !height || !age || pin.length < 4) {
-      err.innerText = "⚠️ يرجى إكمال جميع الحقول (الاسم، الموبايل، الوزن، الطول، العمر، ورمز دخول من 4 أرقام).";
+    if (!name || !phone || !weight || !height || !age || !initWaist || pin.length < 4) {
+      err.innerText = "⚠️ يرجى إكمال جميع الحقول (الاسم، الموبايل، الوزن، الطول، العمر، محيط البطن، ورمز دخول من 4 أرقام).";
       err.style.display = "block";
       return;
     }
 
+    const bioCheck = analyzeBiometrics(weight, height, age, gender, activity, initWaist);
+    if (bioCheck.errors.length > 0) {
+      err.innerText = bioCheck.errors.join(' ');
+      err.style.display = "block";
+      return;
+    }
+
+    // رصد تضارب الأرقام (مثل وزن 55 كجم ومحيط بطن 90 سم) وتنبيه المريض قبل الحفظ
+    if (bioCheck.warnings.length > 0) {
+      const proceed = confirm(`${bioCheck.warnings.join('\n')}\n\nهل أنت متأكد من أن هذه القياسات صحيحة وتريد المتابعة بها؟`);
+      if (!proceed) return;
+    }
+
     const now = Date.now();
     userProfile = {
-      name, phone, pin: String(pin), weight, height, age, gender, activity,
-      chronicDisease, anemiaStatus, goalKey: 'insulin'
+      name, phone, pin: String(pin), weight, height, age, gender, activity, waist: initWaist,
+      chronicDisease, anemiaStatus, medications, goalKey: 'insulin'
     };
     safeSetStorage('nutriclinic_user', userProfile);
 
@@ -783,12 +943,13 @@ function handleAuth() {
       lastSharedTs: 0,
       sessionCount: 1,
       calorieAdjustment: 0,
+      vitDActivated: false,
+      vitDActivationCode: null,
       openCount: 1,
       assessments: [],
       logs: []
     };
 
-    const stats = calculateDailyCalories();
     const assessRecord = {
       id: 'log_' + now,
       type: 'assessment',
@@ -800,23 +961,30 @@ function handleAuth() {
       timeStr: getTimeStr(now),
       weight,
       waist: initWaist,
+      bmi: bioCheck.bmi,
+      obesityClass: bioCheck.obesityClass,
+      bmr: bioCheck.bmr,
+      tdee: bioCheck.tdee,
       symptom: initCraving,
       chronicDisease,
-      anemiaStatus
+      anemiaStatus,
+      medications,
+      conflictNote: bioCheck.warnings.join(' | ')
     };
     state.assessments.push(assessRecord);
     state.logs.unshift(assessRecord);
     saveState();
 
     sendToFormspree({
-      "الحدث": "🆕 تسجيل عميل جديد + فرز الأمراض المزمنة والأنيميا",
+      "الحدث": "🆕 تسجيل عميل جديد + تحليل BMR/TDEE ودرجة السمنة",
       "الاسم": name,
       "الموبايل": phone,
-      "البيانات_الحيوية": `وزن ${weight}كجم | طول ${height}سم | عمر ${age}`,
-      "الاحتياج_اليومي_المحسب": `${stats.fullNeeds} سعرة (أول 15 يوم بدون عجز)`,
+      "القياسات": `وزن ${weight}كجم | طول ${height}سم | عمر ${age} | بطن ${initWaist}سم`,
+      "التصنيف_والأيض": `BMI: ${bioCheck.bmi} (${bioCheck.obesityClass}) | BMR: ${bioCheck.bmr} | TDEE: ${bioCheck.tdee} سعرة`,
+      "ملاحظة_تضارب_الأرقام": bioCheck.warnings.length ? bioCheck.warnings.join(' | ') : "قياسات متناسقة ✅",
       "الأمراض_المزمنة": chronicDisease,
       "حالة_الأنيميا": anemiaStatus,
-      "محيط_البطن": `${initWaist} سم`,
+      "الأدوية_الحالية": medications,
       "المشكلة_الأساسية": initCraving,
       "التوقيت": `${getFullArabicDayDate(now)} - ${getTimeStr(now)}`
     });
@@ -894,12 +1062,115 @@ function logoutUser() {
   initAuth();
 }
 
+// =========================================================
+// نظام فيتامين D: التفعيل بكود يقبل القسمة على 2 و 4 و 8 + التسجيل مع دهون صحية
+// =========================================================
+function openVitDActivationModal() {
+  document.getElementById('vitDActivationCodeInput').value = '';
+  document.getElementById('vitDModal').classList.add('active');
+}
+function closeVitDModal() { document.getElementById('vitDModal').classList.remove('active'); }
+
 function askSpecialistAboutVitD() {
   const name = userProfile ? userProfile.name : "عميل";
   const chronic = (userProfile && userProfile.chronicDisease) ? userProfile.chronicDisease : "غير محدد";
   const anemia = (userProfile && userProfile.anemiaStatus) ? userProfile.anemiaStatus : "غير محدد";
-  const msg = `السلام عليكم دكتور، أنا ${name}.\nأستفسر عن إضافة جرعة فيتامين D 5000 IU إلى جدولي اليومي وهل تناسب حالتي؟\n• الأمراض المزمنة: ${chronic}\n• الأنيميا: ${anemia}`;
+  const meds = (userProfile && userProfile.medications) ? userProfile.medications : "لا يوجد";
+  const msg = `السلام عليكم دكتور، أنا ${name}.\nأرجو تزويدي بكود تفعيل جرعة فيتامين D 5000 IU في التطبيق بعد تقييم حالتي:\n• الأمراض المزمنة: ${chronic}\n• الأنيميا: ${anemia}\n• الأدوية الحالية: ${meds}`;
   window.open(`https://wa.me/${SPECIALIST_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function verifyAndActivateVitD() {
+  const raw = document.getElementById('vitDActivationCodeInput').value.trim();
+  const codeNum = parseInt(raw, 10);
+
+  // التحقق من أن الكود رقم صحيح موجب يقبل القسمة على 2 و 4 و 8 (أي يقبل القسمة على 8)
+  if (!raw || isNaN(codeNum) || codeNum <= 0 || (codeNum % 2 !== 0) || (codeNum % 4 !== 0) || (codeNum % 8 !== 0)) {
+    alert('⛔ كود التفعيل غير صحيح! يجب إدخال الكود الرقمي الصحيح المرسل من الأخصائي.');
+    return;
+  }
+
+  state.vitDActivated = true;
+  state.vitDActivationCode = codeNum;
+  saveState();
+
+  sendToFormspree({
+    "الحدث": "🔓 تفعيل بروتوكول فيتامين D 5000 IU",
+    "العميل": userProfile ? `${userProfile.name} (${userProfile.phone})` : "",
+    "كود_التفعيل_المستخدم": codeNum
+  });
+
+  closeVitDModal();
+  updateDashboard();
+  alert('🎉 تم تفعيل بروتوكول فيتامين D 5000 IU بنجاح! يمكنك الآن تسجيل موعد الجرعة يومياً مع تأكيد تناولها مع دهون صحية.');
+}
+
+function openVitDLogModal() {
+  document.getElementById('vitDFatConfirmCheck').checked = false;
+  document.getElementById('vitDLogModal').classList.add('active');
+}
+function closeVitDLogModal() { document.getElementById('vitDLogModal').classList.remove('active'); }
+
+function confirmLogVitDDose() {
+  if (!document.getElementById('vitDFatConfirmCheck').checked) {
+    alert('⚠️ يجب تأكيد تناول كبسولة فيتامين D مع وجبة تحتوي على دهون صحية لضمان الامتصاص!');
+    return;
+  }
+  const now = Date.now();
+  state.logs.unshift({
+    id: 'log_' + now,
+    type: 'vitd',
+    timestamp: now,
+    date: getTodayStr(),
+    week: getWeekNumber(),
+    fullDayDate: getFullArabicDayDate(now),
+    timeStr: getTimeStr(now),
+    note: 'جرعة فيتامين D 5000 IU (تم التناول مع دهون صحية ✅)'
+  });
+  saveState();
+
+  sendToFormspree({
+    "الحدث": "☀️ تسجيل تناول فيتامين D 5000 IU",
+    "العميل": userProfile ? `${userProfile.name} (${userProfile.phone})` : "",
+    "الموعد": `${getFullArabicDayDate(now)} - ${getTimeStr(now)}`,
+    "التأكيد": "تم التناول مع دهون صحية ✅"
+  });
+
+  closeVitDLogModal();
+  updateDashboard();
+  renderLogs();
+  alert('✅ تم تسجيل موعد جرعة فيتامين D مع الدهون الصحية في سجلك بنجاح.');
+}
+
+function renderVitDSection() {
+  const container = document.getElementById('vitDCardContainer');
+  if (!container) return;
+
+  if (!state.vitDActivated) {
+    container.style.background = '#f0fdf4';
+    container.style.borderColor = '#86efac';
+    container.innerHTML = `
+      <span style="font-weight:800; color:#166534; display:block;">☀️ فيتامين D 5000 IU (مغلق — يُفعّل بكود من الأخصائي)</span>
+      <div style="display:flex; gap:6px; justify-content:center; flex-wrap:wrap; margin-top:4px;">
+        <button type="button" class="vitd-wa-btn" onclick="askSpecialistAboutVitD()">📲 طلب الكود (واتساب)</button>
+        <button type="button" class="vitd-code-btn" onclick="openVitDActivationModal()">🔑 إدخال كود التفعيل</button>
+      </div>
+    `;
+  } else {
+    const today = getTodayStr();
+    const takenToday = state.logs.some(l => l.type === 'vitd' && l.date === today);
+    container.style.background = takenToday ? '#fefce8' : '#fffbeb';
+    container.style.borderColor = '#f59e0b';
+    container.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center; font-weight:800; color:#92400e;">
+        <span>☀️ فيتامين D 5000 IU (مُفعّل ✅)</span>
+        <span>${takenToday ? '1 / 1 اليوم ✅' : '0 / 1 اليوم'}</span>
+      </div>
+      <button type="button" class="vitd-log-btn" onclick="openVitDLogModal()">
+        ${takenToday ? '➕ تسجيل جرعة إضافية / تحديث الموعد' : '💊 اضغط لتسجيل موعد الجرعة الآن (مع دهون صحية)'}
+      </button>
+    `;
+  }
 }
 
 function checkDailyAnd15DayReminders() {
@@ -942,6 +1213,7 @@ function checkDailyAnd15DayReminders() {
   document.getElementById('dailyMotivationalMsg').innerText = MOTIVATIONAL_QUOTES[state.dailyQuoteIdx || 0];
 }
 
+// نافذة تحديد الهدف: تعرض الهدف والنتيجة المتوقعة فقط بدون مقترحات وجبات
 function openGoalModal() {
   const currentKey = (userProfile && userProfile.goalKey) ? userProfile.goalKey : 'insulin';
   let html = '';
@@ -951,8 +1223,7 @@ function openGoalModal() {
     html += `
       <div onclick="selectNewGoal('${key}')" style="border:2.5px solid ${isCurrent ? '#0f766e' : '#cbd5e1'}; background:${isCurrent ? '#f0fdfa' : '#fff'}; border-radius:14px; padding:13px; margin-bottom:10px; cursor:pointer;">
         <div style="font-weight:900; color:#0f766e; font-size:0.96rem; margin-bottom:4px;">${isCurrent ? '✅ ' : '🎯 '}${g.title}</div>
-        <div style="font-size:0.83rem; color:#065f46; line-height:1.5; margin-bottom:6px;">${g.marketingPromise}</div>
-        <div style="font-size:0.79rem; background:#ecfdf5; padding:6px 9px; border-radius:8px; color:#047857; font-weight:bold;">🍽️ مقترح الوجبة: ${g.suggestedMeal}</div>
+        <div style="font-size:0.83rem; color:#065f46; line-height:1.5;">${g.marketingPromise}</div>
       </div>
     `;
   }
@@ -979,9 +1250,10 @@ function openCalorieAdjustModal() {
   const stats = calculateDailyCalories();
   const infoBox = document.getElementById('calInfoSummary');
   infoBox.innerHTML = `
-    • احتياج جسمك اليومي الكامل من الطاقة: <b>${stats.fullNeeds} سعرة</b><br>
+    • التصنيف الحيوي: <b>${stats.obesityClass}</b> (BMI: ${stats.bmi})<br>
+    • معدل الأيض الأساسي (BMR): <b>${stats.bmr} سعرة</b> | إجمالي الطاقة (TDEE): <b>${stats.tdee} سعرة</b><br>
     • الأيام المنقضية منذ البداية: <b>${stats.daysSinceStart} يوم</b><br>
-    ${stats.daysSinceStart < 15 ? '<span style="color:#b45309; font-weight:bold;">⚠️ تنبيه: أنت في أول 15 يوم من البرنامج، النظام يثبت سعراتك عند احتياجك الكامل بدون عجز تماماً.</span>' : '<span style="color:#059669; font-weight:bold;">✅ أتممت 15 يوماً! يمكنك الآن ضبط العجز المناسب حسب توجيه الأخصائي.</span>'}
+    ${stats.daysSinceStart < 15 ? '<span style="color:#b45309; font-weight:bold;">⚠️ تنبيه: أنت في أول 15 يوم من البرنامج، النظام يثبت سعراتك عند TDEE الكامل بدون عجز تماماً.</span>' : '<span style="color:#059669; font-weight:bold;">✅ أتممت 15 يوماً! يمكنك الآن ضبط العجز المناسب حسب توجيه الأخصائي.</span>'}
   `;
   document.getElementById('calorieDeficitSelect').value = String(state.calorieAdjustment || 0);
   document.getElementById('calAdjustModal').classList.add('active');
@@ -992,7 +1264,7 @@ function saveCalorieAdjustment() {
   const stats = calculateDailyCalories();
   const chosenAdj = parseInt(document.getElementById('calorieDeficitSelect').value) || 0;
   if (stats.daysSinceStart < 15 && chosenAdj < 0) {
-    alert('⛔ ممنوع تفعيل عجز السعرات خلال أول 15 يوماً! تستمر السعرات عند احتياجك الكامل بدون عجز حتى إتمام 15 يوماً.');
+    alert('⛔ ممنوع تفعيل عجز السعرات خلال أول 15 يوماً! تستمر السعرات عند TDEE الكامل بدون عجز حتى إتمام 15 يوماً.');
     return;
   }
   state.calorieAdjustment = chosenAdj;
@@ -1074,14 +1346,31 @@ function logSelectedDrink(drinkId) {
   renderLogs();
 }
 
+function updateReassessPreview() {
+  if (!userProfile) return;
+  const w = document.getElementById('newWeightInput').value || userProfile.weight;
+  const waist = document.getElementById('newWaistInput').value || userProfile.waist;
+  const box = document.getElementById('reassessLivePreview');
+  const res = analyzeBiometrics(w, userProfile.height, userProfile.age, userProfile.gender, userProfile.activity, waist);
+  box.style.display = 'block';
+  let html = `<div class="live-preview-box">
+    📊 <strong>التحديث الجديد:</strong> BMI: <b>${res.bmi}</b> (<b>${res.obesityClass}</b>) | BMR: <b>${res.bmr}</b> | TDEE: <b>${res.tdee} سعرة</b>
+  </div>`;
+  if (res.errors.length || res.warnings.length) {
+    html += `<div class="conflict-alert-box">${[...res.errors, ...res.warnings].join('<br>')}</div>`;
+  }
+  box.innerHTML = html;
+}
+
 function openReassessModal() {
   const init = state.assessments.find(a => a.isInitial) || state.assessments[0];
   const box = document.getElementById('initialBaselineSummary');
   if (init) {
-    box.innerHTML = `📌 <strong>تذكير بنقطة بدايتك (${init.fullDayDate}):</strong><br>الوزن: <b>${init.weight} كجم</b> | محيط البطن: <b>${init.waist} سم</b><br>الحالة الصحية: <b>${init.symptom}</b>`;
+    box.innerHTML = `📌 <strong>تذكير بنقطة بدايتك (${init.fullDayDate}):</strong><br>الوزن: <b>${init.weight} كجم</b> | محيط البطن: <b>${init.waist} سم</b>${init.obesityClass ? ` | التصنيف: <b>${init.obesityClass}</b>` : ''}<br>الحالة الصحية: <b>${init.symptom}</b>`;
   } else {
     box.innerHTML = "سجّل قياساتك الحالية لتكون مرجعاً يقيس تقدمك كل 15 يوماً.";
   }
+  document.getElementById('reassessLivePreview').style.display = 'none';
   document.getElementById('reassessModal').classList.add('active');
 }
 function closeReassessModal() { document.getElementById('reassessModal').classList.remove('active'); }
@@ -1092,8 +1381,22 @@ function saveNewAssessment() {
   const sym = document.getElementById('newSymptomInput').value;
   if (!w && !waist) { alert('يرجى إدخال الوزن أو محيط البطن الجديد.'); return; }
 
-  if (w && userProfile) {
-    userProfile.weight = w;
+  const finalW = w || (userProfile ? userProfile.weight : 70);
+  const finalWaist = waist || (userProfile ? userProfile.waist : 80);
+  const bioCheck = analyzeBiometrics(finalW, userProfile ? userProfile.height : 170, userProfile ? userProfile.age : 28, userProfile ? userProfile.gender : 'male', userProfile ? userProfile.activity : 1.375, finalWaist);
+
+  if (bioCheck.errors.length > 0) {
+    alert(bioCheck.errors.join('\n'));
+    return;
+  }
+  if (bioCheck.warnings.length > 0) {
+    const proceed = confirm(`${bioCheck.warnings.join('\n')}\n\nهل تريد اعتماد هذه الأرقام؟`);
+    if (!proceed) return;
+  }
+
+  if (userProfile) {
+    if (w) userProfile.weight = w;
+    if (waist) userProfile.waist = waist;
     safeSetStorage('nutriclinic_user', userProfile);
   }
 
@@ -1107,9 +1410,14 @@ function saveNewAssessment() {
     week: getWeekNumber(),
     fullDayDate: getFullArabicDayDate(now),
     timeStr: getTimeStr(now),
-    weight: w || "غير مسجل",
-    waist: waist || "غير مسجل",
-    symptom: sym
+    weight: finalW,
+    waist: finalWaist,
+    bmi: bioCheck.bmi,
+    obesityClass: bioCheck.obesityClass,
+    bmr: bioCheck.bmr,
+    tdee: bioCheck.tdee,
+    symptom: sym,
+    conflictNote: bioCheck.warnings.join(' | ')
   };
   state.lastAssessmentTs = now;
   state.assessments.push(record);
@@ -1117,10 +1425,12 @@ function saveNewAssessment() {
   saveState();
 
   sendToFormspree({
-    "الحدث": "📊 تحديث التقييم الدوري (15 يوم)",
+    "الحدث": "📊 تحديث التقييم الدوري + BMR/TDEE",
     "العميل": userProfile ? `${userProfile.name} (${userProfile.phone})` : "غير مسجل",
-    "الوزن_الجديد": `${w} كجم`,
-    "محيط_البطن_الجديد": `${waist} سم`,
+    "الوزن_الجديد": `${finalW} كجم`,
+    "محيط_البطن_الجديد": `${finalWaist} سم`,
+    "التصنيف_والأيض": `BMI: ${bioCheck.bmi} (${bioCheck.obesityClass}) | BMR: ${bioCheck.bmr} | TDEE: ${bioCheck.tdee}`,
+    "ملاحظة_التضارب": bioCheck.warnings.length ? bioCheck.warnings.join(' | ') : "متناسق ✅",
     "حالة_الأعراض": sym,
     "التوقيت": `${getFullArabicDayDate(now)} - ${getTimeStr(now)}`
   });
@@ -1131,7 +1441,7 @@ function saveNewAssessment() {
   checkDailyAnd15DayReminders();
   updateDashboard();
   renderLogs();
-  alert('🎉 رائع! تم حفظ تقييمك الجديد وتحديث حسابات السعرات.');
+  alert('🎉 تم حفظ تقييمك الجديد وتحديث BMR و TDEE ودرجة السمنة.');
 }
 
 let selectedIds = new Set(), draftConfigs = {}, currentEncFilter = 'all', selectedMoodCategory = "⚠️ لخبطت في الأكل / أكلت ممنوع";
@@ -1164,7 +1474,8 @@ function updateDashboard() {
   document.getElementById('qNutella').innerText = `${q.nutella} / 1`;
   document.getElementById('qBasbousa').innerText = `${q.basbousa} / 2`;
 
-  // تحديث شارة الجلسة وعدد السجلات الجديدة غير المرسلة
+  renderVitDSection();
+
   const newCount = getNewUnsentLogs().length;
   const sessNum = state.sessionCount || 1;
   const sessBadge = document.getElementById('sessionStatusBadge');
@@ -1180,16 +1491,20 @@ function updateDashboard() {
   document.getElementById('calBudgetNumbers').innerText = `${consumed} / ${stats.allowedDaily} سعرة`;
   document.getElementById('calBarFill').style.width = pct + '%';
   document.getElementById('calBarFill').style.background = pct >= 95 ? '#ef4444' : '#10b981';
-  document.getElementById('dailyNeedsLabel').innerText = `احتياجك اليومي الكامل: ${stats.fullNeeds} سعرة`;
+  document.getElementById('dailyNeedsLabel').innerText = `TDEE: ${stats.tdee} سعرة`;
   document.getElementById('phasePhaseLabel').innerText = stats.daysSinceStart < 15
     ? `أول 15 يوم (بدون عجز - يوم ${stats.daysSinceStart + 1})`
     : `تعديل الأخصائي: ${stats.adj >= 0 ? '+' + stats.adj : stats.adj} سعرة`;
 
+  document.getElementById('bmrValuePill').innerText = `${stats.bmr} سعرة`;
+  document.getElementById('tdeeValuePill').innerText = `${stats.tdee} سعرة`;
+  const obPill = document.getElementById('obesityClassPill');
+  obPill.innerText = stats.obesityClass;
+  obPill.style.color = stats.obesityColor;
+
   const goalKey = (userProfile && userProfile.goalKey && GOALS_CONFIG[userProfile.goalKey]) ? userProfile.goalKey : 'insulin';
   const gCfg = GOALS_CONFIG[goalKey];
   const timing = getTimingIntelligence();
-
-  // اختيار المقترح بناءً على التوقيت الفعلي للوجبة القادمة (إذا كانت بعد 7 م تُستبعد النشويات فوراً!)
   const activeSuggestedMeal = timing.isNightRestricted ? gCfg.nightMeal : gCfg.suggestedMeal;
 
   const card = document.getElementById('timerCard'), status = document.getElementById('timerStatus'), display = document.getElementById('timerDisplay'), sub = document.getElementById('timerSubtext'), nextBox = document.getElementById('nextMealBox');
@@ -1252,9 +1567,7 @@ function openMealModal() {
   
   const timing = getTimingIntelligence();
   const nightHint = document.getElementById('mealModalNightHint');
-  if (nightHint) {
-    nightHint.style.display = timing.isNightRestricted ? 'block' : 'none';
-  }
+  if (nightHint) nightHint.style.display = timing.isNightRestricted ? 'block' : 'none';
 
   renderEncyclopedia(); renderSelectedConfigs();
   document.getElementById('mealModal').classList.add('active');
@@ -1437,8 +1750,9 @@ function renderLogs() {
       ? `<span class="sent-badge">مُرسل ✓</span>`
       : `<span class="new-badge">جديد (جلسة #${state.sessionCount || 1})</span>`;
 
+    if (l.type === 'vitd') return `<div class="log-item log-vitd"><div class="log-header" style="color:#a16207;"><span>☀️ فيتامين D | ${l.fullDayDate} — ${l.timeStr} ${statusBadge}</span><button class="del-log-btn" onclick="deleteFullLog(${idx})">حذف</button></div><div>${l.note}</div></div>`;
     if (l.type === 'interrogation') return `<div class="log-item log-interrog"><div class="log-header" style="color:#0369a1;"><span>🕵️‍♂️ استجواب | ${l.timeStr} ${statusBadge}</span><button class="del-log-btn" onclick="deleteFullLog(${idx})">حذف</button></div><div><b>الالتزام:</b> ${l.compliance}<br><b>التفاصيل:</b> ${l.details}</div></div>`;
-    if (l.type === 'assessment') return `<div class="log-item log-assess"><div class="log-header" style="color:#b45309;"><span>📊 ${l.isInitial ? 'تقييم البداية' : 'تقييم دوري'} | ${l.fullDayDate} ${statusBadge}</span><button class="del-log-btn" onclick="deleteFullLog(${idx})">حذف</button></div><div>الوزن: <b>${l.weight} كجم</b> | البطن: <b>${l.waist} سم</b> | الحالة: ${l.symptom}${l.chronicDisease ? `<br><b>الأمراض المزمنة:</b> ${l.chronicDisease} | <b>الأنيميا:</b> ${l.anemiaStatus}` : ''}</div></div>`;
+    if (l.type === 'assessment') return `<div class="log-item log-assess"><div class="log-header" style="color:#b45309;"><span>📊 ${l.isInitial ? 'تقييم البداية' : 'تقييم دوري'} | ${l.fullDayDate} ${statusBadge}</span><button class="del-log-btn" onclick="deleteFullLog(${idx})">حذف</button></div><div>الوزن: <b>${l.weight} كجم</b> | البطن: <b>${l.waist} سم</b>${l.obesityClass ? ` | التصنيف: <b>${l.obesityClass}</b> (BMI ${l.bmi})` : ''}<br>${l.bmr ? `BMR: <b>${l.bmr}</b> | TDEE: <b>${l.tdee} سعرة</b><br>` : ''}الحالة: ${l.symptom}${l.conflictNote ? `<div style="color:#dc2626; font-weight:bold; margin-top:4px;">${l.conflictNote}</div>` : ''}${l.chronicDisease ? `<br><b>الأمراض المزمنة:</b> ${l.chronicDisease} | <b>الأنيميا:</b> ${l.anemiaStatus}<br><b>الأدوية:</b> ${l.medications || 'لا يوجد'}` : ''}</div></div>`;
     if (l.type === 'chat') return `<div class="log-item log-chat"><div class="log-header" style="color:var(--purple);"><span>💬 ${l.category} | ${l.timeStr} ${statusBadge}</span><button class="del-log-btn" onclick="deleteFullLog(${idx})">حذف</button></div><div style="line-height:1.5;">${l.message}</div></div>`;
     if (l.type === 'drop') return `<div class="log-item log-drop"><div class="log-header"><span>📉 Drop Time | ${l.timeStr} ${statusBadge}</span><button class="del-log-btn" onclick="deleteFullLog(${idx})">حذف</button></div><div>${l.reason} (${l.sinceLastMeal})</div></div>`;
     if (l.type === 'drink' || l.type === 'ginger') return `<div class="log-item"><div class="log-header"><span>☕ ${l.timeStr} ${statusBadge}</span><button class="del-log-btn" onclick="deleteFullLog(${idx})">حذف</button></div><div>${l.note}</div></div>`;
@@ -1447,11 +1761,10 @@ function renderLogs() {
   }).join('') || '<div style="text-align:center; color:#94a3b8;">لا توجد سجلات</div>';
 }
 
-// إرسال التقرير للأخصائي + إغلاق الجلسة الحالية وفتح جلسة جديدة ترسل الجديد فقط في المرة القادمة
 function shareWithSpecialist() {
   const newLogs = getNewUnsentLogs();
   if (!newLogs.length) {
-    alert(`✅ لا توجد سجلات جديدة منذ آخر إرسال!\nأنت الآن في الجلسة #${state.sessionCount || 1}؛ أي وجبة أو مشروب أو استجواب جديد تسجله من الآن سيُرسل في التقرير القادم.`);
+    alert(`✅ لا توجد سجلات جديدة منذ آخر إرسال!\nأنت الآن في الجلسة #${state.sessionCount || 1}؛ أي وجبة أو مشروب أو جرعة فيتامين D جديدة تسجلها من الآن ستُرسل في التقرير القادم.`);
     return;
   }
 
@@ -1462,25 +1775,27 @@ function shareWithSpecialist() {
   let r = `*تقرير متابعة Nutriclinic Mind (الجلسة #${currentSess})*\n`;
   if (userProfile) {
     r += `👤 *العميل:* ${userProfile.name} (${userProfile.phone})\n`;
+    r += `📊 *التصنيف والأيض:* ${stats.obesityClass} (BMI: ${stats.bmi}) | BMR: ${stats.bmr} | TDEE: ${stats.tdee} سعرة\n`;
     r += `🎯 *الهدف:* ${GOALS_CONFIG[userProfile.goalKey || 'insulin'].title}\n`;
     r += `🔥 *السعرات المسموحة:* ${stats.allowedDaily} سعرة\n`;
     if (currentSess === 1) {
       if (userProfile.chronicDisease) r += `🩺 *الأمراض المزمنة:* ${userProfile.chronicDisease}\n`;
       if (userProfile.anemiaStatus) r += `🩸 *الأنيميا:* ${userProfile.anemiaStatus}\n`;
+      if (userProfile.medications) r += `💊 *الأدوية:* ${userProfile.medications}\n`;
     }
     r += `\n📋 *المستجدات منذ آخر إرسال (${newLogs.length} بند):*\n`;
   }
 
   newLogs.forEach(l => {
-    if (l.type === 'interrogation') r += `🕵️‍♂️ [استجواب ${l.timeStr}]: ${l.compliance} (${l.details})\n`;
-    else if (l.type === 'assessment') r += `📊 [تقييم ${l.fullDayDate}]: وزن ${l.weight}كجم، بطن ${l.waist}سم (${l.symptom})\n`;
+    if (l.type === 'vitd') r += `☀️ [فيتامين D ${l.fullDayDate} - ${l.timeStr}]: ${l.note}\n`;
+    else if (l.type === 'interrogation') r += `🕵️‍♂️ [استجواب ${l.timeStr}]: ${l.compliance} (${l.details})\n`;
+    else if (l.type === 'assessment') r += `📊 [تقييم ${l.fullDayDate}]: وزن ${l.weight}كجم، بطن ${l.waist}سم، ${l.obesityClass || ''} (${l.symptom}) ${l.conflictNote ? '⚠️ ' + l.conflictNote : ''}\n`;
     else if (l.type === 'meal') r += `🍽️ ${l.fullDayDate} (${l.timeStr}): ${l.items.map(i=>i.name+' '+i.qty+'جم').join(' + ')} = ${l.totalCals} سعرة\n`;
     else if (l.type === 'chat') r += `💬 [${l.category}] (${l.timeStr}): ${l.message}\n`;
     else if (l.type === 'drop') r += `📉 Drop Time (${l.timeStr}): ${l.reason} (${l.sinceLastMeal})\n`;
     else r += `☕ (${l.timeStr}): ${l.note}\n`;
   });
 
-  // تحديث نقطة القطع وفتح جلسة جديدة فوراً للمستجدات القادمة
   state.lastSharedTs = now;
   state.sessionCount = currentSess + 1;
   state.logs.unshift({
@@ -1503,7 +1818,7 @@ initAuth();
 setInterval(() => { checkDailyAnd15DayReminders(); updateDashboard(); }, 1000);
 
 // إدارة زر الرجوع في الهاتف
-const TRACKED_MODALS = ['goalModal', 'calAdjustModal', 'drinksModal', 'reassessModal', 'chatModal', 'mealModal', 'dropModal', 'deterrenceModal'];
+const TRACKED_MODALS = ['goalModal', 'calAdjustModal', 'drinksModal', 'reassessModal', 'chatModal', 'mealModal', 'dropModal', 'deterrenceModal', 'vitDModal', 'vitDLogModal'];
 function pushModalHistoryState() {
   try { history.pushState({ modalOpen: true }, '', window.location.href); } catch (e) {}
 }
@@ -1528,7 +1843,7 @@ window.addEventListener('popstate', function () {
     pushModalHistoryState();
     return;
   }
-  const priorityOrder = ['deterrenceModal', 'goalModal', 'calAdjustModal', 'drinksModal', 'reassessModal', 'chatModal', 'mealModal', 'dropModal'];
+  const priorityOrder = ['deterrenceModal', 'vitDLogModal', 'vitDModal', 'goalModal', 'calAdjustModal', 'drinksModal', 'reassessModal', 'chatModal', 'mealModal', 'dropModal'];
   for (const id of priorityOrder) {
     const el = document.getElementById(id);
     if (el && el.classList.contains('active')) {
