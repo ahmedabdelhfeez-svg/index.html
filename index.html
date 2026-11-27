@@ -72,7 +72,7 @@
   .btn-drinks-main { background: linear-gradient(135deg, #d97706, #b45309); color: white; box-shadow: 0 5px 0 #78350f; }
   .btn-chat-main { background: linear-gradient(135deg, #7c3aed, #5b21b6); color: white; box-shadow: 0 5px 0 #3b0764; }
   .btn-drop-main { background: linear-gradient(135deg, #dc2626, #b91c1c); color: white; box-shadow: 0 5px 0 #7f1d1d; }
-  .btn-share-main { background: linear-gradient(135deg, #16a34a, #15803d); color: white; box-shadow: 0 5px 0 #14532d; }
+  .btn-share-main { background: linear-gradient(135deg, #16a34a, #15803d); color: white; box-shadow: 0 5px 0 #14532d; flex-direction: column; gap: 3px; }
 
   .modal { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); z-index: 999; align-items: flex-end; }
   .modal.active { display: flex; }
@@ -107,15 +107,18 @@
   .direction-box { background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 12px; padding: 12px; margin: 12px 0; }
   .dir-q { display: flex; align-items: flex-start; gap: 8px; font-size: 0.85rem; margin-bottom: 8px; cursor: pointer; }
   
-  .log-item { border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px; margin-bottom: 10px; font-size: 0.87rem; background: #fff; }
+  .log-item { border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px; margin-bottom: 10px; font-size: 0.87rem; background: #fff; position: relative; }
   .log-drop { background: var(--danger-bg); border-color: #fca5a5; border-right: 4px solid var(--danger); }
   .log-chat { background: var(--purple-bg); border-color: #ddd6fe; border-right: 4px solid var(--purple); }
   .log-assess { background: #fffbeb; border-color: #fde68a; border-right: 4px solid #f59e0b; }
   .log-interrog { background: #f0f9ff; border-color: #bae6fd; border-right: 4px solid #0284c7; }
+  .log-session-marker { background: #ecfdf5; border: 1.5px dashed #10b981; color: #065f46; text-align: center; font-weight: 800; font-size: 0.8rem; padding: 8px; border-radius: 10px; margin-bottom: 10px; }
   .log-header { display: flex; justify-content: space-between; align-items: center; font-weight: 700; margin-bottom: 6px; border-bottom: 1px dashed #e2e8f0; padding-bottom: 6px; }
   .del-log-btn { background: #fee2e2; color: #dc2626; border: none; border-radius: 6px; padding: 3px 8px; font-size: 0.78rem; font-weight: 700; cursor: pointer; }
   .item-chip { display: inline-flex; align-items: center; gap: 6px; background: #f1f5f9; padding: 4px 8px; border-radius: 8px; margin: 3px 2px; font-size: 0.82rem; }
   .dir-badge { display: inline-block; background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 6px; font-size: 0.78rem; font-weight: 700; margin-top: 5px; }
+  .sent-badge { display: inline-block; background: #e2e8f0; color: #475569; padding: 2px 6px; border-radius: 5px; font-size: 0.7rem; margin-right: 5px; }
+  .new-badge { display: inline-block; background: #dcfce7; color: #15803d; padding: 2px 6px; border-radius: 5px; font-size: 0.7rem; margin-right: 5px; font-weight: 800; }
 
   .mood-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
   .mood-chip { padding: 10px; border: 1.5px solid #cbd5e1; border-radius: 10px; background: #f8fafc; font-size: 0.83rem; font-weight: 700; cursor: pointer; text-align: center; }
@@ -239,12 +242,12 @@
 </div>
 
 <div class="container">
-  <!-- تنبيه ذكاء التوقيت بعد 7 مساءً -->
+  <!-- تنبيه ذكاء التوقيت (يتفعل إذا كانت الساعة بعد 7 م أو كان موعد الوجبة القادمة بعد 7 م) -->
   <div class="night-mode-banner" id="nightModeBanner">
-    <div style="font-weight:900; font-size:0.95rem; margin-bottom:4px;">🌙 وضع المساء مُفعّل تلقائياً (بعد الساعة 7:00 مساءً)</div>
+    <div style="font-weight:900; font-size:0.95rem; margin-bottom:4px;" id="nightBannerTitle">🌙 وضع المساء مُفعّل تلقائياً (الوجبة بعد 7:00 مساءً)</div>
     <div style="font-size:0.82rem; line-height:1.55;">
-      ⛔ تم قفل <b>جميع النشويات</b> (الأرز، المحشي، البطاطس، الخبز، الموز، البسبوسة) تلقائياً.<br>
-      ✅ <b>المسموح الآن:</b> شرائح اللحم، لانشون الفراخ البيتي، الجبن المطبوخ (شيدر/فلامنك)، <b>زبادي الروتري</b>، السلطة، أو النوتيلا المحضرة بستيفيا.
+      ⛔ تم استبعاد <b>جميع النشويات</b> (الأرز، المحشي، البطاطس، الخبز، الموز، البسبوسة) لأن موعد الوجبة يقع بعد الساعة 7:00 مساءً.<br>
+      ✅ <b>المسموح لوجبتك القادمة:</b> شرائح اللحم، لانشون الفراخ بورق الزبدة، الجبن المطبوخ (شيدر/فلامنك)، <b>زبادي الروتري</b>، السلطة، أو النوتيلا المحضرة بستيفيا.
     </div>
   </div>
 
@@ -314,11 +317,14 @@
   <button type="button" class="action-btn btn-drinks-main" onclick="openDrinksModal()">☕ قائمة المشروبات الصحية (3 يومياً)</button>
   <button type="button" class="action-btn btn-chat-main" onclick="openChatModal()">💬 فضفضة وأسئلة للأخصائي</button>
   <button type="button" class="action-btn btn-drop-main" onclick="openDropModal()">📉 تسجيل وقت هبوط أو جوع (Drop Time)</button>
-  <button type="button" class="action-btn btn-share-main" onclick="shareWithSpecialist()">📲 إرسال التقرير الشامل للأخصائي (01099006190)</button>
+  <button type="button" class="action-btn btn-share-main" onclick="shareWithSpecialist()">
+    <span>📲 إرسال التقرير الشامل للأخصائي (01099006190)</span>
+    <span id="sessionStatusBadge" style="font-size:0.78rem; opacity:0.92; font-weight:600;">الجلسة #1 — جاهز لإرسال السجلات الجديدة</span>
+  </button>
 
   <div class="card" style="margin-top: 16px;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-      <strong style="color: var(--primary);">📋 سجل المتابعة والاستجوابات</strong>
+      <strong style="color: var(--primary);">📋 سجل المتابعة والجلسات</strong>
       <input type="text" id="searchLog" placeholder="بحث بالسجل..." onkeyup="renderLogs()" style="padding: 5px 10px; border-radius: 8px; border: 1px solid #cbd5e1; width: 130px; font-size: 0.82rem;">
     </div>
     <div id="logsContainer"></div>
@@ -426,7 +432,7 @@
     </div>
     <div id="mealModalBudgetHint" style="background:#f0f9ff; border:1px solid #bae6fd; padding:8px 10px; border-radius:10px; font-size:0.82rem; color:#0369a1; font-weight:bold; margin-bottom:8px;"></div>
     <div id="mealModalNightHint" style="display:none; background:#eef2ff; border:1.5px solid #6366f1; padding:8px 10px; border-radius:10px; font-size:0.81rem; color:#312e81; font-weight:bold; margin-bottom:8px;">
-      🌙 التوقيت الآن بعد 7:00 مساءً: النشويات (الأرز، المحشي، البطاطس، الخبز، الموز، البسبوسة) مغلقة تلقائياً. متاح شرائح اللحم، لانشون الفراخ، الجبن المطبوخ، زبادي الروتري، السلطة، والنوتيلا بستيفيا.
+      🌙 تنبيه التوقيت المسائي (بعد 7:00 م): النشويات (الأرز، المحشي، البطاطس، الخبز، الموز، البسبوسة) مغلقة تلقائياً. متاح شرائح اللحم، لانشون الفراخ، الجبن المطبوخ، زبادي الروتري، السلطة، والنوتيلا بستيفيا.
     </div>
     <input type="text" class="search-enc" id="encSearchInput" placeholder="ابحث عن أي أكل..." onkeyup="renderEncyclopedia()">
     <div class="filter-tabs">
@@ -471,10 +477,32 @@
 const FORMSPREE_URL = "https://formspree.io/f/xaeovayb";
 const SPECIALIST_PHONE = "201099006190";
 
-// دالة ذكاء التوقيت: هل الساعة الآن 7:00 مساءً (19:00) أو بعدها؟
-function isAfterSevenPM() {
-  const hour = new Date().getHours();
-  return hour >= 19; // من 7:00 مساءً (19:00) حتى منتصف الليل (23:59)
+// دالة ذكاء التوقيت المتقدم:
+// تتحقق مما إذا كانت الساعة الحالية >= 7:00 مساءً OR موعد الوجبة القادمة المستحق (بعد 5 ساعات) سيقع بعد 7:00 مساءً!
+function getTimingIntelligence() {
+  const now = new Date();
+  const currentHour = now.getHours();
+  const isNowNight = currentHour >= 19; // من 7:00 مساءً إلى 11:59 مساءً
+
+  let nextMealTs = null;
+  let isNextMealNight = isNowNight;
+
+  if (typeof state !== 'undefined' && state && state.lastMealTime) {
+    nextMealTs = state.lastMealTime + (5 * 3600 * 1000);
+    const nextMealDate = new Date(nextMealTs);
+    const nextHour = nextMealDate.getHours();
+    // إذا كان موعد الوجبة القادمة بعد 7 مساءً (19:00 - 23:59) أو في فجر اليوم التالي قبل 5 صباحاً
+    if (nextHour >= 19 || nextHour < 5) {
+      isNextMealNight = true;
+    }
+  }
+
+  return {
+    isNowNight,
+    isNextMealNight,
+    isNightRestricted: isNowNight || isNextMealNight,
+    nextMealTs
+  };
 }
 
 let memoryFallback = {};
@@ -496,7 +524,7 @@ function safeClearStorage() {
   memoryFallback = {};
   try {
     localStorage.removeItem('nutriclinic_user');
-    localStorage.removeItem('nutriclinic_data_v9');
+    localStorage.removeItem('nutriclinic_data_v10');
   } catch (e) {}
 }
 
@@ -551,7 +579,7 @@ const GOALS_CONFIG = {
     title: "ضبط الإنسولين وعلاج مقاومته",
     marketingPromise: "✨ النتيجة المتوقعة: اختفاء الجوع المفاجئ والدوخة خلال 14 يوماً، تراجع اسمرار الرقبة، واستقرار سكر الدم طوال اليوم مع شبع يدوم 5+ ساعات.",
     suggestedMeal: "160 جم شرائح لحم مشوية أو لانشون فراخ + 130 جم بطاطس أو أرز مجمد 12 ساعة + سلطة.",
-    nightMeal: "🌙 مقترح المساء (بدون نشويات): شرائح لحم مشوية أو لانشون فراخ بورق الزبدة + كوب زبادي الروتري + سلطة.",
+    nightMeal: "🌙 وجبة مسائية (بدون نشويات): شرائح لحم مشوية أو لانشون فراخ بورق الزبدة + كوب زبادي الروتري + سلطة.",
     qtyMultiplier: 0.95,
     satietyNote: "كمية مثالية تملأ المعدة دون استفزاز الإنسولين"
   },
@@ -559,7 +587,7 @@ const GOALS_CONFIG = {
     title: "نسف دهون البطن والوزن الزائد",
     marketingPromise: "🔥 النتيجة المتوقعة: نزول واضح في مقاس البطن والخصر كل 15 يوماً، وتحويل جسمك لماكينة حرق دهون ذاتية أثناء الـ 5 ساعات صيام بدون أي شعور بالحرمان.",
     suggestedMeal: "180 جم شرائح لحم أو لانشون فراخ + 100 جم نشويات مجمدة 12 ساعة + سلطة غنية بالألياف.",
-    nightMeal: "🌙 مقترح المساء (بدون نشويات): 160 جم شرائح لحم أو لانشون فراخ مشوي + زبادي الروتري المسائي + سلطة.",
+    nightMeal: "🌙 وجبة مسائية (بدون نشويات): 160 جم شرائح لحم أو لانشون فراخ مشوي + زبادي الروتري المسائي + سلطة.",
     qtyMultiplier: 0.85,
     satietyNote: "كمية مشبعة عالية البروتين تحفز حرق الدهون المخزنة"
   },
@@ -567,7 +595,7 @@ const GOALS_CONFIG = {
     title: "بناء العضلات وعلاج النحافة",
     marketingPromise: "💪 النتيجة المتوقعة: زيادة صافية في الكتلة العضلية والوزن الصحي، تحسن القوة البدنية والاستشفاء العضلي، وامتلاء الجسم بدون دهون ضارة.",
     suggestedMeal: "220 جم شرائح لحم أو لانشون فراخ + 200 جم بطاطس أو أرز مجمد 12 ساعة + 80 جم جبن شيدر/فلامنك مطبوخ + ثمرة موز مدمجة.",
-    nightMeal: "🌙 مقترح المساء (بدون نشويات): 200 جم شرائح لحم + 200 جم زبادي الروتري + 60 جم جبن مطبوخ + نوتيلا بستيفيا.",
+    nightMeal: "🌙 وجبة مسائية (بدون نشويات): 200 جم شرائح لحم + 200 جم زبادي الروتري + 60 جم جبن مطبوخ + نوتيلا بستيفيا.",
     qtyMultiplier: 1.25,
     satietyNote: "كمية بنائية غنية بالبروتين والطاقة لدعم نمو العضلات وعلاج النحافة"
   },
@@ -575,7 +603,7 @@ const GOALS_CONFIG = {
     title: "مضاعفة الطاقة والتركيز ومنع الخمول",
     marketingPromise: "⚡ النتيجة المتوقعة: استيقاظ بنشاط ذهني حاد، انتهاء ثقلة ما بعد الغداء تماماً، وتركيز مستمر طوال ساعات العمل والدراسة.",
     suggestedMeal: "170 جم ستيك شرائح لحم + 150 جم بطاطس النشا المقاوم + جبن فلامنك مطبوخ عالي الجودة.",
-    nightMeal: "🌙 مقترح المساء (بدون نشويات): شرائح لحم مشوية أو لانشون فراخ + زبادي الروتري لتعزيز النوم العميق.",
+    nightMeal: "🌙 وجبة مسائية (بدون نشويات): شرائح لحم مشوية أو لانشون فراخ + زبادي الروتري لتعزيز النوم العميق.",
     qtyMultiplier: 1.05,
     satietyNote: "كمية متوازنة تمدك بطاقة ثابتة بلا هبوط"
   },
@@ -583,7 +611,7 @@ const GOALS_CONFIG = {
     title: "علاج القولون والانتفاخ وتحسين الهضم",
     marketingPromise: "🌿 النتيجة المتوقعة: بطن مسطح ومريح بعد الأكل، اختفاء الغازات والتقلصات، وتغذية البكتيريا النافعة بالأمعاء عبر النشا المقاوم وزبادي الروتري.",
     suggestedMeal: "140 جم شرائح لحم أو لانشون فراخ + 130 جم أرز مجمد 12 ساعة + سلطة.",
-    nightMeal: "🌙 مقترح المساء (بدون نشويات): كوب زبادي الروتري (L. reuteri) + لانشون فراخ بورق الزبدة.",
+    nightMeal: "🌙 وجبة مسائية (بدون نشويات): كوب زبادي الروتري (L. reuteri) + لانشون فراخ بورق الزبدة.",
     qtyMultiplier: 0.90,
     satietyNote: "كمية مريحة خفيفة على القولون ومشبعة تماماً"
   }
@@ -605,11 +633,10 @@ const HEALTHY_DRINKS = [
 const MOTIVATIONAL_QUOTES = [
   "كل 5 ساعات صيام نظيف تُعيد برمجة خلاياك وتُقرّبك خطوة حقيقية من تحقيق هدفك. استمر يا بطل!",
   "الكميات المضبوطة في جدولك اليوم مصممة لتمنحك الشبع الكامل وتوصلك لأسرع نتيجة بدون حرمان.",
-  "من بعد السابعة مساءً يتوقف دخول النشويات ليعمل جسمك بأقصى كفاءة في الحرق والاستشفاء الليلي.",
+  "أي وجبة تقع بعد السابعة مساءً تُستبعد منها النشويات تلقائياً ليعمل جسمك بأقصى كفاءة في الحرق والاستشفاء الليلي.",
   "تذكر نقطة البداية في سجل تقييمك؛ كل يوم تلتزم فيه يبعدك أكثر عن التعب ويقربك من أفضل نسخة منك."
 ];
 
-// موسوعة الأطعمة المحدثة (مع خاصية isCarb لتمييز النشويات وقفلها بعد 7 مساءً)
 const ENCYCLOPEDIA = [
   { id: 'red_meat', type: 'allowed', isCarb: false, name: 'شرائح اللحم (ستيك / مشوي / مسلوق)', calPer100: 250, baseQty: 170, min: 50, max: 400, reqFreeze: false, recipes: 'شرائح لحم أحمر صافي مشوية أو مسلوقة أو بالفرن بدون زيوت نباتية مهدرجة (مسموح نهاراً وليلاً ✅).' },
   { id: 'chicken_luncheon', type: 'allowed', isCarb: false, name: 'لانشون الفراخ البيتي (بورق الزبدة)', calPer100: 165, baseQty: 150, min: 50, max: 350, reqFreeze: false, recipes: 'طريقة التحضير: يُحضر عن طريق فرم وسحق صدور الفراخ جيداً مع التوابل، ثم وضعها ولفّها بإحكام في ورق زبدة وتسويتها (بالبخار أو الفرن) (مسموح نهاراً وليلاً ✅).' },
@@ -618,13 +645,13 @@ const ENCYCLOPEDIA = [
   { id: 'nutella', type: 'allowed', isCarb: false, name: 'نوتيلا صحية (محضرة بسكر ستيفيا - مساءً)', calPer100: 510, baseQty: 25, min: 10, max: 60, reqFreeze: false, isNutella: true, recipes: 'طريقة التحضير: سمسم محمص مطحون + فول سوداني مطحون + كاكاو خام + زيت بذور الكتان + تحلية بسكر ستيفيا الطبيعي فقط (مسموحة مساءً ضمن حصة اليوم 1/1).' },
   { id: 'salad', type: 'allowed', isCarb: false, name: 'سلطة خضراء وجزر مسلوق', calPer100: 35, baseQty: 180, min: 50, max: 300, reqFreeze: false, isSalad: true, recipes: 'بقدونس + كزبرة + خيار مقشر + طماطم + جزر مسلوق + ليمون (مسموح نهاراً وليلاً ✅).' },
   
-  // النشويات (مسموحة نهاراً فقط وممنوعة تلقائياً بعد الساعة 7:00 مساءً)
-  { id: 'rice', type: 'allowed', isCarb: true, name: 'أرز مجمد 12 ساعة', calPer100: 130, baseQty: 140, min: 50, max: 400, reqFreeze: true, recipes: 'يُطهى ويُجمد 12 ساعة في الفريزر ثم يُسخن بالبخار. (مسموح قبل 7:00 مساءً فقط ⏰).' },
-  { id: 'mahshi', type: 'allowed', isCarb: true, name: 'محشي مجمد 12 ساعة', calPer100: 145, baseQty: 180, min: 50, max: 400, reqFreeze: true, recipes: 'يُجمد بعد التسوية 12 ساعة كاملة ثم يُسخن. (مسموح قبل 7:00 مساءً فقط ⏰).' },
-  { id: 'potato_frozen', type: 'allowed', isCarb: true, name: 'بطاطس محمرة ثم مجمدة 12 ساعة', calPer100: 165, baseQty: 150, min: 50, max: 350, reqFreeze: true, recipes: 'تُحمر وتُبرد ثم تُجمد 12 ساعة في الفريزر لتحويل النشا إلى نشا مقاوم، ثم تُسخن. (مسموح قبل 7:00 مساءً فقط ⏰).' },
-  { id: 'bread', type: 'allowed', isCarb: true, name: 'خبز مجمد في الفريزر', calPer100: 250, baseQty: 60, min: 25, max: 180, reqFreeze: true, recipes: 'يُخرج من الفريزر للتحميص مباشرة. (مسموح قبل 7:00 مساءً فقط ⏰).' },
+  // النشويات (مسموحة فقط إذا كانت الوجبة قبل الساعة 7:00 مساءً)
+  { id: 'rice', type: 'allowed', isCarb: true, name: 'أرز مجمد 12 ساعة', calPer100: 130, baseQty: 140, min: 50, max: 400, reqFreeze: true, recipes: 'يُطهى ويُجمد 12 ساعة في الفريزر ثم يُسخن بالبخار. (مسموح للوجبات قبل 7:00 مساءً فقط ⏰).' },
+  { id: 'mahshi', type: 'allowed', isCarb: true, name: 'محشي مجمد 12 ساعة', calPer100: 145, baseQty: 180, min: 50, max: 400, reqFreeze: true, recipes: 'يُجمد بعد التسوية 12 ساعة كاملة ثم يُسخن. (مسموح للوجبات قبل 7:00 مساءً فقط ⏰).' },
+  { id: 'potato_frozen', type: 'allowed', isCarb: true, name: 'بطاطس محمرة ثم مجمدة 12 ساعة', calPer100: 165, baseQty: 150, min: 50, max: 350, reqFreeze: true, recipes: 'تُحمر وتُبرد ثم تُجمد 12 ساعة في الفريزر لتحويل النشا إلى نشا مقاوم، ثم تُسخن. (مسموح للوجبات قبل 7:00 مساءً فقط ⏰).' },
+  { id: 'bread', type: 'allowed', isCarb: true, name: 'خبز مجمد في الفريزر', calPer100: 250, baseQty: 60, min: 25, max: 180, reqFreeze: true, recipes: 'يُخرج من الفريزر للتحميص مباشرة. (مسموح للوجبات قبل 7:00 مساءً فقط ⏰).' },
   { id: 'banana', type: 'allowed', isCarb: true, name: 'موز (فاكهة مسموحة - يُدمج مع الوجبة نهاراً)', calPer100: 89, baseQty: 100, min: 50, max: 200, reqFreeze: false, isBanana: true, recipes: 'الفاكهة الوحيدة المسموحة؛ ممنوع تناولها منفردة، يجب دمجها داخل الوجبة قبل 7:00 مساءً فقط.' },
-  { id: 'basbousa', type: 'allowed', isCarb: true, name: 'بسبوسة سميد (مرتين أسبوعياً نهاراً)', calPer100: 360, baseQty: 100, min: 30, max: 250, reqFreeze: false, isBasbousa: true, recipes: 'سميد خشن فقط بدون دقيق أبيض + سمن بلدي (قبل 7:00 مساءً فقط ⏰).' },
+  { id: 'basbousa', type: 'allowed', isCarb: true, name: 'بسبوسة سميد (مرتين أسبوعياً نهاراً)', calPer100: 360, baseQty: 100, min: 30, max: 250, reqFreeze: false, isBasbousa: true, recipes: 'سميد خشن فقط بدون دقيق أبيض + سمن بلدي (للوجبات قبل 7:00 مساءً فقط ⏰).' },
 
   // الممنوعات الدائمة
   { id: 'forb_fruits', type: 'forbidden', name: 'باقي الفواكه (مانجو / عنب / تين / عصائر)', warning: 'الفاكهة الوحيدة المسموحة في البروتوكول هي الموز مدمجاً مع الوجبة نهاراً؛ باقي الفواكه ترفع الفركتوز وتُربك الإنسولين.' },
@@ -637,18 +664,20 @@ const ENCYCLOPEDIA = [
 ];
 
 let userProfile = safeGetStorage('nutriclinic_user');
-let state = safeGetStorage('nutriclinic_data_v9') || {
+let state = safeGetStorage('nutriclinic_data_v10') || {
   lastMealTime: null,
   lastActiveDate: null,
   dailyQuoteIdx: 0,
   startProgramTs: null,
   lastAssessmentTs: null,
+  lastSharedTs: 0,
+  sessionCount: 1,
   calorieAdjustment: 0,
   openCount: 0,
   assessments: [],
   logs: []
 };
-function saveState() { safeSetStorage('nutriclinic_data_v9', state); }
+function saveState() { safeSetStorage('nutriclinic_data_v10', state); }
 
 function getTodayStr() { return new Date().toISOString().split('T')[0]; }
 function getFullArabicDayDate(ts) { return new Date(ts).toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric' }); }
@@ -751,6 +780,8 @@ function handleAuth() {
       dailyQuoteIdx: 0,
       startProgramTs: now,
       lastAssessmentTs: now,
+      lastSharedTs: 0,
+      sessionCount: 1,
       calorieAdjustment: 0,
       openCount: 1,
       assessments: [],
@@ -853,6 +884,7 @@ function submitInterrogation() {
 
   document.getElementById('interrogFoodDetails').value = '';
   document.getElementById('interrogationModal').classList.remove('active');
+  updateDashboard();
   renderLogs();
 }
 
@@ -878,11 +910,20 @@ function checkDailyAnd15DayReminders() {
     saveState();
   }
 
-  // إظهار لافتة وضع المساء تلقائياً من الساعة 7:00 مساءً
+  const timing = getTimingIntelligence();
   const nightBanner = document.getElementById('nightModeBanner');
   if (nightBanner) {
-    if (isAfterSevenPM()) nightBanner.classList.add('active');
-    else nightBanner.classList.remove('active');
+    if (timing.isNightRestricted) {
+      nightBanner.classList.add('active');
+      const titleEl = document.getElementById('nightBannerTitle');
+      if (titleEl) {
+        titleEl.innerText = timing.isNowNight
+          ? "🌙 وضع المساء مُفعّل تلقائياً (الآن بعد الساعة 7:00 مساءً)"
+          : `🌙 وضع المساء مُفعّل تلقائياً (وجبتك القادمة الساعة ${getTimeStr(timing.nextMealTs)} — بعد 7:00 م)`;
+      }
+    } else {
+      nightBanner.classList.remove('active');
+    }
   }
 
   if (state.lastAssessmentTs) {
@@ -895,7 +936,7 @@ function checkDailyAnd15DayReminders() {
   const gCfg = GOALS_CONFIG[goalKey];
   const firstName = (userProfile && userProfile.name) ? userProfile.name.split(' ')[0] : "بطل";
 
-  document.getElementById('dailyGreetingTitle').innerText = isAfterSevenPM() ? `🌙 مساء الالتزام يا ${firstName}` : `🌅 يوم الإنجاز يا ${firstName}`;
+  document.getElementById('dailyGreetingTitle').innerText = timing.isNowNight ? `🌙 مساء الالتزام يا ${firstName}` : `🌅 يوم الإنجاز يا ${firstName}`;
   document.getElementById('userGoalBadge').innerText = `🎯 ${gCfg.title} (تغيير)`;
   document.getElementById('expectedResultBox').innerHTML = gCfg.marketingPromise;
   document.getElementById('dailyMotivationalMsg').innerText = MOTIVATIONAL_QUOTES[state.dailyQuoteIdx || 0];
@@ -1111,12 +1152,27 @@ function getQuotas() {
   return { salad, drinks, sugarDrinks, nutella, basbousa };
 }
 
+function getNewUnsentLogs() {
+  const cutoff = state.lastSharedTs || 0;
+  return state.logs.filter(l => l.type !== 'session_marker' && l.timestamp > cutoff);
+}
+
 function updateDashboard() {
   const q = getQuotas();
   document.getElementById('qSalad').innerText = `${q.salad} / 2`;
   document.getElementById('qDrinks').innerText = `${q.drinks} / 3`;
   document.getElementById('qNutella').innerText = `${q.nutella} / 1`;
   document.getElementById('qBasbousa').innerText = `${q.basbousa} / 2`;
+
+  // تحديث شارة الجلسة وعدد السجلات الجديدة غير المرسلة
+  const newCount = getNewUnsentLogs().length;
+  const sessNum = state.sessionCount || 1;
+  const sessBadge = document.getElementById('sessionStatusBadge');
+  if (sessBadge) {
+    sessBadge.innerText = newCount > 0
+      ? `الجلسة #${sessNum} — يوجد (${newCount}) سجل جديد منذ آخر إرسال`
+      : `الجلسة #${sessNum} — تم إرسال جميع السجلات السابقة ✅`;
+  }
 
   const stats = calculateDailyCalories();
   const consumed = getTodayConsumedCalories();
@@ -1131,7 +1187,10 @@ function updateDashboard() {
 
   const goalKey = (userProfile && userProfile.goalKey && GOALS_CONFIG[userProfile.goalKey]) ? userProfile.goalKey : 'insulin';
   const gCfg = GOALS_CONFIG[goalKey];
-  const activeSuggestedMeal = isAfterSevenPM() ? gCfg.nightMeal : gCfg.suggestedMeal;
+  const timing = getTimingIntelligence();
+
+  // اختيار المقترح بناءً على التوقيت الفعلي للوجبة القادمة (إذا كانت بعد 7 م تُستبعد النشويات فوراً!)
+  const activeSuggestedMeal = timing.isNightRestricted ? gCfg.nightMeal : gCfg.suggestedMeal;
 
   const card = document.getElementById('timerCard'), status = document.getElementById('timerStatus'), display = document.getElementById('timerDisplay'), sub = document.getElementById('timerSubtext'), nextBox = document.getElementById('nextMealBox');
 
@@ -1144,7 +1203,7 @@ function updateDashboard() {
 
   const now = Date.now(), diffMs = now - state.lastMealTime, fiveHoursMs = 5 * 3600 * 1000;
   const nextTimeFormatted = new Date(state.lastMealTime + fiveHoursMs).toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
-  nextBox.innerHTML = `⏰ <strong>موعد وجبتك القادمة:</strong> الساعة ${nextTimeFormatted}<br>🥗 <strong>المقترح المشبع الآن:</strong> ${activeSuggestedMeal}`;
+  nextBox.innerHTML = `⏰ <strong>موعد وجبتك القادمة:</strong> الساعة ${nextTimeFormatted}<br>🥗 <strong>المقترح المشبع لوجبتك:</strong> ${activeSuggestedMeal}`;
 
   if (diffMs < fiveHoursMs) {
     alarmPlayedForCurrentMeal = false;
@@ -1181,7 +1240,7 @@ function saveAndSendChat() {
     "التوقيت": `${getFullArabicDayDate(now)} - ${getTimeStr(now)}`,
     "محتوى_الرسالة": msg
   });
-  closeChatModal(); renderLogs();
+  closeChatModal(); updateDashboard(); renderLogs();
   alert('✅ وصلت رسالتك للأخصائي بنجاح.');
 }
 
@@ -1191,8 +1250,11 @@ function openMealModal() {
   const rem = Math.max(0, stats.allowedDaily - getTodayConsumedCalories());
   document.getElementById('mealModalBudgetHint').innerText = `🔥 السعرات المتبقية المسموحة لليوم: ${rem} سعرة (ممنوع تجاوزها)`;
   
+  const timing = getTimingIntelligence();
   const nightHint = document.getElementById('mealModalNightHint');
-  if (nightHint) nightHint.style.display = isAfterSevenPM() ? 'block' : 'none';
+  if (nightHint) {
+    nightHint.style.display = timing.isNightRestricted ? 'block' : 'none';
+  }
 
   renderEncyclopedia(); renderSelectedConfigs();
   document.getElementById('mealModal').classList.add('active');
@@ -1209,7 +1271,7 @@ function renderEncyclopedia() {
   const query = document.getElementById('encSearchInput').value.trim().toLowerCase();
   const grid = document.getElementById('multiFoodGrid');
   grid.innerHTML = '';
-  const nightTime = isAfterSevenPM();
+  const timing = getTimingIntelligence();
 
   const filtered = ENCYCLOPEDIA.filter(item => (currentEncFilter === 'all' || item.type === currentEncFilter) && (!query || item.name.toLowerCase().includes(query)));
   filtered.forEach(item => {
@@ -1225,14 +1287,13 @@ function renderEncyclopedia() {
         document.getElementById('detBody').innerText = item.warning;
         document.getElementById('deterrenceModal').classList.add('active');
       };
-    } else if (nightTime && item.isCarb) {
-      // قفل ذكي تلقائي للنشويات (الأرز، المحشي، البطاطس، الخبز، الموز، البسبوسة) بعد الساعة 7:00 مساءً
+    } else if (timing.isNightRestricted && item.isCarb) {
       btn.className = 'food-card-btn night-locked';
-      btn.innerHTML = `<span>🌙 ${item.name}</span><span class="tag-pill pill-night">مغلق بعد 7 مساءً</span>`;
+      btn.innerHTML = `<span>🌙 ${item.name}</span><span class="tag-pill pill-night">مغلق (بعد 7 م)</span>`;
       btn.onclick = () => {
         document.getElementById('detIcon').innerText = '🌙⏰';
-        document.getElementById('detTitle').innerText = `توقيت المساء (بعد 7:00 م) — ${item.name}`;
-        document.getElementById('detBody').innerText = `لا يمكن اختيار النشويات (${item.name}) بعد الساعة 7:00 مساءً لأن الجسم ليلاً يهيئ هرمون النمو وحرق الدهون.\n\n✅ المسموح لك الآن: شرائح اللحم، لانشون الفراخ بورق الزبدة، زبادي الروتري، الجبن المطبوخ (شيدر/فلامنك)، السلطة، أو النوتيلا المحضرة بستيفيا.`;
+        document.getElementById('detTitle').innerText = `حظر النشويات المسائي — ${item.name}`;
+        document.getElementById('detBody').innerText = `لا يمكن اختيار النشويات (${item.name}) لأن الوقت الحالي أو موعد وجبتك القادمة يقع بعد الساعة 7:00 مساءً.\n\n✅ المسموح لك الآن: شرائح اللحم، لانشون الفراخ بورق الزبدة، زبادي الروتري، الجبن المطبوخ (شيدر/فلامنك)، السلطة، أو النوتيلا المحضرة بستيفيا.`;
         document.getElementById('deterrenceModal').classList.add('active');
       };
     } else {
@@ -1283,19 +1344,19 @@ function updateGrandTotal() {
 }
 
 function saveMultiMeal() {
-  // تحقق مزدوج من التوقيت قبل الحفظ
-  if (isAfterSevenPM()) {
+  const timing = getTimingIntelligence();
+  if (timing.isNightRestricted) {
     for (let id of selectedIds) {
       const f = ENCYCLOPEDIA.find(x => x.id === id);
       if (f && f.isCarb) {
-        alert(`🌙 التوقيت الآن بعد 7:00 مساءً! لا يمكن اعتماد (${f.name}) ليلاً. احذفه واختر من المسموح المسائي.`);
+        alert(`🌙 التوقيت أو موعد وجبتك بعد 7:00 مساءً! لا يمكن اعتماد (${f.name}). احذفه واختر من المسموح المسائي.`);
         return;
       }
     }
   }
 
   if (selectedIds.has('banana') && selectedIds.size === 1) {
-    alert('⛔ ممنوع تناول الموز منفرداً! يجب دمج الموز داخل وجبة تحتوي على بروتين أو نشا مقاوم (مثل شرائح اللحم أو لانشون الفراخ).');
+    alert('⛔ ممنوع تناول الموز منفرداً! يجب دمج الموز داخل وجبة تحتوي على بروتين أو نشا مقاوم.');
     return;
   }
 
@@ -1337,7 +1398,7 @@ function saveMultiMeal() {
     "مؤشر_الاتجاه": `${score}/3`
   });
 
-  closeMealModal(); updateDashboard(); renderLogs();
+  closeMealModal(); checkDailyAnd15DayReminders(); updateDashboard(); renderLogs();
 }
 
 function openDropModal() { document.getElementById('dropModal').classList.add('active'); }
@@ -1350,7 +1411,7 @@ function saveDropTime() {
   saveState();
   sendToFormspree({ "الحدث": "📉 Drop Time", "العميل": userProfile ? `${userProfile.name} (${userProfile.phone})` : "غير مسجل", "التوقيت": `${getFullArabicDayDate(now)} - ${getTimeStr(now)}`, "الفاصل": since, "السبب": reason, "ملاحظات": notes });
   document.getElementById('dropNotes').value = '';
-  closeDropModal(); renderLogs();
+  closeDropModal(); updateDashboard(); renderLogs();
 }
 
 function deleteFullLog(idx) {
@@ -1358,35 +1419,59 @@ function deleteFullLog(idx) {
   state.logs.splice(idx, 1);
   const latest = state.logs.find(l => l.type === 'meal');
   state.lastMealTime = latest ? latest.timestamp : null;
-  saveState(); updateDashboard(); renderLogs();
+  saveState(); checkDailyAnd15DayReminders(); updateDashboard(); renderLogs();
 }
 
 function renderLogs() {
   const q = document.getElementById('searchLog').value.toLowerCase();
+  const cutoff = state.lastSharedTs || 0;
+
   document.getElementById('logsContainer').innerHTML = state.logs.map((l, idx) => {
     if (q && !JSON.stringify(l).toLowerCase().includes(q)) return '';
-    if (l.type === 'interrogation') return `<div class="log-item log-interrog"><div class="log-header" style="color:#0369a1;"><span>🕵️‍♂️ استجواب | ${l.timeStr}</span><button class="del-log-btn" onclick="deleteFullLog(${idx})">حذف</button></div><div><b>الالتزام:</b> ${l.compliance}<br><b>التفاصيل:</b> ${l.details}</div></div>`;
-    if (l.type === 'assessment') return `<div class="log-item log-assess"><div class="log-header" style="color:#b45309;"><span>📊 ${l.isInitial ? 'تقييم البداية (مرجعك)' : 'تقييم دوري (15 يوم)'} | ${l.fullDayDate}</span><button class="del-log-btn" onclick="deleteFullLog(${idx})">حذف</button></div><div>الوزن: <b>${l.weight} كجم</b> | البطن: <b>${l.waist} سم</b> | الحالة: ${l.symptom}${l.chronicDisease ? `<br><b>الأمراض المزمنة:</b> ${l.chronicDisease} | <b>الأنيميا:</b> ${l.anemiaStatus}` : ''}</div></div>`;
-    if (l.type === 'chat') return `<div class="log-item log-chat"><div class="log-header" style="color:var(--purple);"><span>💬 ${l.category} | ${l.timeStr}</span><button class="del-log-btn" onclick="deleteFullLog(${idx})">حذف</button></div><div style="line-height:1.5;">${l.message}</div></div>`;
-    if (l.type === 'drop') return `<div class="log-item log-drop"><div class="log-header"><span>📉 Drop Time | ${l.timeStr}</span><button class="del-log-btn" onclick="deleteFullLog(${idx})">حذف</button></div><div>${l.reason} (${l.sinceLastMeal})</div></div>`;
-    if (l.type === 'drink' || l.type === 'ginger') return `<div class="log-item"><div class="log-header"><span>☕ ${l.timeStr}</span><button class="del-log-btn" onclick="deleteFullLog(${idx})">حذف</button></div><div>${l.note}</div></div>`;
+    
+    if (l.type === 'session_marker') {
+      return `<div class="log-session-marker">✅ تم إرسال تقرير الجلسة #${l.closedSessionNum} للأخصائي (${l.timeStr}) — بداية الجلسة #${l.newSessionNum} 🆕</div>`;
+    }
+
+    const statusBadge = l.timestamp <= cutoff
+      ? `<span class="sent-badge">مُرسل ✓</span>`
+      : `<span class="new-badge">جديد (جلسة #${state.sessionCount || 1})</span>`;
+
+    if (l.type === 'interrogation') return `<div class="log-item log-interrog"><div class="log-header" style="color:#0369a1;"><span>🕵️‍♂️ استجواب | ${l.timeStr} ${statusBadge}</span><button class="del-log-btn" onclick="deleteFullLog(${idx})">حذف</button></div><div><b>الالتزام:</b> ${l.compliance}<br><b>التفاصيل:</b> ${l.details}</div></div>`;
+    if (l.type === 'assessment') return `<div class="log-item log-assess"><div class="log-header" style="color:#b45309;"><span>📊 ${l.isInitial ? 'تقييم البداية' : 'تقييم دوري'} | ${l.fullDayDate} ${statusBadge}</span><button class="del-log-btn" onclick="deleteFullLog(${idx})">حذف</button></div><div>الوزن: <b>${l.weight} كجم</b> | البطن: <b>${l.waist} سم</b> | الحالة: ${l.symptom}${l.chronicDisease ? `<br><b>الأمراض المزمنة:</b> ${l.chronicDisease} | <b>الأنيميا:</b> ${l.anemiaStatus}` : ''}</div></div>`;
+    if (l.type === 'chat') return `<div class="log-item log-chat"><div class="log-header" style="color:var(--purple);"><span>💬 ${l.category} | ${l.timeStr} ${statusBadge}</span><button class="del-log-btn" onclick="deleteFullLog(${idx})">حذف</button></div><div style="line-height:1.5;">${l.message}</div></div>`;
+    if (l.type === 'drop') return `<div class="log-item log-drop"><div class="log-header"><span>📉 Drop Time | ${l.timeStr} ${statusBadge}</span><button class="del-log-btn" onclick="deleteFullLog(${idx})">حذف</button></div><div>${l.reason} (${l.sinceLastMeal})</div></div>`;
+    if (l.type === 'drink' || l.type === 'ginger') return `<div class="log-item"><div class="log-header"><span>☕ ${l.timeStr} ${statusBadge}</span><button class="del-log-btn" onclick="deleteFullLog(${idx})">حذف</button></div><div>${l.note}</div></div>`;
     const items = l.items.map(i => `<span class="item-chip">${i.name} (${i.qty}جم)</span>`).join('');
-    return `<div class="log-item"><div class="log-header"><span>🍽️ ${l.fullDayDate} | ${l.timeStr}</span><button class="del-log-btn" onclick="deleteFullLog(${idx})">حذف</button></div><div>الفاصل: ${l.interval}</div><div style="margin:6px 0;">${items}</div><strong>الإجمالي: ${l.totalCals} سعرة</strong> <span class="dir-badge">🧭 ${l.dirText}</span></div>`;
+    return `<div class="log-item"><div class="log-header"><span>🍽️ ${l.fullDayDate} | ${l.timeStr} ${statusBadge}</span><button class="del-log-btn" onclick="deleteFullLog(${idx})">حذف</button></div><div>الفاصل: ${l.interval}</div><div style="margin:6px 0;">${items}</div><strong>الإجمالي: ${l.totalCals} سعرة</strong> <span class="dir-badge">🧭 ${l.dirText}</span></div>`;
   }).join('') || '<div style="text-align:center; color:#94a3b8;">لا توجد سجلات</div>';
 }
 
+// إرسال التقرير للأخصائي + إغلاق الجلسة الحالية وفتح جلسة جديدة ترسل الجديد فقط في المرة القادمة
 function shareWithSpecialist() {
-  if (!state.logs.length) { alert('لا يوجد سجل'); return; }
+  const newLogs = getNewUnsentLogs();
+  if (!newLogs.length) {
+    alert(`✅ لا توجد سجلات جديدة منذ آخر إرسال!\nأنت الآن في الجلسة #${state.sessionCount || 1}؛ أي وجبة أو مشروب أو استجواب جديد تسجله من الآن سيُرسل في التقرير القادم.`);
+    return;
+  }
+
   const stats = calculateDailyCalories();
-  let r = `*تقرير Nutriclinic Mind*\n`;
+  const currentSess = state.sessionCount || 1;
+  const now = Date.now();
+
+  let r = `*تقرير متابعة Nutriclinic Mind (الجلسة #${currentSess})*\n`;
   if (userProfile) {
     r += `👤 *العميل:* ${userProfile.name} (${userProfile.phone})\n`;
     r += `🎯 *الهدف:* ${GOALS_CONFIG[userProfile.goalKey || 'insulin'].title}\n`;
     r += `🔥 *السعرات المسموحة:* ${stats.allowedDaily} سعرة\n`;
-    if (userProfile.chronicDisease) r += `🩺 *الأمراض المزمنة:* ${userProfile.chronicDisease}\n`;
-    if (userProfile.anemiaStatus) r += `🩸 *الأنيميا:* ${userProfile.anemiaStatus}\n\n`;
+    if (currentSess === 1) {
+      if (userProfile.chronicDisease) r += `🩺 *الأمراض المزمنة:* ${userProfile.chronicDisease}\n`;
+      if (userProfile.anemiaStatus) r += `🩸 *الأنيميا:* ${userProfile.anemiaStatus}\n`;
+    }
+    r += `\n📋 *المستجدات منذ آخر إرسال (${newLogs.length} بند):*\n`;
   }
-  state.logs.slice(0, 20).forEach(l => {
+
+  newLogs.forEach(l => {
     if (l.type === 'interrogation') r += `🕵️‍♂️ [استجواب ${l.timeStr}]: ${l.compliance} (${l.details})\n`;
     else if (l.type === 'assessment') r += `📊 [تقييم ${l.fullDayDate}]: وزن ${l.weight}كجم، بطن ${l.waist}سم (${l.symptom})\n`;
     else if (l.type === 'meal') r += `🍽️ ${l.fullDayDate} (${l.timeStr}): ${l.items.map(i=>i.name+' '+i.qty+'جم').join(' + ')} = ${l.totalCals} سعرة\n`;
@@ -1394,13 +1479,30 @@ function shareWithSpecialist() {
     else if (l.type === 'drop') r += `📉 Drop Time (${l.timeStr}): ${l.reason} (${l.sinceLastMeal})\n`;
     else r += `☕ (${l.timeStr}): ${l.note}\n`;
   });
+
+  // تحديث نقطة القطع وفتح جلسة جديدة فوراً للمستجدات القادمة
+  state.lastSharedTs = now;
+  state.sessionCount = currentSess + 1;
+  state.logs.unshift({
+    id: 'sess_' + now,
+    type: 'session_marker',
+    timestamp: now,
+    closedSessionNum: currentSess,
+    newSessionNum: state.sessionCount,
+    timeStr: `${getFullArabicDayDate(now)} - ${getTimeStr(now)}`
+  });
+  saveState();
+
+  updateDashboard();
+  renderLogs();
+
   window.open(`https://wa.me/${SPECIALIST_PHONE}?text=${encodeURIComponent(r)}`, '_blank');
 }
 
 initAuth();
 setInterval(() => { checkDailyAnd15DayReminders(); updateDashboard(); }, 1000);
 
-// إدارة زر الرجوع في الهاتف (إغلاق القوائم المفتوحة بدلاً من الخروج النهائي)
+// إدارة زر الرجوع في الهاتف
 const TRACKED_MODALS = ['goalModal', 'calAdjustModal', 'drinksModal', 'reassessModal', 'chatModal', 'mealModal', 'dropModal', 'deterrenceModal'];
 function pushModalHistoryState() {
   try { history.pushState({ modalOpen: true }, '', window.location.href); } catch (e) {}
